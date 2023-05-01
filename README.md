@@ -28,10 +28,26 @@
 5. ### Gestion de Pagos
 
     > 📌 Permite crear un pago para una consulta en especifico
-    
+
     > 📌 Permite ver el historial de pagos realizados.
 
 6. ### Gestion de Inventario
     > 📌 Permite crear, editar, consultar o eliminar los distintos suministros en Inventanrio
 
 
+## Tecnologias Utilizadas
+
+<img src="https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white">
+<img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white">
+<img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white">
+<img src="https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white">
+
+## 🚀 Processo de Instalacion
+
+Para instalar seguir los pasos:
+
+git clone https://github.com/Orellanna/Sistema-Gestion-Clinica-Acupuntura.git 
+python -m venv env
+env\Scripts\activate
+pip install django
+pip install psycopg2-binary
