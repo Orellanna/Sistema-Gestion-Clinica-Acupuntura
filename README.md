@@ -11,6 +11,7 @@
 
 2. ### Gestion de Consultas
     > 📌 Permite agregar, modificar, eliminar y consultar cada consulta creada.
+
     > 📌 Permite consultar el historial de las consultas por paciente.
 
 
@@ -20,12 +21,14 @@
 
 4. ### Gestion de Inspecciones de puntos acupunturales
     > 📌 Permite crear, editar, consultar o eliminar cada inspeccion ingresada
+
     > 📌 Permite ver el historial de inspecciones ingresadas por consulta.
 
 
 5. ### Gestion de Pagos
 
     > 📌 Permite crear un pago para una consulta en especifico
+    
     > 📌 Permite ver el historial de pagos realizados.
 
 6. ### Gestion de Inventario
