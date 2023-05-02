@@ -11,6 +11,9 @@ class Paciente(models.Model):
     sexo = models.CharField(max_length=1)
     telefono = models.CharField(max_length=8, blank=True, null=True)
 
+    def __str__(self):
+        return self.primer_nombre + ' ' + self.primer_apellido
+    
     class Meta:
         managed = False
         db_table = 'paciente'
@@ -23,9 +26,13 @@ class Consulta(models.Model):
     consulta_fecha = models.DateField()
     finalizada = models.BooleanField()
 
+    def __str__(self):
+        return self.motivo + ' - ' + self.id_paciente.primer_nombre + ' ' + self.id_paciente.primer_apellido
+    
     class Meta:
         managed = False
         db_table = 'consulta'
+    
 
 class Cita(models.Model):
     id_cita = models.AutoField(primary_key=True)
