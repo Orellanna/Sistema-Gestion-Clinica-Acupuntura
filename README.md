@@ -72,6 +72,6 @@ Para instalar seguir los pasos:
 
 `py manage.py migrate`
 
-5. luego correr la aplicacion :
+5. luego correr la aplicacion:
 
 `py manage.py runserver`
