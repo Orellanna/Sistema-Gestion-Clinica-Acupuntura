@@ -66,7 +66,7 @@ Para instalar seguir los pasos:
 
     ubicarse en:
 
-    Sistema-Gestion-Clinica-Acupuntura\AppClinicaAcupuntura
+    .\AppClinicaAcupuntura
 
     y ejecutar los comandos:
 
