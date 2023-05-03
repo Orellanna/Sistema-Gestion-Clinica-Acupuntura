@@ -70,8 +70,6 @@ Para instalar seguir los pasos:
 
     y ejecutar los comandos:
 
-`py manage.py makemigrations`
-
 `py manage.py migrate`
 
 5. luego correr la aplicacion :
