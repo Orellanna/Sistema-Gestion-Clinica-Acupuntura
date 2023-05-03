@@ -46,32 +46,34 @@
 
 Para instalar seguir los pasos:
 
-### git clone https://github.com/Orellanna/Sistema-Gestion-Clinica-Acupuntura.git
+1. Clonar el Repositorio en la carpeta donde alojaran el proyecto.
 
-Crear un entorno virtual fuera de la carpeta del proyecto:
+`git clone https://github.com/Orellanna/Sistema-Gestion-Clinica-Acupuntura.git`
 
-### python -m venv env
+2. Crear un entorno virtual fuera de la carpeta del proyecto:
 
-### env\Scripts\activate
+`python -m venv env`
 
-Con el entorno virtual activado instalar las librerias:
+`env\Scripts\activate`
 
-### pip install django
+3. Con el entorno virtual activado instalar las librerias:
 
-### pip install psycopg2-binary
+`pip install django`
 
-Luego Realizar las migraciones:
+`pip install psycopg2-binary`
 
-ubicarse en:
+4. Luego Realizar las migraciones:
 
-Sistema-Gestion-Clinica-Acupuntura\AppClinicaAcupuntura
+    ubicarse en:
 
-y ejecutar los comandos:
+    Sistema-Gestion-Clinica-Acupuntura\AppClinicaAcupuntura
 
-### py manage.py makemigrations
+    y ejecutar los comandos:
 
-### py manage.py migrate
+`py manage.py makemigrations`
 
-luego:
+`py manage.py migrate`
 
-### py manage.py runserver
+5. luego correr la aplicacion :
+
+`py manage.py runserver`
