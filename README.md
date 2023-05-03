@@ -7,7 +7,7 @@
 
 1. ### Gestion de Pacientes
     > 📌 Permite agregar, modificar, eliminar y consultar la informacion de los Pacientes.
-
+    > 📌 Permite ver la lista de pacientes registrados.
 
 2. ### Gestion de Consultas
     > 📌 Permite agregar, modificar, eliminar y consultar cada consulta creada.
