@@ -9,4 +9,7 @@ def GestionPacientes(request):
 
 def DetallesConsulta(request):
     return render(request,'DetallesConsulta.html')
+#Borrar lo de abajo antes de subir cambio - Kevin
+def Registrar(request):
+    return render(request,'RegistrarPaciente.html')
     
