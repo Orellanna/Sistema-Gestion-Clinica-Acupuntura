@@ -5,5 +5,5 @@ from django.contrib import admin
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('DetallesConsulta/', views.DetallesConsulta,name='DetallesConsulta'),
+    path('DetallesConsulta/<int:consulta_id>/', views.DetallesConsulta, name='DetallesConsulta'),
 ]

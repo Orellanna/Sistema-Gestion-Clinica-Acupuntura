@@ -12,11 +12,10 @@
                 <div class="col-5 text-right">
                     <i class="fas fa-user"></i>
                   </div>
-              <div class="col-1 text-center">
-                01
+              <div class="text-center text-truncate">
+                {{paciente.id_paciente}} - {{paciente.primer_nombre}} {{paciente.primer_apellido}}
               </div>
-              <div class="col-2 text-center">
-          Juan Perez
+              <div class="col-2 text-center"> 
               </div>
             </div>
         </div>
@@ -84,16 +83,15 @@
               <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <p>Fecha de cita:</p>
-        
+                        <p>Fecha de cita: {{consulta.consulta_fecha}}</p>
                     </div>
-                    <div class="col">
+                    {% comment %} <div class="col">
                         <p>Hora de inicio:</p>
-                    </div>
+                    </div> {% endcomment %}
                 </div>
                 <div class="row">
                     <div class="col">
-                        <p>Motivo:</p>
+                        <p>Motivo: {{consulta.motivo}}</p>
                     </div>
                 </div>
                 <div class="row">
@@ -103,9 +101,7 @@
                     <div class="col">
                         <div class="list-group">
                             <a class="list-group-item list-group-item-action flex-column align-items-start">
-                              <p class="mb-1">Estreñimiento</p>
-                              <p class="mb-1">Pie derecho sin movimiento</p>
-                              <p class="mb-1">Existe dolor en la cadera</p>
+                              <p class="mb-1">{{consulta.obervacion_consulta}}</p>
                             </a>
                         </div>
                     </div>
