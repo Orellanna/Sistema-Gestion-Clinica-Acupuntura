@@ -1,3 +1,12 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 
-# Create your views here.
+def index(request):
+    return render(request,'index.html')
+
+def GestionPacientes(request):
+    return render(request,'GestionPacientes.html')
+
+def DetallesConsulta(request):
+    return render(request,'DetallesConsulta.html')
+    
