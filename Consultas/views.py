@@ -10,8 +10,10 @@ def index(request):
 def DetallesConsulta(request, consulta_id):
     consulta = get_object_or_404(Consulta, pk=consulta_id)
     paciente = consulta.id_paciente
+    fecha_consulta_str = consulta.consulta_fecha.strftime('%d/%B/%Y')
     
     return render(request,'DetallesConsulta.html', {
         'consulta': consulta,
         'paciente': paciente,
+        'fecha_consulta_str': fecha_consulta_str,
     })
