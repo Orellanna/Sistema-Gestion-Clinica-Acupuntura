@@ -1,0 +1,23 @@
+#Ignorando todos los archivos de cache de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyi
+*.pyz
+*.pywz
+
+#Ignorando archivos de registro
+*.log
+*.log.*
+
+#Ignorando archivos de entorno
+.env
+
+#Ignorando archivos de migraciones que no se deben compartir
+**/migrations/*.py
+**/migrations/*.bak
+**/migrations/*.swp
+**/migrations/*.sql
+**/migrations/*.json
+
