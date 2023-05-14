@@ -68,7 +68,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Detalles de Consulta</h1>
+            <h1>Nueva Consulta</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -84,30 +84,40 @@
               <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <p>Fecha de cita:</p>
-        
+                        <div class="form-group row">
+                            <label for="fechacita" class="col-sm-4 col-form-label">Fecha de Cita:</label>
+                            <div class="col-sm-5">
+                                <input type="date" class="limpiarinput" id="birthday" name="birthday">
+                            </div>
+                          </div>
                     </div>
                     <div class="col">
-                        <p>Hora de inicio:</p>
+                        <div class="form-group row">
+                            <label for="horainicio" class="col-sm-4 col-form-label">Hora de inicio:</label>
+                            <div class="col-sm-5">
+                                <input type="time"  id="horainicio" name="horainicio">
+                            </div>
+                          </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <p>Motivo:</p>
+                        <div class="form-group row">
+                            <label for="motivo" class="col-sm-2 col-form-label">Motivo:</label>
+                            <div class="col-sm-10">
+                              <input type="motivo" class="form-control" id="motivo">
+                            </div>
+                          </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-2">
-                        <p>Observaciones:</p>
-                    </div>
                     <div class="col">
-                        <div class="list-group">
-                            <a class="list-group-item list-group-item-action flex-column align-items-start">
-                              <p class="mb-1">Estreñimiento</p>
-                              <p class="mb-1">Pie derecho sin movimiento</p>
-                              <p class="mb-1">Existe dolor en la cadera</p>
-                            </a>
-                        </div>
+                        <div class="form-group row">
+                            <label for="observacion" class="col-sm-2 col-form-label">Observaciones:</label>
+                            <div class="col-sm-10">
+                               <textarea name="observacion"  id="observacion" style="width:855px;height:150px"> </textarea>  
+                            </div>
+                          </div>
                     </div>
                 </div>
             </div>
@@ -127,10 +137,21 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-            <a href="/historialConsultas" class="btn btn-primary"><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a>
-          </div>
+          <a href="/historialConsultas" class="btn btn-primary"><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a>
+        </div>
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-success float-right"><i class="fa fa-thumbs-up"></i>&nbsp; Guardar Consulta</button>
+        </div>
       </div>
     </div><!-- /.container-fluid -->
   </section>
-  
+
+  <script>
+    document.getElementsByClassName("limpiarinput")[0].value = "";
+</script>
+<script>
+    document.getElementById("horainicio").value = "";
+    document.getElementById("motivo").value = "";
+    document.getElementById("observacion").value = "";
+</script>
 {% endblock %}

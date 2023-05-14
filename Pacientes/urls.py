@@ -7,4 +7,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('gestionPacientes/', views.GestionPacientes),
     path('detallesConsulta/', views.DetallesConsulta),
+    path('nuevaConsulta/', views.NuevaConsulta),
+    path('historialConsultas/', views.HistorialConsultas),
 ]

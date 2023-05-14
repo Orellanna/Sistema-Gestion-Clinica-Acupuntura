@@ -9,4 +9,9 @@ def GestionPacientes(request):
 
 def DetallesConsulta(request):
     return render(request,'DetallesConsulta.html')
-    
+
+def NuevaConsulta(request):
+    return render(request,'NuevaConsulta.html')   
+
+def HistorialConsultas(request):
+    return render(request,'HistorialConsultas.html')   
