@@ -1,132 +1,137 @@
-{% extends 'index_master.html' %}
-
-{% block content %} 
+{% extends 'index_master.html' %} {% block content %}
 
 <!-- Main content -->
 <section class="content">
-    <div class="container-fluid">
-        <div class="container">
-            <div class="card">
-                <div class="card-body">
-            <div class="row ">
-                <div class="col-5 text-right">
-                    <i class="fas fa-user"></i>
-                  </div>
-              <div class="text-center text-truncate">
-                {{paciente.id_paciente}} - {{paciente.primer_nombre}} {{paciente.segundo_nombre}} {{paciente.primer_apellido}} {{paciente.segundo_apellido}}
-              </div>
-              <div class="col-2 text-center"> 
-              </div>
+  <div class="container-fluid">
+    <div class="container">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-5 text-right">
+              <i class="fas fa-user"></i>
             </div>
-        </div>
-    </div>
-        </div>
-    </div>
-</section>
-&nbsp; &nbsp; 
-<section class="content">
-    <div class="container-fluid">
-        <div class="container">
-<div class="row ">
-    <div class="col text-center">
-        <i class="fas fa-user"> </i>&nbsp;&nbsp; Datos Personales
-      </div>
-  <div class="col text-center">
-    <i class="fas fa-stethoscope"></i>&nbsp;&nbsp; Consultas
-  </div>
-  <div class="col text-center">
-    <i class="fas fa-plus-square"></i>&nbsp;&nbsp; Inspeccion
-  </div>
-  <div class="col text-center">
-    <i class="fas fa-first-aid"></i>&nbsp;&nbsp; Pagos
-      </div>
-</div>
-</div>
-</div>
-</section>
-<section class="content">
-    <div class="container-fluid">
-        <div class="container">
-            <table class="table table-sm table-secondary">
-                <thead>
-                  <tr>
-                    <th scope="col"></th>
-                    <th class="bg-primary" scope="col"></th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-              </table>
-       
-        </div>
-    </div>
-</section>
-
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Detalles de Consulta</h1>
+            <div class="text-center text-truncate">
+              {{paciente.id_paciente}} - {{paciente.primer_nombre}}
+              {{paciente.segundo_nombre}} {{paciente.primer_apellido}}
+              {{paciente.segundo_apellido}}
+            </div>
+            <div class="col-2 text-center"></div>
           </div>
         </div>
-      </div><!-- /.container-fluid -->
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <!-- Default box -->
-            <div class="card">
-              <div class="card-body">
-                <div class="row">
-                    <div class="col">
-                        <p>Fecha de cita: {{ fecha_consulta_str }}</p>
-                    </div>
-                    {% comment %} <div class="col">
-                        <p>Hora de inicio:</p>
-                    </div> {% endcomment %}
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <p>Motivo: {{consulta.motivo}}</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-2">
-                        <p>Observaciones:</p>
-                    </div>
-                    <div class="col">
-                        <div class="list-group">
-                            <a class="list-group-item list-group-item-action flex-column align-items-start">
-                              <p class="mb-1">{{consulta.obervacion_consulta}}</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /.card-body -->
-            <div class="card-footer">
-            </div>
-            <!-- /.card-footer-->
-          </div>
-          <!-- /.card -->
+      </div>
+    </div>
+  </div>
+</section>
+&nbsp; &nbsp;
+<section class="content">
+  <div class="container-fluid">
+    <div class="container">
+      <div class="row">
+        <div class="col text-center">
+          <i class="fas fa-user"> </i>&nbsp;&nbsp; Datos Personales
+        </div>
+        <div class="col text-center">
+          <i class="fas fa-stethoscope"></i>&nbsp;&nbsp; Consultas
+        </div>
+        <div class="col text-center">
+          <i class="fas fa-plus-square"></i>&nbsp;&nbsp; Inspeccion
+        </div>
+        <div class="col text-center">
+          <i class="fas fa-first-aid"></i>&nbsp;&nbsp; Pagos
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+<section class="content">
+  <div class="container-fluid">
+    <div class="container">
+      <table class="table table-sm table-secondary">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th class="bg-primary" scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+</section>
 
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-            <button type="button" class="btn btn-primary"><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</button>
-        </div>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Detalles de Consulta</h1>
       </div>
-    </div><!-- /.container-fluid -->
-  </section>
-  
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <!-- Default box -->
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <p>Fecha de cita: {{ fecha_consulta_str }}</p>
+              </div>
+              {% comment %}
+              <div class="col">
+                <p>Hora de inicio:</p>
+              </div>
+              {% endcomment %}
+            </div>
+            <div class="row">
+              <div class="col">
+                <p>Motivo: {{consulta.motivo}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-2">
+                <p>Observaciones:</p>
+              </div>
+              <div class="col">
+                <div class="list-group">
+                  <a
+                    class="list-group-item list-group-item-action flex-column align-items-start"
+                  >
+                    <p class="mb-1">{{consulta.obervacion_consulta}}</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer"></div>
+          <!-- /.card-footer-->
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <button type="button" class="btn btn-primary">
+          <i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+
 {% endblock %}
