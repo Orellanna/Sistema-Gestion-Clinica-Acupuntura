@@ -7,6 +7,12 @@ from Pacientes.models import Consulta, Paciente
 def index(request):
     return render(request,'index.html')
 
+def ListarConsultas(request):
+    return render(request,'HistorialConsultas.html')
+
+def NuevaConsulta(request):
+    return render(request,'NuevaConsulta.html')
+
 def DetallesConsulta(request, consulta_id):
     consulta = get_object_or_404(Consulta, pk=consulta_id)
     paciente = consulta.id_paciente
