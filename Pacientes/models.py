@@ -25,7 +25,7 @@ class Consulta(models.Model):
     obervacion_consulta = models.CharField(max_length=500, blank=True, null=True)
     consulta_fecha = models.DateField()
     finalizada = models.BooleanField()
-
+    
     def __str__(self):
         return self.motivo + ' - ' + self.id_paciente.primer_nombre + ' ' + self.id_paciente.primer_apellido
     
