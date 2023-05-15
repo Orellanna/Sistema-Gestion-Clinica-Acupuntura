@@ -13,10 +13,10 @@
                     <i class="fas fa-user"></i>
                   </div>
               <div class="col-1 text-center">
-                01
+                {{paciente.id_paciente}}
               </div>
               <div class="col-2 text-center">
-          Juan Perez
+                {{paciente.primer_nombre}} {{paciente.primer_apellido}}
               </div>
             </div>
         </div>
@@ -76,7 +76,8 @@
             <h2>Historial de Consultas</h2>
           </div>
           <div class="col">
-            <a href="/nuevaConsulta" class="btn btn-success"><i class="nav-icon fas fa-user"></i>&nbsp;&nbsp;Nueva Consulta</a>
+            
+            <a href="{% url 'NuevaConsulta' paciente_id=paciente.id_paciente %}" class="btn btn-success"><i class="nav-icon fas fa-user"></i>&nbsp;&nbsp;Nueva Consulta</a>
             <div class="row"> <div class="card"></div></div>
           </div>
         </div>
@@ -93,6 +94,7 @@
                 
                 <!-- /.card-header -->
                 <div class="card-body">
+
                   <table id="example2" class="table table-bordered table-hover">
                     <thead>
                     <tr>
@@ -103,90 +105,19 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {% for consulta in consultas %}
                     <tr>
-                      <td>Dolor Abdominal</td>
-                      <td>Recuperacion de movilidad
-                      </td>
-                      <td>14/07/23</td>
+                      <td>{{consulta.motivo}}</td>
+                      <td>{{consulta.obervacion_consulta}}</td>
+                      <td>{{consulta.consulta_fecha}}</td>
                       <td><a href="/detallesConsulta" class="btn "><i class="nav-icon fas fa-eye"></i></a>
+
                     </td>
                     </tr>
-                    <tr>
-                      <td>Dolor de cabeza</td>
-                      <td>Perdida de movilidad
-                      </td>
-                      <td>24/07/2023</td>
-                      <td><a href="/detallesConsulta" class="btn "><i class="nav-icon fas fa-eye"></i></a>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>03</td>
-                      <td>Boris Lemus</td>
-                      <td>M</td>
-                      <td><a href="/detallesConsulta" class="btn "><i class="nav-icon fas fa-eye"></i></a>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>04</td>
-                      <td>Francisco Cardona</td>
-                      <td>M</td>
-                      <td><a href="/detallesConsulta" class="btn "><i class="nav-icon fas fa-eye"></i></a>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>05</td>
-                      <td>Ernesto Fuentes</td>
-                      <td>M</td>
-                      <td><a href="/detallesConsulta" class="btn "><i class="nav-icon fas fa-eye"></i></a>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>06</td>
-                      <td>Adonis Guardado</td>
-                      <td>M</td>
-                      <td><a href="/detallesConsulta" class="btn "><i class="nav-icon fas fa-eye"></i></a>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>07</td>
-                      <td>Joel Lopez</td>
-                      <td>M</td>
-                      <td><a href="/detallesConsulta" class="btn "><i class="nav-icon fas fa-eye"></i></a>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>08</td>
-                      <td>Sofia Hernandez</td>
-                      <td>F</td>
-                      <td><a href="/detallesConsulta" class="btn "><i class="nav-icon fas fa-eye"></i></a>
-                    </td>
-                    </tr>
-                    
-                    <tr>
-                      <td>09</td>
-                      <td>Lucia Lopez</td>
-                      <td>F</td>
-                      <td><a href="/detallesConsulta" class="btn "><i class="nav-icon fas fa-eye"></i></a>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>10</td>
-                      <td>William Soriano</td>
-                      <td>M</td>
-                      <td><a href="/detallesConsulta" class="btn "><i class="nav-icon fas fa-eye"></i></a>
-                    </td>
-                    </tr>
-                    
-                    <tr>
-                      <td>11</td>
-                      <td>Carolina Gonzalez</td>
-                      <td>F</td>
-                      <td><a href="/detallesConsulta" class="btn "><i class="nav-icon fas fa-eye"></i></a>
-                    </td>
-                    </tr>
-                    </tbody>
-                   
+                    {% endfor %}
+                    </tbody> 
                   </table>
+                  
                 </div>
                 <!-- /.card-body -->
               </div>
