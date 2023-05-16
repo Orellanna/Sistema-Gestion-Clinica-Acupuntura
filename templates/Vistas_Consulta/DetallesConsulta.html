@@ -12,8 +12,7 @@
             </div>
             <div class="text-center text-truncate">
               {{paciente.id_paciente}} - {{paciente.primer_nombre}}
-              {{paciente.segundo_nombre}} {{paciente.primer_apellido}}
-              {{paciente.segundo_apellido}}
+              {{paciente.primer_apellido}}
             </div>
             <div class="col-2 text-center"></div>
           </div>
@@ -125,9 +124,8 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <button type="button" class="btn btn-primary">
-          <i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial
-        </button>
+        <a href="{% url 'ListarConsultas' paciente_id=paciente.id_paciente %}" class="btn btn-primary"
+            ><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a>
       </div>
     </div>
   </div>

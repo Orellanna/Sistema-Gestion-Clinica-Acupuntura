@@ -1,0 +1,79 @@
+{% extends 'index_master.html' %}
+
+{% block content %}
+<div class="ml-6">
+  <h1>Nuevo Paciente</h1>
+</div>
+<div class="container my-4">
+  <div class="row">
+      <div class="col-md-6">
+          <div class="card card-primary">
+              <div class="card-header">
+                  <h3 class="card-title">Información Personal</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form">
+                  <div class="card-body">
+                      <div class="form-group">
+                          <label for="inputNombre">Nombre</label>
+                          <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre">
+                      </div>
+                      <div class="form-group">
+                          <label for="inputApellidos">Apellidos</label>
+                          <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos">
+                      </div>
+                      <div class="form-group">
+                          <label for="inputEdad">Edad</label>
+                          <input type="number" class="form-control" id="inputEdad" placeholder="Ingrese su edad">
+                      </div>
+                      <div class="form-group">
+                          <label for="selectSexo">Sexo</label>
+                          <select class="form-control" id="selectSexo">
+                              <option value="">Seleccione su sexo</option>
+                              <option value="M">Masculino</option>
+                              <option value="F">Femenino</option>
+                              <option value="O">Otro</option>
+                          </select>
+                      </div>
+                  </div>
+                  <!-- /.card-body -->
+              </form>
+          </div>
+          <!-- /.card -->
+      </div>
+      <div class="col-md-6">
+          <div class="card card-primary">
+              <div class="card-header">
+                  <h3 class="card-title">Información de Contacto</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form">
+                  <div class="card-body">
+                      <div class="form-group">
+                          <label for="inputTelefono">Teléfono</label>
+                          <input type="text" class="form-control" id="inputTelefono" placeholder="Ingrese su teléfono">
+                      </div>
+                      <div class="form-group">
+                         <label for="inputTelefono">Correo</label>
+                          <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo">
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+      <div class="container my-6">
+        <div class="row mt-4">
+          <div class="col-md-12 text-center">
+              <button type="submit" class="btn btn-primary" > <i class="nav-icon fas fa-save"> </i>Guardar</button>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+  </div>
+</div>
+
+{% endblock %}

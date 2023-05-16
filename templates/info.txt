@@ -1,1 +1,0 @@
-##en esta carpeta colocar todas las templates de los modulos.

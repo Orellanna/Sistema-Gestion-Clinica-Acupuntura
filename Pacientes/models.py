@@ -20,7 +20,7 @@ class Paciente(models.Model):
         
 class Consulta(models.Model):
     id_consulta = models.AutoField(primary_key=True)
-    id_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='id_paciente')
+    id_paciente = models.ForeignKey('Paciente', models.CASCADE, db_column='id_paciente')
     motivo = models.CharField(max_length=300)
     obervacion_consulta = models.CharField(max_length=500, blank=True, null=True)
     consulta_fecha = models.DateField()
