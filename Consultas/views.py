@@ -43,12 +43,12 @@ def NuevaConsulta(request, paciente_id):
     return render(request,'NuevaConsulta.html',{'paciente': paciente})
            
 
-def DetallesConsulta(request, consulta_id):
-    consulta = get_object_or_404(Consulta, pk=consulta_id)
-    paciente = consulta.id_paciente
+def DetallesConsulta(request, paciente_id, consulta_id):
+    paciente = get_object_or_404(Paciente, pk=paciente_id)
+    consulta = get_object_or_404(Consulta, pk=consulta_id, paciente=paciente)
     fecha_consulta_str = consulta.consulta_fecha.strftime('%d/%B/%Y')
-    
-    return render(request,'DetallesConsulta.html', {
+
+    return render(request, 'DetallesConsulta.html', {
         'consulta': consulta,
         'paciente': paciente,
         'fecha_consulta_str': fecha_consulta_str,
