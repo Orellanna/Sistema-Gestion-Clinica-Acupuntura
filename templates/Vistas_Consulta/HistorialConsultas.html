@@ -100,7 +100,6 @@
                     <thead>
                     <tr>
                       <th>Motivo</th>
-                      <th>Observacion</th>
                       <th>Fecha</th>
                       <th>Accion</th>
                     </tr>
@@ -109,11 +108,12 @@
                     {% for consulta in consultas %}
                     <tr>
                       <td>{{consulta.motivo}}</td>
-                      <td>{{consulta.obervacion_consulta}}</td>
                       <td>{{consulta.consulta_fecha}}</td>
-                      <td><a href="/detallesConsulta" class="btn "><i class="nav-icon fas fa-eye"></i></a>
-
-                    </td>
+                      <td>
+                        <a href="#" class="ver-consulta" data-consulta-id="{{consulta.id_consulta}}" data-paciente-id = "{{paciente.id_paciente}}">
+                        <i class="nav-icon fas fa-eye"></i>
+                        </a>
+                      </td>
                     </tr>
                     {% endfor %}
                     </tbody> 
@@ -124,4 +124,28 @@
               </div>
               <!-- /.card -->
   <!-- /.content-wrapper -->
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Obtener todos los elementos con la clase "ver-consulta"
+      const verConsultas = document.querySelectorAll(".ver-consulta");
+  
+      // Agregar un evento de clic a cada enlace
+      verConsultas.forEach(function(enlace) {
+        enlace.addEventListener("click", function(event) {
+          event.preventDefault();
+          
+          // Obtener el ID de la consulta del atributo data-consulta-id
+          const consultaId = enlace.getAttribute("data-consulta-id");
+
+          //obtener el ID de el paciente del atributo data-paciente-id
+          const pacienteId = enlace.getAttribute("data-paciente-id");
+          
+          // Redirigir a la página de detalles de la consulta con el ID
+          window.location.href = "/"+ pacienteId + "/HistorialConsultas/DetallesConsulta/" + consultaId + "/";
+        });
+      });
+    });
+  </script>
+  
 {% endblock %}
