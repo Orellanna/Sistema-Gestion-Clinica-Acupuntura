@@ -5,11 +5,11 @@ def index(request):
     return render(request,'index.html')
 
 def GestionPacientes(request):
-    return render(request,'GestionPacientes.html')
+    return render(request,'Vistas_Pacientes/GestionPacientes.html')
 
 def DetallesConsulta(request):
-    return render(request,'DetallesConsulta.html')
+    return render(request,'Vistas_Pacientes/DetallesConsulta.html')
 #Borrar lo de abajo antes de subir cambio - Kevin
 def Registrar(request):
-    return render(request,'RegistrarPaciente.html')
+    return render(request,'Vistas_Pacientes/RegistrarPaciente.html')
     

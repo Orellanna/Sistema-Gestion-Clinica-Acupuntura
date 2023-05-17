@@ -1,0 +1,151 @@
+{% extends 'index_master.html' %}
+
+{% block content %} 
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+            <div class="row ">
+                <div class="col-5 text-right">
+                    <i class="fas fa-user"></i>
+                  </div>
+                  <div class="text-center text-truncate">
+                    {{paciente.id_paciente}} - {{paciente.primer_nombre}}
+                    {{paciente.primer_apellido}}
+                  </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</section>
+
+&nbsp; &nbsp; 
+<section class="content">
+    <div class="container-fluid">
+        <div class="container">
+<div class="row ">
+    <div class="col text-center">
+        <i class="fas fa-user"> </i>&nbsp;&nbsp; Datos Personales
+      </div>
+  <div class="col text-center">
+    <i class="fas fa-stethoscope"></i>&nbsp;&nbsp; Consultas
+  </div>
+  <div class="col text-center">
+    <i class="fas fa-plus-square"></i>&nbsp;&nbsp; Inspeccion
+  </div>
+  <div class="col text-center">
+    <i class="fas fa-first-aid"></i>&nbsp;&nbsp; Pagos
+      </div>
+</div>
+</div>
+</div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="container">
+            <table class="table table-sm table-secondary">
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th class="bg-primary" scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+              </table>
+       
+        </div>
+    </div>
+</section>
+&nbsp;&nbsp;
+
+<!-- Content Wrapper. Contains page content -->
+
+    <!-- Content Header (Page header) -->
+    
+      <div class="container-fluid">
+        <form>
+        <div class="row">
+            <div class="col-md-1"></div>
+          <div class="col-8">
+            <h2>Historial de Consultas</h2>
+          </div>
+          <div class="col">
+            
+            <a href="{% url 'NuevaConsulta' paciente_id=paciente.id_paciente %}" class="btn btn-success"><i class="nav-icon fas fa-user"></i>&nbsp;&nbsp;Nueva Consulta</a>
+            <div class="row"> <div class="card"></div></div>
+          </div>
+        </div>
+    </form>
+      </div><!-- /.container-fluid -->
+      <div class="row"> <div class="card"></div></div>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                
+                <!-- /.card-header -->
+                <div class="card-body">
+
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                      <th>Id</th>
+                      <th>Motivo</th>
+                      <th>Fecha</th>
+                      <th>Accion</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for consulta in consultas %}
+                    <tr>
+                      <td>{{consulta.id_consulta}}</td>
+                      <td>{{consulta.motivo_consulta}}</td>
+                      <td>{{consulta.consulta_fecha}}</td>
+                      <td>
+                        <a href="#" class="ver-consulta" data-consulta-id="{{consulta.id_consulta}}" data-paciente-id = "{{paciente.id_paciente}}">
+                        <i class="nav-icon fas fa-eye"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody> 
+                  </table>
+                  
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+  <!-- /.content-wrapper -->
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Obtener todos los elementos con la clase "ver-consulta"
+      const verConsultas = document.querySelectorAll(".ver-consulta");
+  
+      // Agregar un evento de clic a cada enlace
+      verConsultas.forEach(function(enlace) {
+        enlace.addEventListener("click", function(event) {
+          event.preventDefault();
+          
+          // Obtener el ID de la consulta del atributo data-consulta-id
+          const consultaId = enlace.getAttribute("data-consulta-id");
+
+          //obtener el ID de el paciente del atributo data-paciente-id
+          const pacienteId = enlace.getAttribute("data-paciente-id");
+          
+          // Redirigir a la página de detalles de la consulta con el ID
+          window.location.href = "/"+ pacienteId + "/HistorialConsultas/DetallesConsulta/" + consultaId + "/";
+        });
+      });
+    });
+  </script>
+  
+{% endblock %}
