@@ -81,17 +81,20 @@
           <div class="card-body">
             <div class="row">
               <div class="col">
-                <p>Fecha de cita: {{ fecha_consulta_str }}</p>
+                <p>ID: {{consulta.id_consulta}}</p>
               </div>
-              {% comment %}
-              <div class="col">
-                <p>Hora de inicio:</p>
-              </div>
-              {% endcomment %}
             </div>
             <div class="row">
               <div class="col">
-                <p>Motivo: {{consulta.motivo}}</p>
+                <p>Fecha de cita: {{ fecha_consulta_str }}</p>
+              </div>
+              <div class="col">
+                <p>Hora de inicio: {{consulta.hora_consulta}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <p>Motivo: {{consulta.motivo_consulta}}</p>
               </div>
             </div>
             <div class="row">
@@ -103,7 +106,7 @@
                   <a
                     class="list-group-item list-group-item-action flex-column align-items-start"
                   >
-                    <p class="mb-1">{{consulta.obervacion_consulta}}</p>
+                    <p class="mb-1">{{consulta.observacion_consulta}}</p>
                   </a>
                 </div>
               </div>
@@ -124,8 +127,11 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <a href="{% url 'ListarConsultas' paciente_id=paciente.id_paciente %}" class="btn btn-primary"
-            ><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a>
+        <a
+          href="{% url 'ListarConsultas' paciente_id=paciente.id_paciente %}"
+          class="btn btn-primary"
+          ><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a
+        >
       </div>
     </div>
   </div>

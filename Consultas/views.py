@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404,redirect
 from django.http import HttpResponse
 from Pacientes.models import Consulta, Paciente
 from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
 
 def index(request):
     return render(request,'index.html')
@@ -23,25 +24,28 @@ def NuevaConsulta(request, paciente_id):
     
     if request.method == 'POST':
         
-        #obtenemos los datos del formulario
-        fecha_consulta = request.POST['fecha_consulta']
-        motivo = request.POST['motivo']
-        obervacion_consulta = request.POST['obervacion_consulta']
-        finalizada = request.POST.get('finalizada', False) == 'on'
+        # obtenemos los datos del formulario
+        fecha_consulta = request.POST['consulta_fecha']
+        motivo_consulta = request.POST['motivo_consulta']
+        observacion_consulta = request.POST['observacion_consulta']
+        hora_consulta = request.POST['hora_consulta']
         
-        #Creamos la nueva consulta para el paciente
+        # Creamos la nueva consulta para el paciente
         consulta = Consulta.objects.create(
-            id_paciente = paciente,
-            consulta_fecha = fecha_consulta,
-            motivo = motivo,
-            obervacion_consulta = obervacion_consulta,
-            finalizada = finalizada,
+            id_paciente=paciente,
+            consulta_fecha=fecha_consulta,
+            motivo_consulta=motivo_consulta,
+            observacion_consulta=observacion_consulta,
+            hora_consulta=hora_consulta,
         )
         
-        #Redirige al usuario a la pagina del historial de consultas del paciente 
-        return redirect('Vistas_Consulta/ListarConsultas', paciente_id=paciente_id)
+        # Generamos la URL correcta usando reverse
+        url = reverse('DetallesConsulta', kwargs={'paciente_id': paciente_id, 'consulta_id': consulta.id_consulta})
+        
+        # Redirigimos al usuario a la URL correcta
+        return redirect(url)
     
-    return render(request,'Vistas_Consulta/NuevaConsulta.html',{'paciente': paciente})
+    return render(request, 'Vistas_Consulta/NuevaConsulta.html', {'paciente': paciente})
            
 
 @csrf_exempt
