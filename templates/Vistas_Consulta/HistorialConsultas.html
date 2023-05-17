@@ -12,12 +12,10 @@
                 <div class="col-5 text-right">
                     <i class="fas fa-user"></i>
                   </div>
-              <div class="col-1 text-center">
-                {{paciente.id_paciente}}
-              </div>
-              <div class="col-2 text-center">
-                {{paciente.primer_nombre}} {{paciente.primer_apellido}}
-              </div>
+                  <div class="text-center text-truncate">
+                    {{paciente.id_paciente}} - {{paciente.primer_nombre}}
+                    {{paciente.primer_apellido}}
+                  </div>
             </div>
         </div>
     </div>
@@ -99,6 +97,7 @@
                   <table id="example2" class="table table-bordered table-hover">
                     <thead>
                     <tr>
+                      <th>Id</th>
                       <th>Motivo</th>
                       <th>Fecha</th>
                       <th>Accion</th>
@@ -107,7 +106,8 @@
                     <tbody>
                     {% for consulta in consultas %}
                     <tr>
-                      <td>{{consulta.motivo}}</td>
+                      <td>{{consulta.id_consulta}}</td>
+                      <td>{{consulta.motivo_consulta}}</td>
                       <td>{{consulta.consulta_fecha}}</td>
                       <td>
                         <a href="#" class="ver-consulta" data-consulta-id="{{consulta.id_consulta}}" data-paciente-id = "{{paciente.id_paciente}}">
