@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-    <title>Log in - Brand</title>
+    <title>Inicar Sesion</title>
     <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -35,10 +35,10 @@
             <div class="col-md-6 col-xl-4">
                 <div class="card mt-4">
                     <div class="card-body text-center d-flex flex-column align-items-center">
-                        <img src="{% static 'img/54407583_624854861288853_3652361530487341056_n.jpg' %}" style="max-width: 146px;" class="mb-4">
-                        <form class = "user" method="POST">
+                        <img src="{% static 'img/logo.jpg' %}" style="max-width: 146px;" class="mb-4">
+                        <form action="" method="POST">
                             {% csrf_token %}
-                            <div class="mb-3"><input class="form-control" id="idusername" type="email" name="user" placeholder="Usuario" /></div>
+                            <div class="mb-3"><input class="form-control" id="idusername" name="user" placeholder="Usuario" /></div>
                             <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Contraseña" /></div>
                             <div class="mt-4 mb-4"><button class="btn btn-primary shadow d-block w-100" type="submit" style="background: rgb(55, 99, 244);">Acceder</button></div>
                             <p class="text-muted">Olvidaste la contraseña?</p>
