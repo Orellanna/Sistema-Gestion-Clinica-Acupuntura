@@ -12,7 +12,14 @@ def GestionPacientes(request):
 
 @login_required
 def DetallesConsulta(request):
+<<<<<<< HEAD
     return render(request,'Vistas_Pacientes/DetallesConsulta.html')
+=======
+    return render(request,'DetallesConsulta.html')
+
+def DatosPersonales(request):
+    return render(request,'DatosPersonales.html')
+>>>>>>> VA17011
 #Borrar lo de abajo antes de subir cambio - Kevin
 
 @login_required
