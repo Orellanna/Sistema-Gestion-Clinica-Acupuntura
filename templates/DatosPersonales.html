@@ -51,13 +51,14 @@
             <table class="table table-sm table-secondary">
                 <thead>
                   <tr>
-                    <th scope="col"></th>
                     <th class="bg-primary" scope="col"></th>
+                    <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
               </table>
+       
         </div>
     </div>
 </section>
@@ -67,7 +68,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Nueva Consulta</h1>
+            <h1>Datos Personales</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -81,44 +82,38 @@
             <!-- Default box -->
             <div class="card">
               <div class="card-body">
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group row">
-                            <label for="fechacita" class="col-sm-4 col-form-label">Fecha de Cita:</label>
-                            <div class="col-sm-5">
-                                <input type="date" class="limpiarinput" id="birthday" name="birthday">
-                            </div>
-                          </div>
+                
+                <form>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="nombre">Nombre</label>
+                      <input type="text" class="form-control" id="nombre">
                     </div>
-                    <div class="col">
-                        <div class="form-group row">
-                            <label for="horainicio" class="col-sm-4 col-form-label">Hora de inicio:</label>
-                            <div class="col-sm-5">
-                                <input type="time"  id="horainicio" name="horainicio">
-                            </div>
-                          </div>
+                    <div class="form-group col-md-6">
+                      <label for="apellido">Apellido</label>
+                      <input type="text" class="form-control" id="apellido">
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group row">
-                            <label for="motivo" class="col-sm-2 col-form-label">Motivo:</label>
-                            <div class="col-sm-10">
-                              <input type="motivo" class="form-control" id="motivo">
-                            </div>
-                          </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="inputState">Genero</label>
+                      <select id="inputState" class="form-control">
+                        <option selected>M</option>
+                        <option>F</option>
+                      </select>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group row">
-                            <label for="observacion" class="col-sm-2 col-form-label">Observaciones:</label>
-                            <div class="col-sm-10">
-                              <textarea class="form-control" id="observacion" rows="3"></textarea>    
-                            </div>
-                          </div>
+                    <div class="form-group col-md-6">
+                      <label for="edad">Edad</label>
+                      <input type="text" class="form-control" id="edad">
                     </div>
-                </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="telefono">Telefono</label>
+                      <input type="tel" class="form-control" id="telefono">
+                    </div>
+                  </div>
+                </form>
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
@@ -136,21 +131,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <a href="/historialConsultas" class="btn btn-primary"><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a>
-        </div>
-        <div class="col-sm-6">
-            <button type="button" class="btn btn-success float-right"><i class="fa fa-thumbs-up"></i>&nbsp; Guardar Consulta</button>
+            <a href="" class="btn btn-info">Editar</a>
+          </div>
+          <div class="col-sm-6">
+            <button type="button" class="btn btn-primary float-right"><i class="fa fa-user"></i>&nbsp; Actualizar Informacion</button>
         </div>
       </div>
     </div><!-- /.container-fluid -->
   </section>
-
-  <script>
-    document.getElementsByClassName("limpiarinput")[0].value = "";
-</script>
-<script>
-    document.getElementById("horainicio").value = "";
-    document.getElementById("motivo").value = "";
-    document.getElementById("observacion").value = "";
-</script>
 {% endblock %}
