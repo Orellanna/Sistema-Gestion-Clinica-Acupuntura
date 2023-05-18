@@ -13,7 +13,7 @@ def ListarConsultas(request, paciente_id):
     paciente = get_object_or_404(Paciente, id_paciente =paciente_id)
     consultas = Consulta.objects.filter(id_paciente=paciente_id)
     return render(request,'Vistas_Consulta/HistorialConsultas.html',{
-        'consultas': consultas, 
+        'consultas': consultas,
         'paciente': paciente,
     })
 

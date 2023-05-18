@@ -3,6 +3,8 @@ from django.urls import path
 from django.conf.urls import include
 from Pacientes import views
 from Consultas import views
+from Cuentas import views
+
 
 
 urlpatterns = [
@@ -10,5 +12,6 @@ urlpatterns = [
 
     path('', include('Pacientes.urls')),
     path('', include('Consultas.urls')),
+
 
 ]
