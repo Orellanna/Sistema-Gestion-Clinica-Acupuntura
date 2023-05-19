@@ -12,8 +12,13 @@ def GestionPacientes(request):
 
 @login_required
 def DetallesConsulta(request):
+<<<<<<< HEAD
     return render(request,'Vistas_Pacientes/DetallesConsulta.html')
+=======
+    return render(request,'DetallesConsulta.html')
+>>>>>>> main
 
+@login_required
 def DatosPersonales(request):
     return render(request,'Vistas_Pacientes/DatosPersonales.html')
 

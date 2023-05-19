@@ -19,7 +19,43 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{% static 'css/adminlte.min.css' %}">
 </head>
+<style>
+  /* Estilos para la ventana emergente de confirmación de logout */
+.logout-dialog {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+}
 
+.logout-dialog-content {
+  text-align: center;
+}
+
+.logout-dialog h3 {
+  margin-top: 0;
+}
+
+.logout-dialog-buttons {
+  margin-top: 20px;
+}
+
+/* Estilos adicionales para el enlace de logout */
+.logout-link {
+  transition: opacity 0.3s;
+}
+
+.logout-link:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+</style>
 
 <body class="hold-transition sidebar-mini layout-fixed">
   <!-- Site wrapper -->
@@ -45,13 +81,29 @@
   
       <!-- Sidebar -->
       <div class="sidebar">
+        
         <!-- Sidebar user (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div id="user-panel-content" class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
             <img src="{% static 'img/user4-128x128.jpg' %}" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
             <a href="#" class="d-block">{{ user.first_name }}</a>
+<<<<<<< HEAD
+=======
+            <a href="" class="logout-link" style="opacity: 0; pointer-events: none;">Cerrar Sesion</a>
+          </div>
+        </div>
+        
+        <!-- Ventana emergente de confirmación de logout -->
+        <div id="logout-dialog" class="logout-dialog">
+          <div class="logout-dialog-content">
+            <h3>¿Estás seguro de que deseas cerrar sesión?</h3>
+            <div class="logout-dialog-buttons">
+              <button id="logout-confirm" class="btn btn-danger">Confirmar</button>
+              <button id="logout-cancel" class="btn btn-secondary">Cancelar</button>
+            </div>
+>>>>>>> main
           </div>
         </div>
   
@@ -184,8 +236,7 @@
 <script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js'%}"></script>
 <!-- AdminLTE App -->
 <script src="{% static 'js/adminlte.min.js'%}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{% static 'js/demo.js'%}"></script>
+
 <!-- Page specific script -->
 <script>
   $(function () {
@@ -203,6 +254,47 @@
       "responsive": true,
     });
   });
-</script>
+// Obtén el elemento del panel de usuario y el enlace de logout
+var userPanelContent = document.getElementById('user-panel-content');
+var logoutLink = document.querySelector('.logout-link');
+
+// Obtén los elementos de la ventana emergente
+var logoutDialog = document.getElementById('logout-dialog');
+var logoutConfirmButton = document.getElementById('logout-confirm');
+var logoutCancelButton = document.getElementById('logout-cancel');
+
+// Agrega un evento de mouseover al panel de usuario
+userPanelContent.addEventListener('mouseover', function() {
+  // Muestra el enlace de logout
+  logoutLink.style.display = 'inline';
+  logoutLink.style.opacity = '1';
+  logoutLink.style.pointerEvents = 'auto';
+});
+
+// Agrega un evento de mouseout al panel de usuario
+userPanelContent.addEventListener('mouseout', function() {
+  // Oculta el enlace de logout
+  logoutLink.style.display = 'none';
+});
+
+// Agrega un evento de clic al enlace de logout
+logoutLink.addEventListener('click', function(event) {
+  // Detiene el comportamiento predeterminado del enlace
+  event.preventDefault();
+
+  // Muestra la ventana emergente de confirmación de logout
+  logoutDialog.style.display = 'block';
+});
+
+
+
+// Agrega un evento de clic al botón de cancelar
+logoutCancelButton.addEventListener('click', function() {
+  // Oculta la ventana emergente de confirmación de logout
+  logoutDialog.style.display = 'none';
+});
+
+
+ </script>
 </body>
 </html>

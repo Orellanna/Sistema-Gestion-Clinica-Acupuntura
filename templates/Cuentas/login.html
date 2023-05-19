@@ -28,8 +28,13 @@
         </div>
     </nav>
     <section class="py-5 mt-5">
-        <div class="col-md-8 col-xl-6 text-center mx-auto">
+        <div class="col-md-8 col-xl-4 text-center mx-auto">
             <h1 class="fs-3 fw-bold text-dark mb-2 font-weight-bold" style="background: var(--bs-card-cap-bg);color: var(--bs-btn-hover-border-color);">Iniciar sesión</h1>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-danger ">{{ message }}</div>
+                {% endfor %}
+            {% endif %}  
         </div>
         <div class="row d-flex justify-content-center" style="padding: 0px;">
             <div class="col-md-6 col-xl-4">
@@ -38,17 +43,20 @@
                         <img src="{% static 'img/logo.jpg' %}" style="max-width: 146px;" class="mb-4">
                         <form action="" method="POST">
                             {% csrf_token %}
+<<<<<<< HEAD
                             <div class="mb-3"><input class="form-control" id="idusername" name="user" placeholder="Usuario" /></div>
+=======
+                            <div class="mb-3"><input class="form-control" id="idusername" name="user" placeholder="Usuario"></div>
+>>>>>>> main
                             <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Contraseña" /></div>
                             <div class="mt-4 mb-4"><button class="btn btn-primary shadow d-block w-100" type="submit" style="background: rgb(55, 99, 244);">Acceder</button></div>
-                            <p class="text-muted">Olvidaste la contraseña?</p>
+                            <p class="text-muted">Olvidaste la contraseña?</p>  
                         </form>
                     </div>
                 </div>
             </div>
             
-        </div>
-        
+        </div>  
     </section>
     <footer class="bg-primary-gradient">
         <div class="container py-4 py-lg-5">
@@ -90,8 +98,6 @@
 <script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js'%}"></script>
 <!-- AdminLTE App -->
 <script src="{% static 'js/adminlte.min.js'%}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{% static 'js/demo.js'%}"></script>
 <!-- Page specific script -->
 <script>
   $(function () {
