@@ -7,7 +7,7 @@ class Paciente(models.Model):
     segundo_nombre = models.CharField(max_length=100, blank=True, null=True)
     primer_apellido = models.CharField(max_length=100)
     segundo_apellido = models.CharField(max_length=100, blank=True, null=True)
-    edad_paciente = models.IntegerField()
+    fechanac_paciente = models.DateField()
     sexo_paciente = models.CharField(max_length=1)
     telefono_paciente = models.CharField(max_length=8, blank=True, null=True)
     email_paciente = models.CharField(max_length=50, blank=True, null=True)
