@@ -6,12 +6,10 @@ from Consultas import views
 from Cuentas import views
 
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-
     path('', include('Pacientes.urls')),
     path('', include('Consultas.urls')),
-
+    path('',include('Cuentas.urls'))
 
 ]
