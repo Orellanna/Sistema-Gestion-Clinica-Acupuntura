@@ -27,7 +27,7 @@ def Login(request):
         else:
             return HttpResponse('Usuario o contraseña incorrectos')
         
-    return render(request,'login.html')
+    return render(request,'Cuentas/login.html')
 
 
 

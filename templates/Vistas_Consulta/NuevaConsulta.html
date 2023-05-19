@@ -124,9 +124,10 @@
                       >Observaciones:</label>
                     <div class="col-sm-10">
                       <textarea
+                        class="form-control" 
+                        rows="3"
                         name="observacion_consulta"
-                        id="observacion_consulta"
-                        style="width: 855px; height: 150px">
+                        id="observacion_consulta">
                       </textarea>
                     </div>
                   </div>
@@ -156,12 +157,12 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <div class="container-fluid">
-      <div class="row mb-2">
+      <div class="row mb-2 d-flex justify-content-between" >
+
         <div class="col-sm-6">
-          <a href="{% url 'ListarConsultas' paciente_id=paciente.id_paciente %}" class="btn btn-primary"
-            ><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a
-          >
+          <a href="{% url 'ListarConsultas' paciente_id=paciente.id_paciente %}" class="btn btn-primary float-left"><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a>
         </div>
+
         <div class="col-sm-6">
           <button
             type="submit"
@@ -170,6 +171,7 @@
             <i class="fa fa-thumbs-up"></i>&nbsp; Guardar Consulta
           </button>
         </div>
+
       </div>
     </div>
     <!-- /.container-fluid -->
