@@ -21,3 +21,4 @@ __pycache__/
 **/migrations/*.sql
 **/migrations/*.json
 
+*.pyc
