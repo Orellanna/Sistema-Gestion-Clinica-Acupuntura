@@ -4,19 +4,23 @@ from django.http import HttpResponse
 from Pacientes.models import Consulta, Paciente
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def index(request):
     return render(request,'index.html')
 
+@login_required
 @csrf_exempt
 def ListarConsultas(request, paciente_id):
     paciente = get_object_or_404(Paciente, id_paciente =paciente_id)
     consultas = Consulta.objects.filter(id_paciente=paciente_id)
     return render(request,'Vistas_Consulta/HistorialConsultas.html',{
-        'consultas': consultas, 
+        'consultas': consultas,
         'paciente': paciente,
     })
 
+@login_required
 @csrf_exempt
 def NuevaConsulta(request, paciente_id):
     
@@ -48,6 +52,7 @@ def NuevaConsulta(request, paciente_id):
     return render(request, 'Vistas_Consulta/NuevaConsulta.html', {'paciente': paciente})
            
 
+@login_required
 @csrf_exempt
 def DetallesConsulta(request, paciente_id, consulta_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
