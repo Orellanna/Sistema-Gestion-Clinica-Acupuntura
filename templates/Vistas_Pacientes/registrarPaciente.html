@@ -1,20 +1,27 @@
 {% extends 'index_master.html' %}
 
 {% block content %}
-<div class="ml-6">
-  <h1>Nuevo Paciente</h1>
-</div>
+
 <div class="container my-4">
+    <div class="container-fluid">
+        <form>
+        <div class="row">
+            <h2>Registrar Paciente</h2>
+        </form>
+        </div>
+    </div>
+    
   <div class="row">
       <div class="col-md-6">
-          <div class="card card-primary">
+        
+          <div class="card card-secondary">
               <div class="card-header">
                   <h3 class="card-title">Información Personal</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
               <form role="form">
-                  <div class="card-body">
+                  <div class="card-body ">
                       <div class="form-group">
                           <label for="inputNombre">Nombre</label>
                           <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre">
@@ -24,8 +31,12 @@
                           <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos">
                       </div>
                       <div class="form-group">
-                          <label for="inputEdad">Edad</label>
-                          <input type="number" class="form-control" id="inputEdad" placeholder="Ingrese su edad">
+                        <label for="fechanacimiento" class="sm-4 col-form-label">Fecha de Nacimiento:</label>
+                            <input
+                              type="date"
+                              class="limpiarinput"
+                              id="nacimiento_fecha"
+                              name="nacimiento_fecha"/>
                       </div>
                       <div class="form-group">
                           <label for="selectSexo">Sexo</label>
@@ -43,7 +54,7 @@
           <!-- /.card -->
       </div>
       <div class="col-md-6">
-          <div class="card card-primary">
+          <div class="card card-secondary">
               <div class="card-header">
                   <h3 class="card-title">Información de Contacto</h3>
               </div>
