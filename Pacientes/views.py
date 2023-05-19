@@ -12,20 +12,13 @@ def GestionPacientes(request):
 
 @login_required
 def DetallesConsulta(request):
-<<<<<<< HEAD
     return render(request,'DetallesConsulta.html')
 
-def DatosPersonales(request):
-    return render(request,'DatosPersonales.html')
-#Borrar lo de abajo antes de subir cambio - Kevin
-=======
-    return render(request,'Vistas_Pacientes/DetallesConsulta.html')
-
+@login_required
 def DatosPersonales(request):
     return render(request,'Vistas_Pacientes/DatosPersonales.html')
 
 @login_required
->>>>>>> main
 def Registrar(request):
     return render(request,'Vistas_Pacientes/RegistrarPaciente.html')
     
