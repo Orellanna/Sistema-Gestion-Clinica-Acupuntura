@@ -1,0 +1,397 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestion Clinica Acupuntura</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+   <!-- DataTables -->
+   <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+   <link rel="stylesheet" href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+   <link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'css/adminlte.min.css' %}">
+</head>
+
+<style>
+  /* Estilos para la ventana emergente de confirmación de logout */
+.logout-dialog {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+}
+
+.logout-dialog-content {
+  text-align: center;
+}
+
+.logout-dialog h3 {
+  margin-top: 0;
+}
+
+.logout-dialog-buttons {
+  margin-top: 20px;
+}
+
+/* Estilos adicionales para el enlace de logout */
+.logout-link {
+  transition: opacity 0.3s;
+}
+
+.logout-link:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.nav-link {
+    position: relative;
+  }
+  
+  .nav-link .bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+  }
+  
+  .nav-link.active .bar {
+    background-color: #36A2EB;
+  }
+
+</style>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+  <!-- Site wrapper -->
+  <div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+  
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="{%url 'index'%}" class="brand-link">
+        <img src="{% static 'img/logo.jpg' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">LOGO</span>
+      </a>
+  
+      <!-- Sidebar -->
+      <div class="sidebar">
+        
+        <!-- Sidebar user (optional) -->
+        <div id="user-panel-content" class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="{% static 'img/user4-128x128.jpg' %}" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="#" class="d-block">{{ user.first_name }}</a>
+
+            <a href="" class="logout-link" style="opacity: 0; pointer-events: none;">Cerrar Sesion</a>
+          </div>
+        </div>
+        
+        <!-- Ventana emergente de confirmación de logout -->
+        <div id="logout-dialog" class="logout-dialog">
+          <div class="logout-dialog-content">
+            <h3>¿Estás seguro de que deseas cerrar sesión?</h3>
+            <div class="logout-dialog-buttons">
+              <button id="logout-confirm" class="btn btn-danger">Confirmar</button>
+              <button id="logout-cancel" class="btn btn-secondary">Cancelar</button>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+              <li class="nav-item">
+                  <a href="{%url 'index'%}" class="nav-link">
+                    <i class="nav-icon fas fa-home "></i>
+                    <p>
+                    Inicio
+                    </p>
+                  </a>  
+              </li>
+              <li class="nav-item">
+                <a href="{%url 'GestionPacientes'%}" class="nav-link">
+                <i class="nav-icon fas fa-users "></i>
+                <p>
+                  Pacientes
+                </p>
+              </a>  
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link">
+                <i class="nav-icon fas fa-calendar-plus"></i>
+                <p>
+                  Citas
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link">
+                <i class="nav-icon fas fa-medkit"></i>
+                <p>
+                  Inventario
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-chart-pie"></i>
+                <p>
+                  Reportes Estadisticos
+                </p>
+              </a>
+            </li>          
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+  
+      <div class="sidebar-custom">
+        
+        <a href="" class="btn btn-secondary hide-on-collapse pos-left"> <i class="nav-icon fas fa-bars"></i> Administracion </a>
+      </div>
+      <!-- /.sidebar-custom -->
+    </aside>
+    
+    
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+             
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+      
+        <!-- Main content -->
+             
+        <section class="content">
+            <div class="container-fluid">
+              <div class="container">
+                <div class="card bg-light rounded">
+                  <div class="card-body text-center">
+                    <div class="row align-items-center">
+                      <div class="col-12">
+                        <h2 class="mb-0" style="font-size: 24px;">{{ paciente.id_paciente }}</h2>
+                        <h4 class="text-truncate" style="font-size: 18px;">{{ paciente.primer_nombre }} {{ paciente.primer_apellido }}</h4>
+                        <hr class="my-2">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="content">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-3 text-center">
+                  <a href="#" class="nav-link" id="perfil-link" onclick="highlightIcon('perfil-link')">
+                    <i class="fas fa-user fa-2x" style="color: #422722;"></i>
+                    <p class="mt-2" style="color: #422722; font-weight: bold;">Perfil</p>
+                    <div class="bar"></div>
+                  </a>
+                </div>
+                <div class="col-3 text-center">
+                  <a href="#" class="nav-link" id="consultas-link" onclick="highlightIcon('consultas-link')">
+                    <i class="fas fa-stethoscope fa-2x" style="color: #36A2EB;"></i>
+                    <p class="mt-2" style="color: #36A2EB; font-weight: bold;">Consultas</p>
+                    <div class="bar"></div>
+                  </a>
+                </div>
+                <div class="col-3 text-center">
+                  <a href="#" class="nav-link" id="terapia-link" onclick="highlightIcon('terapia-link')">
+                    <i class="fas fa-heart fa-2x" style="color: #FF0000;"></i>
+                    <p class="mt-2" style="color: #FF0000; font-weight: bold;">Terapia</p>
+                    <div class="bar"></div>
+                  </a>
+                </div>
+                <div class="col-3 text-center">
+                  <a href="#" class="nav-link" id="pagos-link" onclick="highlightIcon('pagos-link')">
+                    <i class="fas fa-hand-holding-usd fa-2x" style="color: #00BB2D;"></i>
+                    <p class="mt-2" style="color: #00BB2D; font-weight: bold;">Pagos</p>
+                    <div class="bar"></div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+            
+            </div>
+            <!-- /.container-fluid -->
+        </section>
+
+        {% block content %} 
+
+
+
+
+
+
+
+
+        {% endblock %}
+
+
+        <!-- /Main End -->
+                
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                
+                </div>
+                <!-- /.card-footer-->
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- /.content -->
+      
+    </div>
+    <!-- /.content-wrapper -->
+  
+    <footer class="main-footer text-center">
+      <div class="float-right d-none d-sm-block ">
+      
+      </div>
+      <strong>Copyright &copy; ICS 2023.</strong> All rights reserved.
+    </footer>
+  
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js'%}"></script>
+<!-- DataTables  & Plugins -->
+<script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'plugins/jszip/jszip.min.js' %}"></script>
+<script src="{% static 'plugins/pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static 'plugins/pdfmake/vfs_fonts.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js'%}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'js/adminlte.min.js'%}"></script>
+
+<!-- Page specific script -->
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+// Obtén el elemento del panel de usuario y el enlace de logout
+var userPanelContent = document.getElementById('user-panel-content');
+var logoutLink = document.querySelector('.logout-link');
+
+// Obtén los elementos de la ventana emergente
+var logoutDialog = document.getElementById('logout-dialog');
+var logoutConfirmButton = document.getElementById('logout-confirm');
+var logoutCancelButton = document.getElementById('logout-cancel');
+
+// Agrega un evento de mouseover al panel de usuario
+userPanelContent.addEventListener('mouseover', function() {
+  // Muestra el enlace de logout
+  logoutLink.style.display = 'inline';
+  logoutLink.style.opacity = '1';
+  logoutLink.style.pointerEvents = 'auto';
+});
+
+// Agrega un evento de mouseout al panel de usuario
+userPanelContent.addEventListener('mouseout', function() {
+  // Oculta el enlace de logout
+  logoutLink.style.display = 'none';
+});
+
+// Agrega un evento de clic al enlace de logout
+logoutLink.addEventListener('click', function(event) {
+  // Detiene el comportamiento predeterminado del enlace
+  event.preventDefault();
+
+  // Muestra la ventana emergente de confirmación de logout
+  logoutDialog.style.display = 'block';
+});
+
+
+// Agrega un evento de clic al botón de cancelar
+logoutCancelButton.addEventListener('click', function() {
+  // Oculta la ventana emergente de confirmación de logout
+  logoutDialog.style.display = 'none';
+});
+
+function highlightIcon(id) {
+    const icons = document.getElementsByClassName('nav-link');
+    for (let i = 0; i < icons.length; i++) {
+      icons[i].classList.remove('active');
+    }
+    document.getElementById(id).classList.add('active');
+  }
+
+ </script>
+</body>
+</html>

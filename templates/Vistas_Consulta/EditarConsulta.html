@@ -1,80 +1,4 @@
-{% extends 'index_master.html' %} {% block content %}
-
-<style>
-  .nav-link {
-    position: relative;
-  }
-  
-  .nav-link .bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background-color: transparent;
-    transition: background-color 0.3s ease;
-  }
-  
-  .nav-link.active .bar {
-    background-color: #36A2EB;
-  }
-</style>
-
-<section class="content">
-  <div class="container-fluid">
-    <div class="container">
-      <div class="card bg-light rounded">
-        <div class="card-body text-center">
-          <div class="row align-items-center">
-            <div class="col-12">
-              <h2 class="mb-0" style="font-size: 24px;">{{ paciente.id_paciente }}</h2>
-              <h4 class="text-truncate" style="font-size: 18px;">{{ paciente.primer_nombre }} {{ paciente.primer_apellido }}</h4>
-              <hr class="my-2">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-&nbsp; &nbsp;
-<section class="content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-3 text-center">
-        <a href="#" class="nav-link" id="perfil-link" onclick="highlightIcon('perfil-link')">
-          <i class="fas fa-user fa-2x" style="color: #422722;"></i>
-          <p class="mt-2" style="color: #422722; font-weight: bold;">Perfil</p>
-          <div class="bar"></div>
-        </a>
-      </div>
-      <div class="col-3 text-center">
-        <a href="#" class="nav-link" id="consultas-link" onclick="highlightIcon('consultas-link')">
-          <i class="fas fa-stethoscope fa-2x" style="color: #36A2EB;"></i>
-          <p class="mt-2" style="color: #36A2EB; font-weight: bold;">Consultas</p>
-          <div class="bar"></div>
-        </a>
-      </div>
-      <div class="col-3 text-center">
-        <a href="#" class="nav-link" id="terapia-link" onclick="highlightIcon('terapia-link')">
-          <i class="fas fa-heart fa-2x" style="color: #FF0000;"></i>
-          <p class="mt-2" style="color: #FF0000; font-weight: bold;">Terapia</p>
-          <div class="bar"></div>
-        </a>
-      </div>
-      <div class="col-3 text-center">
-        <a href="#" class="nav-link" id="pagos-link" onclick="highlightIcon('pagos-link')">
-          <i class="fas fa-hand-holding-usd fa-2x" style="color: #00BB2D;"></i>
-          <p class="mt-2" style="color: #00BB2D; font-weight: bold;">Pagos</p>
-          <div class="bar"></div>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
+{% extends 'base_pacientes.html' %} {% block content %}
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -167,24 +91,6 @@
                   </div>
                 </div>
               </div>
-              {% comment %}
-              <div class="row">
-                <div class="col">
-                  <div class="form-group row">
-                    <label for="finalizada" class="col-sm-2 col-form-label"
-                      >Estado:
-                    </label>
-                    <div class="col-sm-10">
-                      <input
-                        type="checkbox"
-                        name="finalizada"
-                        id="finalizada"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {% endcomment %}
             </div>
             <!-- /.card-body -->
             <div class="card-footer"></div>
@@ -222,7 +128,6 @@
     <!-- /.container-fluid -->
   </section>
 </form>
-
 <script>
   // Eliminar espacios en blanco al cargar la página
   window.addEventListener('DOMContentLoaded', function() {
@@ -230,15 +135,5 @@
     textarea.value = textarea.value.trim();
   });
 
-    function highlightIcon(id) {
-    const icons = document.getElementsByClassName('nav-link');
-    for (let i = 0; i < icons.length; i++) {
-      icons[i].classList.remove('active');
-    }
-    document.getElementById(id).classList.add('active');
-  }
-  
-
 </script>
-
 {% endblock %}
