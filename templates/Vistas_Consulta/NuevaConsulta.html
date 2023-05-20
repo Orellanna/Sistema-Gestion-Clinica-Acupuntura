@@ -46,14 +46,14 @@
     <div class="row">
       <div class="col-3 text-center">
         <a href="#" class="nav-link" id="perfil-link" onclick="highlightIcon('perfil-link')">
-          <i class="fas fa-user fa-1x" style="color: #422722;"></i>
+          <i class="fas fa-user fa-2x" style="color: #422722;"></i>
           <p class="mt-2" style="color: #422722; font-weight: bold;">Perfil</p>
           <div class="bar"></div>
         </a>
       </div>
       <div class="col-3 text-center">
         <a href="#" class="nav-link" id="consultas-link" onclick="highlightIcon('consultas-link')">
-          <i class="fas fa-stethoscope fa-1x" style="color: #36A2EB;"></i>
+          <i class="fas fa-stethoscope fa-2x" style="color: #36A2EB;"></i>
           <p class="mt-2" style="color: #36A2EB; font-weight: bold;">Consultas</p>
           <div class="bar"></div>
         </a>
@@ -72,23 +72,6 @@
           <div class="bar"></div>
         </a>
       </div>
-    </div>
-  </div>
-</section>
-
-<section class="content">
-  <div class="container-fluid">
-    <div class="container">
-      <table class="table table-sm table-secondary">
-        <thead>
-          <tr>
-            <th scope="col"></th>
-            <th class="bg-primary" scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-      </table>
     </div>
   </div>
 </section>
@@ -203,7 +186,7 @@
             type="submit"
             name="submit"
             class="btn btn-success float-right">
-            <i class="fa fa-thumbs-up"></i>&nbsp; Guardar Consulta
+            <i class="fa fa-save"></i>&nbsp; Guardar Consulta
           </button>
         </div>
 
@@ -214,10 +197,21 @@
 </form>
 
 <script>
-  document.getElementsByClassName("limpiarinput")[0].value = "";
+  // Eliminar espacios en blanco al cargar la página
+  window.addEventListener('DOMContentLoaded', function() {
+    var textarea = document.getElementById('observacion_consulta');
+    textarea.value = textarea.value.trim();
+  });
+
+    function highlightIcon(id) {
+      const icons = document.getElementsByClassName('nav-link');
+      for (let i = 0; i < icons.length; i++) {
+        icons[i].classList.remove('active');
+      }
+      document.getElementById(id).classList.add('active');
+    }
+  
+
 </script>
-<script>
-  document.getElementById("motivo").value = "";
-  document.getElementById("observacion").value = "";
-</script>
+
 {% endblock %}

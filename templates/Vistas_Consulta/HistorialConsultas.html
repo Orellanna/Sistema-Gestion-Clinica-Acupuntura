@@ -48,14 +48,14 @@
     <div class="row">
       <div class="col-3 text-center">
         <a href="#" class="nav-link" id="perfil-link" onclick="highlightIcon('perfil-link')">
-          <i class="fas fa-user fa-1x" style="color: #422722;"></i>
+          <i class="fas fa-user fa-2x" style="color: #422722;"></i>
           <p class="mt-2" style="color: #422722; font-weight: bold;">Perfil</p>
           <div class="bar"></div>
         </a>
       </div>
       <div class="col-3 text-center">
         <a href="#" class="nav-link" id="consultas-link" onclick="highlightIcon('consultas-link')">
-          <i class="fas fa-stethoscope fa-1x" style="color: #36A2EB;"></i>
+          <i class="fas fa-stethoscope fa-2x" style="color: #36A2EB;"></i>
           <p class="mt-2" style="color: #36A2EB; font-weight: bold;">Consultas</p>
           <div class="bar"></div>
         </a>
@@ -84,22 +84,21 @@
 
     <!-- Content Header (Page header) -->
     
+    <section class="content-header">  
       <div class="container-fluid">
-        <form>
-          <div class="row">
-              <div class="col-md-1"></div>
-            <div class="col-8">
-              <h2>Historial de Consultas</h2>
-            </div>
-            <div class="col">
-              
-              <a href="{% url 'NuevaConsulta' paciente_id=paciente.id_paciente %}" class="btn btn-success"><i class="nav-icon fas fa-user"></i>&nbsp;&nbsp;Nueva Consulta</a>
-              <div class="row"> <div class="card"></div></div>
-            </div>
+        <div class="row mb-2 justify-content-between">
+          <div class="col-sm-6">
+            <h2>Historial de Consultas</h2>
           </div>
-      </form>
-      </div><!-- /.container-fluid -->
-      <div class="row"> <div class="card"></div></div>
+          <div class="col-sm-6">
+            <a href="{% url 'NuevaConsulta' paciente_id=paciente.id_paciente %}" class="btn btn-success ml-auto float-right"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Nueva Consulta</a>
+          </div>
+        </div>
+      </div>
+      
+      
+
+      
 
     <!-- Main content -->
     <section class="content">

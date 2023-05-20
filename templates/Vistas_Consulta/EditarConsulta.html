@@ -45,14 +45,14 @@
     <div class="row">
       <div class="col-3 text-center">
         <a href="#" class="nav-link" id="perfil-link" onclick="highlightIcon('perfil-link')">
-          <i class="fas fa-user fa-1x" style="color: #422722;"></i>
+          <i class="fas fa-user fa-2x" style="color: #422722;"></i>
           <p class="mt-2" style="color: #422722; font-weight: bold;">Perfil</p>
           <div class="bar"></div>
         </a>
       </div>
       <div class="col-3 text-center">
         <a href="#" class="nav-link" id="consultas-link" onclick="highlightIcon('consultas-link')">
-          <i class="fas fa-stethoscope fa-1x" style="color: #36A2EB;"></i>
+          <i class="fas fa-stethoscope fa-2x" style="color: #36A2EB;"></i>
           <p class="mt-2" style="color: #36A2EB; font-weight: bold;">Consultas</p>
           <div class="bar"></div>
         </a>
@@ -231,12 +231,12 @@
   });
 
     function highlightIcon(id) {
-      const icons = document.getElementsByClassName('nav-link');
-      for (let i = 0; i < icons.length; i++) {
-        icons[i].classList.remove('active');
-      }
-      document.getElementById(id).classList.add('active');
+    const icons = document.getElementsByClassName('nav-link');
+    for (let i = 0; i < icons.length; i++) {
+      icons[i].classList.remove('active');
     }
+    document.getElementById(id).classList.add('active');
+  }
   
 
 </script>
