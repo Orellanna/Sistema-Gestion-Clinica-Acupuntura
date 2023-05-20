@@ -33,6 +33,9 @@ def Login(request):
         
     return render(request,'Cuentas/login.html')
 
+def Registro(request):
+    return render(request,'Cuentas/Registro.html')
+
 
 
 
