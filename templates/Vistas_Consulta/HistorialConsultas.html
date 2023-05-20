@@ -2,65 +2,82 @@
 
 {% block content %} 
 
+<style>
+  .nav-link {
+    position: relative;
+  }
+  
+  .nav-link .bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+  }
+  
+  .nav-link.active .bar {
+    background-color: #36A2EB;
+  }
+</style>
+
+<!-- Main content -->
 <!-- Main content -->
 <section class="content">
-    <div class="container-fluid">
-        <div class="container">
-            <div class="card">
-                <div class="card-body">
-            <div class="row ">
-                <div class="col-5 text-right">
-                    <i class="fas fa-user"></i>
-                  </div>
-                  <div class="text-center text-truncate">
-                    {{paciente.id_paciente}} - {{paciente.primer_nombre}}
-                    {{paciente.primer_apellido}}
-                  </div>
+  <div class="container-fluid">
+    <div class="container">
+      <div class="card bg-light rounded">
+        <div class="card-body text-center">
+          <div class="row align-items-center">
+            <div class="col-12">
+              <h2 class="mb-0" style="font-size: 24px;">{{ paciente.id_paciente }}</h2>
+              <h4 class="text-truncate" style="font-size: 18px;">{{ paciente.primer_nombre }} {{ paciente.primer_apellido }}</h4>
+              <hr class="my-2">
             </div>
+          </div>
         </div>
+      </div>
     </div>
-        </div>
-    </div>
+  </div>
 </section>
 
 &nbsp; &nbsp; 
 <section class="content">
-    <div class="container-fluid">
-        <div class="container">
-<div class="row ">
-    <div class="col text-center">
-        <i class="fas fa-user"> </i>&nbsp;&nbsp; Datos Personales
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-3 text-center">
+        <a href="#" class="nav-link" id="perfil-link" onclick="highlightIcon('perfil-link')">
+          <i class="fas fa-user fa-1x" style="color: #422722;"></i>
+          <p class="mt-2" style="color: #422722; font-weight: bold;">Perfil</p>
+          <div class="bar"></div>
+        </a>
       </div>
-  <div class="col text-center">
-    <i class="fas fa-stethoscope"></i>&nbsp;&nbsp; Consultas
-  </div>
-  <div class="col text-center">
-    <i class="fas fa-plus-square"></i>&nbsp;&nbsp; Inspeccion
-  </div>
-  <div class="col text-center">
-    <i class="fas fa-first-aid"></i>&nbsp;&nbsp; Pagos
+      <div class="col-3 text-center">
+        <a href="#" class="nav-link" id="consultas-link" onclick="highlightIcon('consultas-link')">
+          <i class="fas fa-stethoscope fa-1x" style="color: #36A2EB;"></i>
+          <p class="mt-2" style="color: #36A2EB; font-weight: bold;">Consultas</p>
+          <div class="bar"></div>
+        </a>
       </div>
-</div>
-</div>
-</div>
-</section>
-<section class="content">
-    <div class="container-fluid">
-        <div class="container">
-            <table class="table table-sm table-secondary">
-                <thead>
-                  <tr>
-                    <th scope="col"></th>
-                    <th class="bg-primary" scope="col"></th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-              </table>
-       
-        </div>
+      <div class="col-3 text-center">
+        <a href="#" class="nav-link" id="terapia-link" onclick="highlightIcon('terapia-link')">
+          <i class="fas fa-heart fa-2x" style="color: #FF0000;"></i>
+          <p class="mt-2" style="color: #FF0000; font-weight: bold;">Terapia</p>
+          <div class="bar"></div>
+        </a>
+      </div>
+      <div class="col-3 text-center">
+        <a href="#" class="nav-link" id="pagos-link" onclick="highlightIcon('pagos-link')">
+          <i class="fas fa-hand-holding-usd fa-2x" style="color: #00BB2D;"></i>
+          <p class="mt-2" style="color: #00BB2D; font-weight: bold;">Pagos</p>
+          <div class="bar"></div>
+        </a>
+      </div>
     </div>
+  </div>
 </section>
+
 &nbsp;&nbsp;
 
 <!-- Content Wrapper. Contains page content -->
@@ -69,18 +86,18 @@
     
       <div class="container-fluid">
         <form>
-        <div class="row">
-            <div class="col-md-1"></div>
-          <div class="col-8">
-            <h2>Historial de Consultas</h2>
+          <div class="row">
+              <div class="col-md-1"></div>
+            <div class="col-8">
+              <h2>Historial de Consultas</h2>
+            </div>
+            <div class="col">
+              
+              <a href="{% url 'NuevaConsulta' paciente_id=paciente.id_paciente %}" class="btn btn-success"><i class="nav-icon fas fa-user"></i>&nbsp;&nbsp;Nueva Consulta</a>
+              <div class="row"> <div class="card"></div></div>
+            </div>
           </div>
-          <div class="col">
-            
-            <a href="{% url 'NuevaConsulta' paciente_id=paciente.id_paciente %}" class="btn btn-success"><i class="nav-icon fas fa-user"></i>&nbsp;&nbsp;Nueva Consulta</a>
-            <div class="row"> <div class="card"></div></div>
-          </div>
-        </div>
-    </form>
+      </form>
       </div><!-- /.container-fluid -->
       <div class="row"> <div class="card"></div></div>
 
@@ -109,10 +126,15 @@
                       <td>{{consulta.id_consulta}}</td>
                       <td>{{consulta.motivo_consulta}}</td>
                       <td>{{consulta.consulta_fecha}}</td>
-                      <td>
-                        <a href="#" class="ver-consulta" data-consulta-id="{{consulta.id_consulta}}" data-paciente-id = "{{paciente.id_paciente}}">
-                        <i class="nav-icon fas fa-eye"></i>
-                        </a>
+                      <td class="text-center">
+                        <div class="d-inline-flex flex-row align-items-center">
+                          <a href="#" class="ver-consulta mr-5" data-consulta-id="{{consulta.id_consulta}}" data-paciente-id="{{paciente.id_paciente}}">
+                            <i class="nav-icon fas fa-eye"></i>
+                          </a>
+                          <a href="{% url 'EliminarConsulta' paciente_id=paciente.id_paciente consulta_id=consulta.id_consulta %}" class="eliminar-consulta" data-consulta-id="{{consulta.id_consulta}}" data-paciente-id="{{paciente.id_paciente}}">
+                            <i class="nav-icon fas fa-trash"></i>
+                          </a>
+                        </div>
                       </td>
                     </tr>
                     {% endfor %}
@@ -146,6 +168,15 @@
         });
       });
     });
+
+    function highlightIcon(id) {
+      const icons = document.getElementsByClassName('nav-link');
+      for (let i = 0; i < icons.length; i++) {
+        icons[i].classList.remove('active');
+      }
+      document.getElementById(id).classList.add('active');
+    }
+
   </script>
   
 {% endblock %}

@@ -65,3 +65,45 @@ def DetallesConsulta(request, paciente_id, consulta_id):
         'paciente': paciente,
         'fecha_consulta_str': fecha_consulta_str,
     })
+
+@login_required
+@csrf_exempt
+def EditarConsulta(request, paciente_id, consulta_id):
+    paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
+    consulta = get_object_or_404(Consulta, id_consulta=consulta_id, id_paciente=paciente)
+    
+    if request.method == 'POST':
+        
+        # Obtenemos los datos del formulario
+        fecha_consulta = request.POST['consulta_fecha']
+        motivo_consulta = request.POST['motivo_consulta']
+        observacion_consulta = request.POST['observacion_consulta']
+        hora_consulta = request.POST['hora_consulta']
+        
+        # Actualizamos los campos de la consulta existente
+        consulta.consulta_fecha = fecha_consulta
+        consulta.motivo_consulta = motivo_consulta
+        consulta.observacion_consulta = observacion_consulta
+        consulta.hora_consulta = hora_consulta
+        consulta.save()
+        
+        # Generamos la URL correcta usando reverse
+        url = reverse('DetallesConsulta', kwargs={'paciente_id': paciente_id, 'consulta_id': consulta_id})
+        
+        # Redirigimos al usuario a la URL correcta
+        return redirect(url)
+    
+    return render(request, 'Vistas_Consulta/EditarConsulta.html', {'paciente': paciente, 'consulta': consulta})
+
+@login_required
+@csrf_exempt
+def EliminarConsulta(request, paciente_id, consulta_id):
+    paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
+    consulta = get_object_or_404(Consulta, id_consulta=consulta_id, id_paciente=paciente)
+
+    if request.method == 'POST':
+        consulta.delete()
+        # Redirigir al usuario a la página de lista de consultas o cualquier otra página que desees mostrar después de eliminar la consulta
+        return redirect('ListarConsultas', paciente_id=paciente_id)
+    
+    return render(request, 'Vistas_Consulta/EliminarConsulta.html', {'paciente': paciente, 'consulta': consulta})

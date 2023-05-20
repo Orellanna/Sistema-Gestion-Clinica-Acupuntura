@@ -6,11 +6,9 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-<<<<<<< HEAD
-=======
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
->>>>>>> main
 
 @login_required
 def HomePage(request):
@@ -30,13 +28,9 @@ def Login(request):
             login(request,user)
             return redirect('index')
         else:
-<<<<<<< HEAD
-            return HttpResponse('Usuario o contraseña incorrectos')
-        
-=======
             messages.error(request, 'Usuario o contraseña incorrectos')
             return redirect('index')
->>>>>>> main
+        
     return render(request,'Cuentas/login.html')
 
 
