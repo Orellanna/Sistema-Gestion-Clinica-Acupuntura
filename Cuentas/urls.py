@@ -9,4 +9,5 @@ urlpatterns = [
     #urls de acceso
     path('home/', HomePage, name='home'),
     path('login/', Login, name='login-page'),
+    path('Registro/', views.Registro,name='Registro'),
 ]
