@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404,redirect
 from Pacientes.models import Consulta, Paciente
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, GestionPacientes
 from django.urls import reverse
 
 
@@ -14,7 +14,7 @@ def index(request):
 @login_required
 def GestionPacientes(request):
 
-    paciente = Paciente.objects.all()
+    pacientes = Paciente.objects.all().values()
 
     return render(request,'Vistas_Pacientes/GestionPacientes.html')
 
