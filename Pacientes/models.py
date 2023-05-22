@@ -12,6 +12,18 @@ class Paciente(models.Model):
     telefono_paciente = models.CharField(max_length=8, blank=True, null=True)
     email_paciente = models.CharField(max_length=50, blank=True, null=True)
 
+
+    def save(self, *args, **kwargs):
+                if not self.id_paciente:  
+                    nombre_paciente = self.id_paciente.primer_nombre
+                    apellido_paciente = self.id_paciente.primer_apellido
+                    id_paciente = (nombre_paciente[0] + apellido_paciente[0]).upper()
+                            # Obtener el número de consultas previas para ese paciente
+                    pacientes_previos = Paciente.objects.filter(id_paciente=self.id_paciente).count()
+                    numero_paciente = pacientes_previos + 1
+                            # Crear el ID del paciente en el formato requerido
+                    self.id_paciente = f'{id_paciente}C{numero_paciente:02}'
+                super().save(*args, **kwargs)
     def __str__(self):
         return self.primer_nombre + ' ' + self.primer_apellido
     class Meta:
