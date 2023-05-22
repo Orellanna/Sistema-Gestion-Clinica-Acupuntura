@@ -1,122 +1,60 @@
-{% extends 'index_master.html' %} {% block content %}
+{% extends 'base_pacientes.html' %} 
 
-<!-- Main content -->
-<section class="content">
-  <div class="container-fluid">
-    <div class="container">
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-5 text-right">
-              <i class="fas fa-user"></i>
-            </div>
-            <div class="text-center text-truncate">
-              {{paciente.id_paciente}} - {{paciente.primer_nombre}}
-              {{paciente.primer_apellido}}
-            </div>
-            <div class="col-2 text-center"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-&nbsp; &nbsp;
-<section class="content">
-  <div class="container-fluid">
-    <div class="container">
-      <div class="row">
-        <div class="col text-center">
-          <i class="fas fa-user"> </i>&nbsp;&nbsp; Datos Personales
-        </div>
-        <div class="col text-center">
-          <i class="fas fa-stethoscope"></i>&nbsp;&nbsp; Consultas
-        </div>
-        <div class="col text-center">
-          <i class="fas fa-plus-square"></i>&nbsp;&nbsp; Inspeccion
-        </div>
-        <div class="col text-center">
-          <i class="fas fa-first-aid"></i>&nbsp;&nbsp; Pagos
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="content">
-  <div class="container-fluid">
-    <div class="container">
-      <table class="table table-sm table-secondary">
-        <thead>
-          <tr>
-            <th scope="col"></th>
-            <th class="bg-primary" scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- Content Header (Page header) -->
-<section class="content-header">
-  <div class="container-fluid">
-    <div class="row mb-2">
-      <div class="col-sm-6">
-        <h1>Detalles de Consulta</h1>
-      </div>
-    </div>
-  </div>
-  <!-- /.container-fluid -->
-</section>
-
+{% block content %}
+  
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
-        <!-- Default box -->
         <div class="card">
           <div class="card-body">
-            <div class="row">
-              <div class="col">
-                <p>ID: {{consulta.id_consulta}}</p>
-              </div>
+            <div class="text-center mb-4">
+              <h4 class="text-primary">Detalles de la Consulta</h4>
+              <hr>
             </div>
             <div class="row">
-              <div class="col">
-                <p>Fecha de cita: {{ fecha_consulta_str }}</p>
+              <div class="col-4">
+                <div class="text-center">
+                  <h6 class="text-secondary">ID de la Consulta</h6>
+                  <p class="font-weight-bold">{{consulta.id_consulta}}</p>
+                </div>
               </div>
-              <div class="col">
-                <p>Hora de inicio: {{consulta.hora_consulta}}</p>
+              <div class="col-4">
+                <div class="text-center">
+                  <h6 class="text-secondary">Fecha de Cita</h6>
+                  <p>{{ fecha_consulta_str }}</p>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="text-center">
+                  <h6 class="text-secondary">Hora de Inicio</h6>
+                  <p>{{consulta.hora_consulta}}</p>
+                </div>
               </div>
             </div>
-            <div class="row">
+            <div class="row mt-4">
               <div class="col">
-                <p>Motivo: {{consulta.motivo_consulta}}</p>
+                <div class="text-center">
+                  <h6 class="text-secondary">Motivo de la Consulta</h6>
+                  <p class="font-weight-bold">{{consulta.motivo_consulta}}</p>
+                </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-2">
-                <p>Observaciones:</p>
-              </div>
+            <div class="row mt-4">
               <div class="col">
-                <div class="list-group">
-                  <a
-                    class="list-group-item list-group-item-action flex-column align-items-start"
-                  >
-                    <p class="mb-1">{{consulta.observacion_consulta}}</p>
-                  </a>
+                <div class="text-center">
+                  <h6 class="text-secondary">Observaciones</h6>
+                  <div class="list-group">
+                    <a class="list-group-item list-group-item-action flex-column align-items-start">
+                      <p class="mb-1">{{consulta.observacion_consulta}}</p>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <!-- /.card-body -->
-          <div class="card-footer"></div>
-          <!-- /.card-footer-->
         </div>
-        <!-- /.card -->
       </div>
     </div>
   </div>
@@ -130,12 +68,19 @@
         <a
           href="{% url 'ListarConsultas' paciente_id=paciente.id_paciente %}"
           class="btn btn-primary"
-          ><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a
-        >
+          ><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a>
       </div>
+
+      <div class="col-sm-6">
+        <a href="{% url 'EditarConsulta' paciente_id=paciente.id_paciente consulta_id=consulta.id_consulta %}" 
+        class="btn btn-success float-right"><i 
+        class="nav-icon fas fa-pen"></i>&nbsp;&nbsp;Editar Consulta</a>
+      </div>
+      
     </div>
   </div>
   <!-- /.container-fluid -->
 </section>
+
 
 {% endblock %}

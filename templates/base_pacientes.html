@@ -56,6 +56,25 @@
   opacity: 1;
   cursor: pointer;
 }
+
+.nav-link {
+    position: relative;
+  }
+  
+  .nav-link .bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+  }
+  
+  .nav-link.active .bar {
+    background-color: #36A2EB;
+  }
+
 </style>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -177,11 +196,84 @@
           </div>
         </div><!-- /.container-fluid -->
       </section>
-  
-                  {% block content %} 
+      
+        <!-- Main content -->
+             
+        <section class="content">
+            <div class="container-fluid">
+              <div class="container">
+                <div class="card bg-light rounded">
+                  <div class="card-body text-center">
+                    <div class="row align-items-center">
+                      <div class="col-12">
+                        <h2 class="mb-0" style="font-size: 24px;">{{ paciente.id_paciente }}</h2>
+                        <h4 class="text-truncate" style="font-size: 18px;">{{ paciente.primer_nombre }} {{ paciente.primer_apellido }}</h4>
+                        <hr class="my-2">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
 
-                  {% endblock %}
+          <section class="content">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-3 text-center">
+                  <a href="#" class="nav-link" id="perfil-link" onclick="highlightIcon('perfil-link')">
+                    <i class="fas fa-user fa-2x" style="color: #422722;"></i>
+                    <p class="mt-2" style="color: #422722; font-weight: bold;">Perfil</p>
+                    <div class="bar"></div>
+                  </a>
+                </div>
+                <div class="col-3 text-center">
+                  <a href="#" class="nav-link" id="consultas-link" onclick="highlightIcon('consultas-link')">
+                    <i class="fas fa-stethoscope fa-2x" style="color: #36A2EB;"></i>
+                    <p class="mt-2" style="color: #36A2EB; font-weight: bold;">Consultas</p>
+                    <div class="bar"></div>
+                  </a>
+                </div>
+                <div class="col-3 text-center">
+                  <a href="#" class="nav-link" id="terapia-link" onclick="highlightIcon('terapia-link')">
+                    <i class="fas fa-heart fa-2x" style="color: #FF0000;"></i>
+                    <p class="mt-2" style="color: #FF0000; font-weight: bold;">Terapia</p>
+                    <div class="bar"></div>
+                  </a>
+                </div>
+                <div class="col-3 text-center">
+                  <a href="#" class="nav-link" id="pagos-link" onclick="highlightIcon('pagos-link')">
+                    <i class="fas fa-hand-holding-usd fa-2x" style="color: #00BB2D;"></i>
+                    <p class="mt-2" style="color: #00BB2D; font-weight: bold;">Pagos</p>
+                    <div class="bar"></div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
 
+          <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+            
+            </div>
+            <!-- /.container-fluid -->
+        </section>
+
+        {% block content %} 
+
+
+
+
+
+
+
+
+        {% endblock %}
+
+
+        <!-- /Main End -->
+                
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
@@ -286,13 +378,19 @@ logoutLink.addEventListener('click', function(event) {
 });
 
 
-
 // Agrega un evento de clic al botón de cancelar
 logoutCancelButton.addEventListener('click', function() {
   // Oculta la ventana emergente de confirmación de logout
   logoutDialog.style.display = 'none';
 });
 
+function highlightIcon(id) {
+    const icons = document.getElementsByClassName('nav-link');
+    for (let i = 0; i < icons.length; i++) {
+      icons[i].classList.remove('active');
+    }
+    document.getElementById(id).classList.add('active');
+  }
 
  </script>
 </body>

@@ -1,14 +1,11 @@
-{% extends 'base_pacientes.html' %} 
-
-{% block content %}
-
+{% extends 'base_pacientes.html' %} {% block content %}
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>Nueva Consulta</h1>
+        <h1>Editar Consulta</h1>
       </div>
     </div>
   </div>
@@ -16,7 +13,8 @@
 </section>
 
 <!-- Main content -->
-<form action="{% url 'NuevaConsulta' paciente_id=paciente.id_paciente %}" method="POST">
+<form
+  action="{% url 'EditarConsulta' paciente_id=paciente.id_paciente consulta_id=consulta.id_consulta %}" method="POST">
   {% csrf_token %}
   <section class="content">
     <div class="container-fluid">
@@ -27,15 +25,21 @@
             <div class="card-body">
               <div class="row">
                 <div class="col">
+                  <p>ID: {{consulta.id_consulta}}</p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
                   <div class="form-group row">
                     <label for="fechacita" class="col-sm-4 col-form-label"
                       >Fecha de Consulta:</label>
-                    <div class="col-sm-5">
+                      <div class="col-sm-5">
                       <input
                         type="date"
-                        class="limpiarinput"
                         id="consulta_fecha"
                         name="consulta_fecha"
+                        value="{{ consulta.consulta_fecha|date:'Y-m-d' }}"
                       />
                     </div>
                   </div>
@@ -43,9 +47,14 @@
                 <div class="col">
                   <div class="form-group row">
                     <label for="horainicio" class="col-sm-4 col-form-label"
-                      >Hora de inicio:</label>
+                    >Hora de inicio:</label>
                     <div class="col-sm-5">
-                      <input type="time" class="limpiarinput" id="hora_consulta" name="hora_consulta" />
+                      <input
+                        type="time"
+                        id="hora_consulta"
+                        name="hora_consulta"
+                        value="{{ consulta.hora_consulta|time:'H:i' }}"
+                      />
                     </div>
                   </div>
                 </div>
@@ -54,10 +63,14 @@
                 <div class="col">
                   <div class="form-group row">
                     <label for="motivo" class="col-sm-2 col-form-label"
-                      >Motivo:</label
-                    >
+                      >Motivo:</label>
                     <div class="col-sm-10">
-                      <input class="form-control" id="motivo_consulta" name="motivo_consulta" />
+                      <input
+                        class="form-control"
+                        id="motivo_consulta"
+                        name="motivo_consulta"
+                        value="{{ consulta.motivo_consulta }}"
+                      />
                     </div>
                   </div>
                 </div>
@@ -66,28 +79,18 @@
                 <div class="col">
                   <div class="form-group row">
                     <label for="observacion" class="col-sm-2 col-form-label"
-                      >Observaciones:</label>
+                      >Observaciones:</label
+                    >
                     <div class="col-sm-10">
-                      <textarea
-                        class="form-control" 
-                        rows="3"
-                        name="observacion_consulta"
-                        id="observacion_consulta">
-                      </textarea>
+          
+                        <textarea class="form-control" rows="3" name="observacion_consulta" id="observacion_consulta">
+                          {{ consulta.observacion_consulta }}
+                        </textarea>
+                     
                     </div>
                   </div>
                 </div>
               </div>
-              {% comment %} <div class="row">
-                <div class="col">
-                  <div class="form-group row">
-                    <label for="finalizada" class="col-sm-2 col-form-label">Estado: </label>
-                    <div class="col-sm-10">
-                      <input type="checkbox" name="finalizada" id="finalizada" />
-                    </div>
-                  </div>
-                </div>
-              </div> {% endcomment %}
             </div>
             <!-- /.card-body -->
             <div class="card-footer"></div>
@@ -102,10 +105,13 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <div class="container-fluid">
-      <div class="row mb-2 d-flex justify-content-between" >
-
+      <div class="row mb-2 d-flex justify-content-between">
         <div class="col-sm-6">
-          <a href="{% url 'ListarConsultas' paciente_id=paciente.id_paciente %}" class="btn btn-primary float-left"><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a>
+          <a
+            href="{% url 'ListarConsultas' paciente_id=paciente.id_paciente %}"
+            class="btn btn-primary float-left"
+            ><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a
+          >
         </div>
 
         <div class="col-sm-6">
@@ -113,7 +119,7 @@
             type="submit"
             name="submit"
             class="btn btn-success float-right">
-            <i class="fa fa-thumbs-up"></i>&nbsp; Guardar Consulta
+            <i class="fa fa-thumbs-up"></i>&nbsp; Actualizar Consulta
           </button>
         </div>
 
@@ -122,10 +128,12 @@
     <!-- /.container-fluid -->
   </section>
 </form>
-
 <script>
-  document.getElementsByClassName("limpiarinput")[0].value = "";
-  document.getElementById("motivo").value = "";
-  document.getElementById("observacion").value = "";
+  // Eliminar espacios en blanco al cargar la página
+  window.addEventListener('DOMContentLoaded', function() {
+    var textarea = document.getElementById('observacion_consulta');
+    textarea.value = textarea.value.trim();
+  });
+
 </script>
 {% endblock %}

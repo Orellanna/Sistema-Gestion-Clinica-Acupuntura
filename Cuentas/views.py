@@ -7,6 +7,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required, user_passes_test
+
 @login_required
 def HomePage(request):
     contexto = {'usuario':request.user}
@@ -25,9 +28,13 @@ def Login(request):
             login(request,user)
             return redirect('index')
         else:
-            return HttpResponse('Usuario o contraseña incorrectos')
+            messages.error(request, 'Usuario o contraseña incorrectos')
+            return redirect('index')
         
     return render(request,'Cuentas/login.html')
+
+def Registro(request):
+    return render(request,'Cuentas/Registro.html')
 
 
 

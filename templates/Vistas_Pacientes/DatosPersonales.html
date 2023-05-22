@@ -1,67 +1,8 @@
-{% extends 'index_master.html' %}
+{% extends 'base_pacientes.html' %}
 
 {% block content %} 
 
 <!-- Main content -->
-<section class="content">
-    <div class="container-fluid">
-        <div class="container">
-            <div class="card">
-                <div class="card-body">
-            <div class="row ">
-                <div class="col-5 text-right">
-                    <i class="fas fa-user"></i>
-                  </div>
-              <div class="col-1 text-center">
-                01
-              </div>
-              <div class="col-2 text-center">
-          Juan Perez
-              </div>
-            </div>
-        </div>
-    </div>
-        </div>
-    </div>
-</section>
-&nbsp; &nbsp; 
-<section class="content">
-    <div class="container-fluid">
-        <div class="container">
-<div class="row ">
-    <div class="col text-center">
-        <i class="fas fa-user"> </i>&nbsp;&nbsp; Datos Personales
-      </div>
-  <div class="col text-center">
-    <i class="fas fa-stethoscope"></i>&nbsp;&nbsp; Consultas
-  </div>
-  <div class="col text-center">
-    <i class="fas fa-plus-square"></i>&nbsp;&nbsp; Inspeccion
-  </div>
-  <div class="col text-center">
-    <i class="fas fa-first-aid"></i>&nbsp;&nbsp; Pagos
-      </div>
-</div>
-</div>
-</div>
-</section>
-<section class="content">
-    <div class="container-fluid">
-        <div class="container">
-            <table class="table table-sm table-secondary">
-                <thead>
-                  <tr>
-                    <th class="bg-primary" scope="col"></th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-              </table>
-       
-        </div>
-    </div>
-</section>
 
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -102,6 +43,9 @@
                         <option>F</option>
                       </select>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col">
                     <div class="form-group col-md-6">
                       <label for="edad">Edad</label>
                       <input type="text" class="form-control" id="edad">

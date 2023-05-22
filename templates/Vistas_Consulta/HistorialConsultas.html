@@ -1,89 +1,21 @@
-{% extends 'index_master.html' %}
+{% extends 'base_pacientes.html' %}
 
 {% block content %} 
 
-<!-- Main content -->
-<section class="content">
-    <div class="container-fluid">
-        <div class="container">
-            <div class="card">
-                <div class="card-body">
-            <div class="row ">
-                <div class="col-5 text-right">
-                    <i class="fas fa-user"></i>
-                  </div>
-                  <div class="text-center text-truncate">
-                    {{paciente.id_paciente}} - {{paciente.primer_nombre}}
-                    {{paciente.primer_apellido}}
-                  </div>
-            </div>
-        </div>
-    </div>
-        </div>
-    </div>
-</section>
-
-&nbsp; &nbsp; 
-<section class="content">
-    <div class="container-fluid">
-        <div class="container">
-<div class="row ">
-    <div class="col text-center">
-        <i class="fas fa-user"> </i>&nbsp;&nbsp; Datos Personales
-      </div>
-  <div class="col text-center">
-    <i class="fas fa-stethoscope"></i>&nbsp;&nbsp; Consultas
-  </div>
-  <div class="col text-center">
-    <i class="fas fa-plus-square"></i>&nbsp;&nbsp; Inspeccion
-  </div>
-  <div class="col text-center">
-    <i class="fas fa-first-aid"></i>&nbsp;&nbsp; Pagos
-      </div>
-</div>
-</div>
-</div>
-</section>
-<section class="content">
-    <div class="container-fluid">
-        <div class="container">
-            <table class="table table-sm table-secondary">
-                <thead>
-                  <tr>
-                    <th scope="col"></th>
-                    <th class="bg-primary" scope="col"></th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-              </table>
-       
-        </div>
-    </div>
-</section>
-&nbsp;&nbsp;
-
-<!-- Content Wrapper. Contains page content -->
-
     <!-- Content Header (Page header) -->
     
+    <section class="content-header">  
       <div class="container-fluid">
-        <form>
-        <div class="row">
-            <div class="col-md-1"></div>
-          <div class="col-8">
+        <div class="row mb-2 justify-content-between">
+          <div class="col-sm-6">
             <h2>Historial de Consultas</h2>
           </div>
-          <div class="col">
-            
-            <a href="{% url 'NuevaConsulta' paciente_id=paciente.id_paciente %}" class="btn btn-success"><i class="nav-icon fas fa-user"></i>&nbsp;&nbsp;Nueva Consulta</a>
-            <div class="row"> <div class="card"></div></div>
+          <div class="col-sm-6">
+            <a href="{% url 'NuevaConsulta' paciente_id=paciente.id_paciente %}" class="btn btn-success ml-auto float-right"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Nueva Consulta</a>
           </div>
         </div>
-    </form>
-      </div><!-- /.container-fluid -->
-      <div class="row"> <div class="card"></div></div>
-
+      </div>
+      
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
@@ -109,10 +41,15 @@
                       <td>{{consulta.id_consulta}}</td>
                       <td>{{consulta.motivo_consulta}}</td>
                       <td>{{consulta.consulta_fecha}}</td>
-                      <td>
-                        <a href="#" class="ver-consulta" data-consulta-id="{{consulta.id_consulta}}" data-paciente-id = "{{paciente.id_paciente}}">
-                        <i class="nav-icon fas fa-eye"></i>
-                        </a>
+                      <td class="text-center">
+                        <div class="d-inline-flex flex-row align-items-center">
+                          <a href="#" class="ver-consulta mr-5" data-consulta-id="{{consulta.id_consulta}}" data-paciente-id="{{paciente.id_paciente}}">
+                            <i class="nav-icon fas fa-eye"></i>
+                          </a>
+                          <a href="{% url 'EliminarConsulta' paciente_id=paciente.id_paciente consulta_id=consulta.id_consulta %}" class="eliminar-consulta" data-consulta-id="{{consulta.id_consulta}}" data-paciente-id="{{paciente.id_paciente}}">
+                            <i class="nav-icon fas fa-trash"></i>
+                          </a>
+                        </div>
                       </td>
                     </tr>
                     {% endfor %}
@@ -146,6 +83,7 @@
         });
       });
     });
+
   </script>
   
 {% endblock %}
