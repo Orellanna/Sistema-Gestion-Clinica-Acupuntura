@@ -23,9 +23,18 @@ def DatosPersonales(request):
     return render(request,'Vistas_Pacientes/DatosPersonales.html')
 
 @login_required
-def Registrar(request, id_paciente, primer_nombre, segundo_nombre, primer_apellido , segundo_apellido, edad_paciente, sexo_paciente, telefono_paciente, email_paciente)
+def Registrar(request, id_paciente, primer_nombre, segundo_nombre, primer_apellido , segundo_apellido, edad_paciente, sexo_paciente, telefono_paciente, email_paciente):
 
-    paciente = get_object_or_404(Paciente, id_paciente=id_paciente)
+    Paciente = get_object_or_404(Paciente, id_paciente=id_paciente)
+    Paciente = get_object_or_404(Paciente, primer_nombre=primer_nombre)
+    Paciente = get_object_or_404(Paciente, segundo_nombre=segundo_nombre)
+    Paciente = get_object_or_404(Paciente, primer_apellido=primer_apellido)
+    Paciente = get_object_or_404(Paciente, segundo_apellido=segundo_apellido)
+    Paciente = get_object_or_404(Paciente, edad_paciente=edad_paciente)
+    Paciente = get_object_or_404(Paciente, sexo_paciente=sexo_paciente)
+    Paciente = get_object_or_404(Paciente, telefono_paciente=telefono_paciente)
+    Paciente = get_object_or_404(Paciente, email_paciente=email_paciente)
+
     
     if request.method == 'POST':
 
@@ -39,19 +48,16 @@ def Registrar(request, id_paciente, primer_nombre, segundo_nombre, primer_apelli
         email_paciente    = request.POST['InputCorreo']
  
         # Creamos la nueva consulta para el paciente
-        paciente = Paciente.objects.create(
-            
-            
-            
+        Paciente = Paciente.objects.create(
             id_paciente       = id_paciente,
-            primer_nombre     = primer_nombre
-            segundo_nombre    = segundo_nombre
-            primer_apellido   = primer_apellido
-            segundo_apellido  = segundo_apellido
-            edad_paciente     = edad_paciente 
-            sexo_paciente     = sexo_paciente
-            telefono_paciente = telefono_paciente
-            email_paciente    = email_paciente
+            primer_nombre     = primer_nombre,
+            segundo_nombre    = segundo_nombre,
+            primer_apellido   = primer_apellido,
+            segundo_apellido  = segundo_apellido,
+            edad_paciente     = edad_paciente,
+            sexo_paciente     = sexo_paciente,
+            telefono_paciente = telefono_paciente,
+            email_paciente    = email_paciente,
         )
             
      
