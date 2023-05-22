@@ -8,6 +8,9 @@ from .views import HomePage,Login
 urlpatterns = [
     #urls de acceso
     path('home/', HomePage, name='home'),
+    path('administracion/', views.Administracion, name='administracion'),
     path('login/', Login, name='login-page'),
-    path('Registro/', views.Registro,name='Registro'),
+    path('Registro/', views.NuevoUsuario, name='registroUsuario'),
+    path('GestionUsuarios/', views.GestionUsuarios, name='gestionUsuarios'),
+
 ]
