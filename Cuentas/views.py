@@ -26,6 +26,7 @@ def Administracion(request):
 def Register(request):
     pass
 def Login(request):
+  
     if request.method == 'POST':
         name = request.POST.get('user')
         password = request.POST.get('password')
@@ -42,6 +43,12 @@ def Login(request):
             return redirect('index')  # Redirige al usuario autenticado a la vista 'panel'
         else:
             return render(request, "Cuentas/login.html",{})
+        
+        
+def cierre_sesion(request):
+    logout(request)
+    return redirect('login-page')
+        
 
 @login_required
 @csrf_exempt

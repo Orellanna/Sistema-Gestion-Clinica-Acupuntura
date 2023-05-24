@@ -99,7 +99,7 @@
             <a href="#" class="d-block">{{ user.first_name }}</a>
 
 
-            <a href="" class="logout-link" style="opacity: 0; pointer-events: none;">Cerrar Sesion</a>
+            <a href="{% url 'login-page' %}" class="logout-link" style="opacity: 0; pointer-events: none;">Cerrar Sesion</a>
             
           </div>
         </div>
@@ -109,7 +109,7 @@
           <div class="logout-dialog-content">
             <h3>¿Estás seguro de que deseas cerrar sesión?</h3>
             <div class="logout-dialog-buttons">
-              <a href="{% url 'login-page' %}" class="btn btn-danger">SI</a>
+              <a href="{% url 'cerrar_sesion' %}" class="btn btn-danger">SI</a>
               
 
               <button id="logout-cancel" class="btn btn-secondary">Cancelar</button>

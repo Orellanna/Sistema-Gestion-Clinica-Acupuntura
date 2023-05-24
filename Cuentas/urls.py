@@ -7,14 +7,11 @@ from .views import HomePage,Login,logout
 
 
 urlpatterns = [
-    #urls de acceso
-    path('home/', HomePage, name='home'),
+        path('home/', HomePage, name='home'),
     path('administracion/', views.Administracion, name='administracion'),
     path('login/', Login, name='login-page'),
-    path('Registro/', views.Registro,name='Registro'),
+    path('Registro/', views.Register,name='Register'),
     path('cerrar_sesion/', views.cierre_sesion, name='cerrar_sesion'),
     path('Registro/', views.NuevoUsuario, name='registroUsuario'),
     path('GestionUsuarios/', views.GestionUsuarios, name='gestionUsuarios'),
-
-
-]
+    ]
