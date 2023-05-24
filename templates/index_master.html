@@ -73,7 +73,7 @@
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+          <a class="nav-link"  role="button"></a>
         </li>
       </ul>
     </nav>
@@ -243,7 +243,13 @@
 <script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js'%}"></script>
 <!-- AdminLTE App -->
 <script src="{% static 'js/adminlte.min.js'%}"></script>
-
+<!-- Deshabilitar la informacion de un paciente de las vistas -->
+<script>
+  function ocultarFila(boton) {
+    var fila = boton.parentNode.parentNode;
+    fila.style.display = 'none';
+  }
+</script>
 <!-- Page specific script -->
 <script>
   $(function () {
