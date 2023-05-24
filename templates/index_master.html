@@ -56,6 +56,13 @@
   opacity: 1;
   cursor: pointer;
 }
+
+.admin-btn-link {
+  font-size: 14px; /* Ajusta el tamaño de la fuente según tus necesidades */
+  letter-spacing: normal; /* Restaura el espaciado normal entre letras */
+}
+
+
 </style>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -162,8 +169,9 @@
       <!-- /.sidebar -->
   
       <div class="sidebar-custom">
-        
-        <a href="" class="btn btn-secondary hide-on-collapse pos-left"> <i class="nav-icon fas fa-bars"></i> Administracion </a>
+        <a href="{%url 'administracion' %}" class="btn btn-secondary hide-on-collapse pos-left admin-btn-link text-truncate">
+          <i class="nav-icon fas fa-bars"></i>Administracion
+        </a>
       </div>
       <!-- /.sidebar-custom -->
     </aside>

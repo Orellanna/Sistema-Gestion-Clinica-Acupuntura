@@ -1,4 +1,4 @@
-{% extends 'base_pacientes.html' %}
+{% extends 'index_master.html' %}
 
 {% block content %} 
 
@@ -8,10 +8,10 @@
       <div class="container-fluid">
         <div class="row mb-2 justify-content-between">
           <div class="col-sm-6">
-            <h2>Historial de Consultas</h2>
+            <h2>Gestion de Usuarios</h2>
           </div>
           <div class="col-sm-6">
-            <a href="{% url 'NuevaConsulta' paciente_id=paciente.id_paciente %}" class="btn btn-success ml-auto float-right"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Nueva Consulta</a>
+            <a href="{% url 'registroUsuario' %}" class="btn btn-success ml-auto float-right"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Crear Usuario</a>
           </div>
         </div>
       </div>
@@ -29,27 +29,35 @@
                   <table id="example2" class="table table-bordered table-hover">
                     <thead>
                     <tr>
-                      <th>Id</th>
-                      <th>Motivo</th>
-                      <th>Fecha</th>
+                      <th>Usuario</th>
+                      <th>Nombre</th>
+                      <th>Ultimo acceso</th>
+                      <th>Fecha de Creacion</th>
+                      <th>Cargo</th>
                       <th>Accion</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for consulta in consultas %}
+                    {% for usuario in usuarios %}
                     <tr>
-                      <td>{{consulta.id_consulta}}</td>
-                      <td>{{consulta.motivo_consulta}}</td>
-                      <td>{{consulta.consulta_fecha}}</td>
+                      <td>{{ usuario.username }}</td>
+                      <td>{{ usuario.first_name }} {{ usuario.last_name }}</td>
+                      <td>{{ usuario.last_login }}</td>
+                      <td>{{ usuario.date_joined }}</td>
+                      <td>
+                        {% if usuario.is_superuser %}
+                          Administrador
+                        {% else %}
+                          Acupunturista
+                        {% endif %}
+                      </td>
                       <td class="text-center">
-
                         <div class="d-inline-flex flex-row align-items-center">
-                          <a href="#" class="ver-consulta mr-5" data-consulta-id="{{consulta.id_consulta}}" data-paciente-id="{{paciente.id_paciente}}">   
-                            <i class="fas fa-eye fa-lg" style="color: #0a3461;"></i>
+                          <a href="#" class="ver-usuario mr-5" data-usuario-id="">
+                            <i class="nav-icon fas fa-eye"></i>
                           </a>
-
-                          <a href="{% url 'EliminarConsulta' paciente_id=paciente.id_paciente consulta_id=consulta.id_consulta %}" class="eliminar-consulta" data-consulta-id="{{consulta.id_consulta}}" data-paciente-id="{{paciente.id_paciente}}">
-                            <i class="fas fa-trash fa-lg" style="color: #1e3152;"></i>
+                          <a href="#" class="eliminar-usuario" data-consulta-id="" data-paciente-id="">
+                            <i class="nav-icon fas fa-trash"></i>
                           </a>
                         </div>
                       </td>
@@ -67,21 +75,18 @@
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       // Obtener todos los elementos con la clase "ver-consulta"
-      const verConsultas = document.querySelectorAll(".ver-consulta");
+      const verConsultas = document.querySelectorAll(".ver-usuario");
   
       // Agregar un evento de clic a cada enlace
       verConsultas.forEach(function(enlace) {
         enlace.addEventListener("click", function(event) {
           event.preventDefault();
-          
-          // Obtener el ID de la consulta del atributo data-consulta-id
-          const consultaId = enlace.getAttribute("data-consulta-id");
 
-          //obtener el ID de el paciente del atributo data-paciente-id
-          const pacienteId = enlace.getAttribute("data-paciente-id");
+          //obtener el ID de el usuario del atributo data-paciente-id
+          const usuarioId = enlace.getAttribute("data-usuario-id");
           
-          // Redirigir a la página de detalles de la consulta con el ID
-          window.location.href = "/"+ pacienteId + "/HistorialConsultas/DetallesConsulta/" + consultaId + "/";
+          // Redirigir a la página de detalles del usuario con el usuario
+          window.location.href = "/"+ usuarioId +;
         });
       });
     });
