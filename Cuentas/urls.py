@@ -12,5 +12,6 @@ urlpatterns = [
     path('login/', Login, name='login-page'),
     path('Registro/', views.NuevoUsuario, name='registroUsuario'),
     path('GestionUsuarios/', views.GestionUsuarios, name='gestionUsuarios'),
+    path('verUsuario/<str:username>/', views.VerUsuario, name='verUsuario'),
 
 ]

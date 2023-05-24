@@ -45,18 +45,18 @@
                       <td>{{ usuario.last_login }}</td>
                       <td>{{ usuario.date_joined }}</td>
                       <td>
-                        {% if usuario.is_superuser %}
+                        {% if usuario.groups.first.name == 'Administrador' %}
                           Administrador
-                        {% else %}
+                        {% elif usuario.groups.first.name == 'Acupunturista' %}
                           Acupunturista
                         {% endif %}
                       </td>
                       <td class="text-center">
                         <div class="d-inline-flex flex-row align-items-center">
-                          <a href="#" class="ver-usuario mr-5" data-usuario-id="">
+                          <a href="" class="ver-usuario mr-5" data-usuario-username="{{usuario.username}}">
                             <i class="nav-icon fas fa-eye"></i>
                           </a>
-                          <a href="#" class="eliminar-usuario" data-consulta-id="" data-paciente-id="">
+                          <a href="#" class="eliminar-usuario" data-usuario-username="{{usuario.username}}">
                             <i class="nav-icon fas fa-trash"></i>
                           </a>
                         </div>
@@ -74,19 +74,19 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      // Obtener todos los elementos con la clase "ver-consulta"
-      const verConsultas = document.querySelectorAll(".ver-usuario");
+      // Obtener todos los elementos con la clase "ver-usuario"
+      const verUsuarios = document.querySelectorAll(".ver-usuario");
   
       // Agregar un evento de clic a cada enlace
-      verConsultas.forEach(function(enlace) {
+      verUsuarios.forEach(function(enlace) {
         enlace.addEventListener("click", function(event) {
           event.preventDefault();
 
           //obtener el ID de el usuario del atributo data-paciente-id
-          const usuarioId = enlace.getAttribute("data-usuario-id");
+          const usuarioUsername = enlace.getAttribute("data-usuario-username");
           
           // Redirigir a la página de detalles del usuario con el usuario
-          window.location.href = "/"+ usuarioId +;
+          window.location.href = "/verUsuario/" + usuarioUsername + "/";
         });
       });
     });

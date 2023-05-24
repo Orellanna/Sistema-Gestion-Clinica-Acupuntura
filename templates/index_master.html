@@ -142,19 +142,25 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="" class="nav-link">
-                <i class="nav-icon fas fa-medkit"></i>
-                <p>
-                  Inventario
-                </p>
-              </a>
-            </li>
+            {% for group in request.user.groups.all %}
+              {% if group.name == 'Administrador' %}
+                  <!-- El usuario pertenece al grupo "Administrador", mostrar la sección de "Inventario" -->
+                  <li class="nav-item">
+                    <a href="" class="nav-link">
+                      <i class="nav-icon fas fa-medkit"></i>
+                      <p>
+                        Inventario
+                      </p>
+                    </a>
+                  </li>
+              {% endif %}
+            {% endfor %}
+              
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-chart-pie"></i>
                 <p>
-                  Reportes Estadisticos
+                  Reportes
                 </p>
               </a>
             </li>          
@@ -163,16 +169,19 @@
         <!-- /.sidebar-menu -->
       </div>
       <!-- /.sidebar -->
-  
-      <div class="sidebar-custom">
-        <a href="{%url 'administracion' %}" class="btn btn-secondary hide-on-collapse pos-left admin-btn-link text-truncate">
-          <i class="nav-icon fas fa-bars"></i>Administracion
-        </a>
-      </div>
-      <!-- /.sidebar-custom -->
-    </aside>
-    
-    
+
+      {% for group in request.user.groups.all %}
+          {% if group.name == 'Administrador' %}
+              <!-- Si El usuario pertenece al grupo "Administrador", mostrara la sección de "Administración" -->
+              <div class="sidebar-custom">
+                  <a href="{% url 'administracion' %}" class="btn btn-secondary hide-on-collapse pos-left admin-btn-link text-truncate">
+                      <i class="nav-icon fas fa-bars"></i>Administracion
+                  </a>
+              </div>
+          {% endif %}
+      {% endfor %}
+      
+  </aside>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
