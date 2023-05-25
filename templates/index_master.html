@@ -57,7 +57,18 @@
   cursor: pointer;
 }
 
+<<<<<<< HEAD
+=======
+.admin-btn-link {
+  font-size: 14px; /* Ajusta el tamaño de la fuente según tus necesidades */
+  letter-spacing: normal; /* Restaura el espaciado normal entre letras */
+}
+
+
+>>>>>>> main
 </style>
+
+
 
 <body class="hold-transition sidebar-mini layout-fixed">
   <!-- Site wrapper -->
@@ -92,7 +103,9 @@
           <div class="info">
             <a href="#" class="d-block">{{ user.first_name }}</a>
 
-            <a href="" class="logout-link" style="opacity: 0; pointer-events: none;">Cerrar Sesion</a>
+
+            <a href="{% url 'login-page' %}" class="logout-link" style="opacity: 0; pointer-events: none;">Cerrar Sesion</a>
+            
           </div>
         </div>
         
@@ -101,7 +114,9 @@
           <div class="logout-dialog-content">
             <h3>¿Estás seguro de que deseas cerrar sesión?</h3>
             <div class="logout-dialog-buttons">
-              <button id="logout-confirm" class="btn btn-danger">Confirmar</button>
+              <a href="{% url 'cerrar_sesion' %}" class="btn btn-danger">SI</a>
+              
+
               <button id="logout-cancel" class="btn btn-secondary">Cancelar</button>
             </div>
           </div>
@@ -136,19 +151,25 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="" class="nav-link">
-                <i class="nav-icon fas fa-medkit"></i>
-                <p>
-                  Inventario
-                </p>
-              </a>
-            </li>
+            {% for group in request.user.groups.all %}
+              {% if group.name == 'Administrador' %}
+                  <!-- El usuario pertenece al grupo "Administrador", mostrar la sección de "Inventario" -->
+                  <li class="nav-item">
+                    <a href="" class="nav-link">
+                      <i class="nav-icon fas fa-medkit"></i>
+                      <p>
+                        Inventario
+                      </p>
+                    </a>
+                  </li>
+              {% endif %}
+            {% endfor %}
+              
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-chart-pie"></i>
                 <p>
-                  Reportes Estadisticos
+                  Reportes
                 </p>
               </a>
             </li>          
@@ -157,15 +178,19 @@
         <!-- /.sidebar-menu -->
       </div>
       <!-- /.sidebar -->
-  
-      <div class="sidebar-custom">
-        
-        <a href="" class="btn btn-secondary hide-on-collapse pos-left"> <i class="nav-icon fas fa-bars"></i> Administracion </a>
-      </div>
-      <!-- /.sidebar-custom -->
-    </aside>
-    
-    
+
+      {% for group in request.user.groups.all %}
+          {% if group.name == 'Administrador' %}
+              <!-- Si El usuario pertenece al grupo "Administrador", mostrara la sección de "Administración" -->
+              <div class="sidebar-custom">
+                  <a href="{% url 'administracion' %}" class="btn btn-secondary hide-on-collapse pos-left admin-btn-link text-truncate">
+                      <i class="nav-icon fas fa-bars"></i>Administracion
+                  </a>
+              </div>
+          {% endif %}
+      {% endfor %}
+      
+  </aside>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
@@ -181,6 +206,7 @@
   
                   {% block content %} 
 
+                
                   {% endblock %}
 
                 </div>

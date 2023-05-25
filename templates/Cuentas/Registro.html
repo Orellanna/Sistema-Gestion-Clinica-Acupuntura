@@ -5,82 +5,97 @@
 <div class="container my-4">
     <div class="container-fluid">
         <form>
-        <div class="row">
+        <div class="row mb-3">
             <h2>Registrar Usuario</h2>
         </form>
         </div>
     </div>
     
-  <div class="row">
-      <div class="col-md-6">
+<div class="row">
+    <div class="col-md-6">
         
-          <div class="card card-secondary">
-              <div class="card-header">
-                  <h3 class="card-title">Información de Registro</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form role="form">
-                  <div class="card-body ">
-                    <div class="form-group">
-                        <label for="inputUser">Usuario*</label>
-                        <input type="text" class="form-control" id="inputUser" placeholder="Ingrese su usuario">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputPassword">Contraseña*</label>
-                        <input class="form-control" type="password" name="passwordUser" placeholder="Ingrese una contraseña">
-                    </div>
-                    <div class="form-group">
-                        <label for="selectCargo">Cargo*</label>
-                        <select class="form-control" id="selectCargo">
-                            <option value="">Seleccione el cargo</option>
-                            <option value="M">Acupunturista</option>
-                            <option value="F">Asistente</option>
-                        </select>
-                    </div>
+        <div class="card card-secondary">
+            <div class="card-header">
+                <h3 class="card-title">Información de Registro</h3>
+            </div>
+            <!-- /.card-header -->
 
-                  </div>
-                  <!-- /.card-body -->
-              </form>
-          </div>
-          <!-- /.card -->
-      </div>
-      <div class="col-md-6">
-          <div class="card card-secondary">
-              <div class="card-header">
-                  <h3 class="card-title">Información Adicional</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form role="form">
-                  <div class="card-body">   
-                      <div class="form-group">
-                        <label for="inputNombre">Nombre</label>
-                        <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputApellidos">Apellidos</label>
-                        <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputTelefono">Correo</label>
-                         <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo">
-                     </div>
 
+            <!-- form start -->
+            <form action="{% url 'registroUsuario' %}" method="POST">
+            {% csrf_token %}
+                    
+                        <div class="card-body ">
+                        <div class="form-group">
+                            <label for="inputUser">Usuario*</label>
+                            <input type="text" class="form-control" id="inputUser" placeholder="Ingrese su usuario" name="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword">Contraseña*</label>
+                            <input class="form-control" type="password" name="password" placeholder="Ingrese una contraseña">
+                        </div>
+                        <div class="form-group">
+                            <label for="selectCargo">Cargo*</label>
+                            <select class="form-control" id="selectCargo" name="cargo">
+                                <option value="">Seleccione el cargo</option>
+                                <option value="administrador">Administrador</option>
+                                <option value="acupunturista">Acupunturista</option>
+                            </select>
+                        </div>
+
+                        </div>
+                        <!-- /.card-body -->
+                   
                 </div>
-              </form>
-          </div>
-      </div>
-      <div class="container my-6">
-        <div class="row mt-4">
-          <div class="col-md-12 text-center">
-                <button type="submit" class="btn btn-primary"> <i class="nav-icon fas fa-save"> </i>Guardar</button>
-                <button type="reset" class="btn btn-secondary">Cancelar</button>
-          </div>
+                <!-- /.card -->
+            </div>
+            <div class="col-md-6">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">Información Adicional</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form">
+                        <div class="card-body">   
+                            <div class="form-group">
+                            <label for="inputNombre">Nombre</label>
+                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="firstname">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputApellidos">Apellido</label>
+                            <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="lastname">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputTelefono">Correo</label>
+                            <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email">
+                        </div>
+    
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="container my-6">
+            <div class="row mt-4">
+                <div class="col-md-12 text-center">
+                    <button type="submit" name="submit" class="btn btn-primary"> <i class="nav-icon fas fa-save"> </i>&nbsp;&nbsp;Guardar</button>
+                    <button type="reset" class="btn btn-secondary">Cancelar</button>
+                </div>
+
+            </form>
+            <!--End For-->
 
         </div>
+<<<<<<< HEAD
       </div>
   </div>
+=======
+    </div>
+
+
+
+</div>
+>>>>>>> main
 </div>
 
 {% endblock %}

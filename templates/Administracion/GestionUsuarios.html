@@ -1,0 +1,105 @@
+{% extends 'index_master.html' %}
+
+{% block content %} 
+
+{% if messages %}
+<div class="messages">
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+      {{ message }}
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+    <!-- Content Header (Page header) -->
+    
+    <section class="content-header">  
+      <div class="container-fluid">
+        <div class="row mb-2 justify-content-between">
+          <div class="col-sm-6">
+            <h2>Gestion de Usuarios</h2>
+          </div>
+          <div class="col-sm-6">
+            <a href="{% url 'registroUsuario' %}" class="btn btn-success ml-auto float-right"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Crear Usuario</a>
+          </div>
+        </div>
+      </div>
+      
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                
+                <!-- /.card-header -->
+                <div class="card-body">
+
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                      <th>Usuario</th>
+                      <th>Nombre</th>
+                      <th>Ultimo acceso</th>
+                      <th>Fecha de Creacion</th>
+                      <th>Cargo</th>
+                      <th>Acción</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for usuario in usuarios %}
+                    <tr>
+                      <td>{{ usuario.username }}</td>
+                      <td>{{ usuario.first_name }} {{ usuario.last_name }}</td>
+                      <td>{{ usuario.last_login }}</td>
+                      <td>{{ usuario.date_joined }}</td>
+                      <td>
+                        {% if usuario.groups.first.name == 'Administrador' %}
+                          Administrador
+                        {% elif usuario.groups.first.name == 'Acupunturista' %}
+                          Acupunturista
+                        {% endif %}
+                      </td>
+                      <td class="text-center">
+                        <div class="d-inline-flex flex-row align-items-center">
+                          <a href="" class="ver-usuario mr-5" data-usuario-username="{{usuario.username}}">
+                            <i class="nav-icon fas fa-eye"></i>
+                          </a>
+                          <a href="{% url 'eliminarUsuario' usuario.username %}" class="eliminar-usuario" data-usuario-username="{{usuario.username}}">
+                            <i class="nav-icon fas fa-trash"></i>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody> 
+                  </table>                 
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+  <!-- /.content-wrapper -->
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Obtener todos los elementos con la clase "ver-usuario"
+      const verUsuarios = document.querySelectorAll(".ver-usuario");
+  
+      // Agregar un evento de clic a cada enlace
+      verUsuarios.forEach(function(enlace) {
+        enlace.addEventListener("click", function(event) {
+          event.preventDefault();
+
+          //obtener el ID de el usuario del atributo data-paciente-id
+          const usuarioUsername = enlace.getAttribute("data-usuario-username");
+          
+          // Redirigir a la página de detalles del usuario con el usuario
+          window.location.href = "/verUsuario/" + usuarioUsername + "/";
+        });
+      });
+    });
+
+  </script>
+  
+{% endblock %}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    /* Estilos para el informe */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      text-align: center;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+
+    .logo {
+      width: 100px;
+      height: 100px;
+    }
+
+    .title {
+      font-size: 24px;
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .content {
+      margin: 20px;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 5px;
+    }
+
+    .section-content {
+      margin-left: 20px;
+    }
+
+    .button-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+
+    .button:hover {
+      background-color: #45a049;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #f2f2f2;
+    }
+
+    .footer-logo {
+      width: 50px;
+      height: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img class="logo" src="static/img/logo.jpg" alt="Logo de la clínica">
+    <h2 class="title">Clinica Terapia-Holsitica Acupuntura</h2>
+    <h4 class="subtitle">Informe de Consulta</h4>
+    <p>{{ fecha_actual }}</p>
+  </div>
+
+  <div class="content">
+    <div class="section">
+      <h3 class="section-title">Detalles de la Consulta</h3>
+      <div class="section-content">
+        <p><strong>ID de la Consulta:</strong> {{ consulta.id_consulta }}</p>
+        <p><strong>Fecha de Cita:</strong> {{ fecha_consulta_str }}</p>
+        <p><strong>Hora de Inicio:</strong> {{ consulta.hora_consulta }}</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title">Motivo de la Consulta</h3>
+      <div class="section-content">
+        <p>{{ consulta.motivo_consulta }}</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title">Observaciones</h3>
+      <div class="section-content">
+        <p>{{ consulta.observacion_consulta }}</p>
+      </div>
+    </div>
+
+
+  <div class="footer">
+    <img class="footer-logo" src="static/img/log.jpg" alt="Logo de la clínica">
+    <p>Santa tecla--</p>
+  </div>
+</body>
+</html>
