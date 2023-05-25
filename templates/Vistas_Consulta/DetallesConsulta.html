@@ -11,6 +11,7 @@
           <div class="card-body">
             <div class="text-center mb-4">
               <h4 class="text-primary">Detalles de la Consulta</h4>
+              <a href="{% url 'GenerarReportePDF' paciente_id=paciente.id_paciente|urlencode consulta_id=consulta.id_consulta|urlencode %}" target="_blank" class="btn btn-primary">Generar Reporte</a>
               <hr>
             </div>
             <div class="row">

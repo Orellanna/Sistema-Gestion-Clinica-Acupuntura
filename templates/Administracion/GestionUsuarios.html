@@ -2,6 +2,16 @@
 
 {% block content %} 
 
+{% if messages %}
+<div class="messages">
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+      {{ message }}
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
     <!-- Content Header (Page header) -->
     
     <section class="content-header">  
@@ -56,7 +66,7 @@
                           <a href="" class="ver-usuario mr-5" data-usuario-username="{{usuario.username}}">
                             <i class="nav-icon fas fa-eye"></i>
                           </a>
-                          <a href="#" class="eliminar-usuario" data-usuario-username="{{usuario.username}}">
+                          <a href="{% url 'eliminarUsuario' usuario.username %}" class="eliminar-usuario" data-usuario-username="{{usuario.username}}">
                             <i class="nav-icon fas fa-trash"></i>
                           </a>
                         </div>
