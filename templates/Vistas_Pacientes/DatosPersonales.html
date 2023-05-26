@@ -7,11 +7,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Datos Personales</h1>
-          </div>
-        </div>
+
       </div><!-- /.container-fluid -->
     </section>
 
@@ -20,55 +16,46 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <!-- Default box -->
             <div class="card">
-              <div class="card-body">
-                
-                <form>
-                  <div class="form-row">
-                    <div class="form-group col-md-6">
-                      <label for="nombre">Nombre</label>
-                      <input type="text" class="form-control" id="nombre">
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="apellido">Apellido</label>
-                      <input type="text" class="form-control" id="apellido">
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="form-group col-md-6">
-                      <label for="inputState">Genero</label>
-                      <select id="inputState" class="form-control">
-                        <option selected>M</option>
-                        <option>F</option>
-                      </select>
-                    </div>
+              <div class="card-body" style="background-color: #eef5f9; border: 1px solid #dee2e6;">
+                <div class="text-center mb-4">
+                  <h4 class="text-primary">Datos Personales</h4>
+                  <hr>
                 </div>
                 <div class="row">
-                    <div class="col">
-                    <div class="form-group col-md-6">
-                      <label for="edad">Edad</label>
-                      <input type="text" class="form-control" id="edad">
+                  <div class="col-4">
+                    <div class="text-center">
+                      <h6 class="font-weight-bold">Nombre:</h6>
+                      <p class="font-secondary">{{ paciente.primer_nombre }} {{ paciente.primer_apellido }}</p>
                     </div>
                   </div>
-                  <div class="form-row">
-                    <div class="form-group col-md-6">
-                      <label for="telefono">Telefono</label>
-                      <input type="tel" class="form-control" id="telefono">
+                  <div class="col-4">
+                    <div class="text-center">
+                      <h6 class="font-weight-bold">Género:</h6>
+                      <p>{{ paciente.sexo_paciente }}</p>
                     </div>
                   </div>
-                </form>
+                  <div class="col-4">
+                    <div class="text-center">
+                      <h6 class="font-weight-bold">Edad:</h6>
+                      <p>{{ edad }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-4">
+                  <div class="col">
+                    <div class="text-center">
+                      <h6 class="font-weight-bold">Teléfono:</h6>
+                      <p class="font-secondary">{{ paciente.telefono_paciente }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <!-- /.card-body -->
-            <div class="card-footer">
-            </div>
-            <!-- /.card-footer-->
           </div>
-          <!-- /.card -->
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
   <!-- Content Header (Page header) -->
   <section class="content-header">
