@@ -13,7 +13,7 @@
             <h2>Gesti&oacuten de Pacientes</h2>
           </div>
           <div class="col">
-            <a href="/nuevoPaciente" class="btn btn-success"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Crear Paciente</a>
+            <a href="{% url 'registrarPaciente' %}" class="btn btn-success"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Crear Paciente</a>
             <div class="row"> <div class="card"></div></div>
             <form class="form-inline">
                 <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
@@ -45,112 +45,19 @@
                     </tr>
                     </thead>
                     <tbody>
+                      {% for paciente in pacientes%}
                     <tr>
-                      <td>01</td>
-                      <td>Juan Perez
-                      </td>
-                      <td>M</td>
-                      <td>56</td>
-                      <td><button type="button" class="btn"><i class="nav-icon fas fa-eye"></i></button>
-                        <button type="button" class="btn"><i class="fas fa-trash"></i></button>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>02</td>
-                      <td>Carmen Lopez
-                      </td>
-                      <td>F</td>
-                      <td>45</td>
-                      <td><button type="button" class="btn"><i class="nav-icon fas fa-eye"></i></button>
-                        <button type="button" class="btn"><i class="fas fa-trash"></i></button>
-                    </td>
-                    </tr>
-                    
-                    <tr>
-                      <td>03</td>
-                      <td>Boris Lemus</td>
-                      <td>M</td>
-                      <td>27</td>
-                      <td><button type="button" class="btn"><i class="nav-icon fas fa-eye"></i></button>
-                        <button type="button" class="btn"><i class="fas fa-trash"></i></button>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>04</td>
-                      <td>Francisco Cardona</td>
-                      <td>M</td>
-                      <td>32</td>
-                      <td><button type="button" class="btn"><i class="nav-icon fas fa-eye"></i></button>
-                        <button type="button" class="btn"><i class="fas fa-trash"></i></button>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>05</td>
-                      <td>Ernesto Fuentes</td>
-                      <td>M</td>
-                      <td>90</td>
-                      <td><button type="button" class="btn"><i class="nav-icon fas fa-eye"></i></button>
-                        <button type="button" class="btn"><i class="fas fa-trash"></i></button>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>06</td>
-                      <td>Adonis Guardado</td>
-                      <td>M</td>
-                      <td>60</td>
-                      <td><button type="button" class="btn"><i class="nav-icon fas fa-eye"></i></button>
-                        <button type="button" class="btn"><i class="fas fa-trash"></i></button>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>07</td>
-                      <td>Joel Lopez</td>
-                      <td>M</td>
-                      <td>80</td>
-                      <td><button type="button" class="btn"><i class="nav-icon fas fa-eye"></i></button>
-                        <button type="button" class="btn"><i class="fas fa-trash"></i></button>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>08</td>
-                      <td>Sofia Hernandez</td>
-                      <td>F</td>
-                      <td>30</td>
-                      <td><button type="button" class="btn"><i class="nav-icon fas fa-eye"></i></button>
-                        <button type="button" class="btn"><i class="fas fa-trash"></i></button>
-                    </td>
-                    </tr>
-                    
-                    <tr>
-                      <td>09</td>
-                      <td>Lucia Lopez</td>
-                      <td>F</td>
-                      <td>35</td>
-                      <td><button type="button" class="btn"><i class="nav-icon fas fa-eye"></i></button>
-                        <button type="button" class="btn"><i class="fas fa-trash"></i></button>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>10</td>
-                      <td>William Soriano</td>
-                      <td>M</td>
-                      <td>40</td>
-                      <td><button type="button" class="btn"><i class="nav-icon fas fa-eye"></i></button>
-                        <button type="button" class="btn"><i class="fas fa-trash"></i></button>
-                    </td>
-                    </tr>
-                    
-                    <tr>
-                      <td>11</td>
-                      <td>Carolina Gonzalez</td>
-                      <td>F</td>
-                      <td>42</td>
+                      <td>{{paciente.id_paciente}}</td>
+                      <td>{{paciente.primer_nombre}} {{paciente.segundo_nombre}}</td>
+                      <td>{{paciente.sexo_paciente}}</td>
+                      <td>{{edad}}</td>
+
                       <td><button type="button" class="btn"><i class="nav-icon fas fa-eye"></i></button>
                         <button type="button" class="btn"><i class="fas fa-trash"></i></button>
                     </td>
                     </tr>
                     </tbody>
-                   
+                    {% endfor %}
                   </table>
                 </div>
                 <!-- /.card-body -->

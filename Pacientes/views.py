@@ -3,13 +3,24 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import Paciente
+
 @login_required
 def index(request):
     return render(request,'index.html')
 
 @login_required
 def GestionPacientes(request):
-    return render(request,'Vistas_Pacientes/GestionPacientes.html')
+    pacientes = Paciente.objects.all()
+
+    # Iterar sobre cada paciente para calcular la edad
+    for paciente in pacientes:
+        fechanac_paciente = paciente.fechanac_paciente
+        edad = CalcularEdad(fechanac_paciente)
+
+    return render(request, 'Vistas_Pacientes/GestionPacientes.html', {
+        'pacientes': pacientes,
+        'edad':edad,
+    })
 
 @login_required
 def DetallesConsulta(request):
