@@ -45,16 +45,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                      {% for paciente in pacientes%}
+                      {% for paciente in pacientes %}
                     <tr>
                       <td>{{paciente.id_paciente}}</td>
                       <td>{{paciente.primer_nombre}} {{paciente.segundo_nombre}}</td>
                       <td>{{paciente.sexo_paciente}}</td>
-                      <td>{{edad}}</td>
+                      <td>{{paciente.edad}}</td>
 
                       <td>
                         <a href="#" class="ver-pacientes" data-pacientes-id="{{paciente.id_paciente}}"><i class="nav-icon fas fa-eye"></i></a>
-
                         <button type="button" class="btn"><i class="fas fa-trash"></i></button>
                      </td>
                     </tr>

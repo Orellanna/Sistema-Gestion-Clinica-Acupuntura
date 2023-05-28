@@ -12,14 +12,18 @@ def index(request):
 def GestionPacientes(request):
     pacientes = Paciente.objects.all()
 
-    # Iterar sobre cada paciente para calcular la edad
+    fecha_actual = datetime.today()
+    
     for paciente in pacientes:
-        fechanac_paciente = paciente.fechanac_paciente
-        edad = CalcularEdad(fechanac_paciente)
-
+        edad= fecha_actual.year - paciente.fechanac_paciente.year
+        if fecha_actual.month < paciente.fechanac_paciente.month and fecha_actual.day < paciente.fechanac_paciente.day:
+            edad -=1
+        elif fecha_actual.month == paciente.fechanac_paciente.month and fecha_actual.day < paciente.fechanac_paciente.day:
+            edad -=1
+        paciente.edad = edad
+    
     return render(request, 'Vistas_Pacientes/GestionPacientes.html', {
         'pacientes': pacientes,
-        'edad': edad,
     })
 
 @login_required
@@ -30,7 +34,7 @@ def DatosPersonales(request, id_paciente):
     return render(request,'Vistas_Pacientes/DatosPersonales.html', {
         'paciente': paciente,
         'edad' : edad,
-    })
+    }) 
     
 def CalcularEdad(fechanac_paciente):
     hoy = date.today()
