@@ -90,8 +90,20 @@ def EditarPaciente(request, id_paciente):
     
         paciente.save()
         
-        return redirect('GestionPacientes')
+        return redirect('DatosPersonales', id_paciente=id_paciente)
     
     return render(request,'Vistas_Pacientes/EditarPaciente.html', {
         'paciente': paciente,
     })
+    
+
+def EliminarPaciente(request, id_paciente):
+    
+    paciente = get_object_or_404(Paciente, id_paciente=id_paciente)
+    
+    # Deshabilitar al paciente
+    paciente.deshabilitado = True
+    paciente.save()
+
+    # Redirigir a la página de gestión de pacientes
+    return redirect('GestionPacientes')
