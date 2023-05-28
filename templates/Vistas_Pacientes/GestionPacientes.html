@@ -52,9 +52,11 @@
                       <td>{{paciente.sexo_paciente}}</td>
                       <td>{{edad}}</td>
 
-                      <td><button type="button" class="btn"><i class="nav-icon fas fa-eye"></i></button>
+                      <td>
+                        <a href="#" class="ver-pacientes" data-pacientes-id="{{paciente.id_paciente}}"><i class="nav-icon fas fa-eye"></i></a>
+
                         <button type="button" class="btn"><i class="fas fa-trash"></i></button>
-                    </td>
+                     </td>
                     </tr>
                     </tbody>
                     {% endfor %}
@@ -64,4 +66,27 @@
               </div>
               <!-- /.card -->
   <!-- /.content-wrapper -->
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+      // Obtener todos los elementos con la clase "ver-consulta"
+      const verPacientes = document.querySelectorAll(".ver-pacientes");
+  
+      // Agregar un evento de clic a cada enlace
+      verPacientes.forEach(function(enlace) {
+        enlace.addEventListener("click", function(event) {
+        event.preventDefault();
+          
+          // Obtener el ID de la consulta del atributo data-consulta-id
+          const pacienteId = enlace.getAttribute("data-pacientes-id");
+       
+          // Redirigir a la página de detalles de la consulta con el ID
+          window.location.href = "/"+ "datosPersonales/" + pacienteId + "/";
+        });
+      });
+    });
+
+  </script>
 {% endblock %}
