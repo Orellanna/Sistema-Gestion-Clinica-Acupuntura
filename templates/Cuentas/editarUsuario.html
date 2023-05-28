@@ -1,0 +1,136 @@
+{% extends 'index_master.html' %}
+
+{% block content %}
+
+<style>
+    ul.messages {
+        list-style-type: none;
+        padding: 0;
+      }
+      
+      .message {
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 4px;
+      }
+      
+      .success {
+        background-color: #dff0d8;
+        color: #3c763d;
+      }
+      
+      .error {
+        background-color: #f2dede;
+        color: #a94442;
+      }
+      
+      .warning {
+        background-color: #fcf8e3;
+        color: #8a6d3b;
+      }
+</style>
+<div class="container my-4">
+
+    
+    <div class="container-fluid">
+        <form>
+        <div class="row mb-3">
+            <h2>Editar Usuario</h2>
+        </form>
+        </div>
+    </div>
+    
+<div class="row">
+    <div class="col-md-6">
+        
+        <div class="card card-secondary">
+            <div class="card-header">
+                <h3 class="card-title">Información de Registro</h3>
+            </div>
+            <!-- /.card-header -->
+
+            <!-- form start -->
+            <form action="{% url 'editarUsuario' usuario.username %}" method="POST">
+            {% csrf_token %}
+                    
+                        <div class="card-body">
+                        <div class="form-group">
+                            <label for="inputUser">Usuario*</label>
+                            <input type="text" class="form-control" id="inputUser" placeholder="Ingrese su usuario" name="username" value="{{ usuario.username }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword">Contraseña*</label>
+                            <input class="form-control" type="password" name="password" placeholder="Ingrese una contraseña">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputConfirmPassword">Confirmar Contraseña*</label>
+                            <input class="form-control" type="password" name="confirm_password" placeholder="Ingrese la contraseña nuevamente">
+                        </div>
+                        <div class="form-group">
+                            <label for="selectCargo">Cargo*</label>
+                            <select class="form-control" id="selectCargo" name="cargo">
+                                <option value="">Seleccione el cargo</option>
+                                <option value="administrador" {% if 'Administrador' in grupos_usuario %}selected{% endif %}>Administrador</option>
+                                <option value="acupunturista" {% if 'Acupunturista' in grupos_usuario %}selected{% endif %}>Acupunturista</option>
+                            </select>
+                        </div>
+
+                        </div>
+                        <!-- /.card-body -->
+                   
+                </div>
+                <!-- /.card -->
+            </div>
+            <div class="col-md-6">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">Información Adicional</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form">
+                        <div class="card-body">   
+                            <div class="form-group">
+                            <label for="inputNombre">Nombre</label>
+                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="firstname" value="{{ usuario.first_name }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputApellidos">Apellido</label>
+                            <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="lastname" value="{{ usuario.last_name }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputCorreo">Correo</label>
+                            <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email" value="{{ usuario.email }}">
+                        </div>
+    
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="container my-6">
+                <div class="row mt-4">
+                    <div class="col-md-12 text-center">
+                        {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                    <li class="message {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        <button type="submit" name="submit" class="btn btn-primary"> <i class="nav-icon fas fa-save"></i>&nbsp;&nbsp;Guardar</button>
+                        <button type="reset" class="btn btn-secondary">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
+            </form>
+            <!--End Form-->
+
+        </div>
+    </div>
+
+</div>
+</div>
+
+{% endblock %}

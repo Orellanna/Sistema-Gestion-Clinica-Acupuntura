@@ -7,8 +7,7 @@ from django.contrib.auth.models import User,Group
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView
-
-
+from django.views.generic import DeleteView
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
@@ -77,8 +76,6 @@ def NuevoUsuario(request):
         elif cargo == "acupunturista":
             grupo_acupunturista = Group.objects.get(name='Acupunturista')
             nuevo_usuario.groups.add(grupo_acupunturista)
-            
-        nuevo_usuario.save()
            
         return redirect('gestionUsuarios')
     
@@ -90,6 +87,54 @@ def VerUsuario(request, username):
     return render(request, 'Administracion/VerUsuario.html', {
         'usuario': usuario,
     })
+    
 
+@login_required
+@csrf_exempt
+def EliminarUsuario(request, username):
+    usuario = get_object_or_404(User, username=username)
+    
+    if request.method == 'POST':
+        usuario.delete()
+        messages.info(request,"El Usuario se ha eliminado satisfactoriamente")
+        return redirect('gestionUsuarios')
+    
+    return render(request, 'Cuentas/eliminarUsuario.html', {'usuario': usuario})
 
+# @login_required
+# def EditarUsuario(request, username):
+#     usuario = get_object_or_404(User, username=username)
+#     grupos_usuario = usuario.groups.values_list('name', flat=True)
+    
+#     if request.method == 'POST':
+#         nuevo_usuario = request.POST['username']
+#         nueva_contraseña = request.POST['password']
+#         confirmar_contraseña = request.POST['confirm_password']
+#         nuevo_primerNombre = request.POST['firstname']
+#         nuevo_primerApellido = request.POST['lastname']
+#         nuevo_correo = request.POST['email']
+#         nuevo_cargo = request.POST['cargo']
+        
+#         if nueva_contraseña != confirmar_contraseña:
+#             messages.error(request, 'Las contraseñas no coinciden')
+#             return redirect('editarUsuario', username=username)
+        
+#         usuario.username = nuevo_usuario
+#         if nueva_contraseña:
+#             usuario.set_password(nueva_contraseña)
+#         usuario.email = nuevo_correo
+#         usuario.first_name = nuevo_primerNombre
+#         usuario.last_name = nuevo_primerApellido
+#         usuario.save()
+        
+#         grupos_usuario = Group.objects.filter(name=nuevo_cargo)
+#         usuario.groups.set(grupos_usuario)
+        
+#         messages.success(request, 'El usuario se ha actualizado correctamente')
+#         return redirect('gestionUsuarios')
+    
+#     return render(request, 'Cuentas/editarUsuario.html', {
+#         'usuario': usuario,
+#         'grupos_usuario': grupos_usuario,
+#     })
 

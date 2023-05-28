@@ -16,4 +16,7 @@ urlpatterns = [
     
     path('<str:paciente_id>/HistorialConsultas/EliminarConsulta/<str:consulta_id>/', views.EliminarConsulta, name='EliminarConsulta'),
     
+    path('<str:paciente_id>/HistorialConsultas/DetallesConsulta/<str:consulta_id>/generar_reporte_pdf/', views.generar_reporte_pdf, name='GenerarReportePDF'),
+    
+    
 ]

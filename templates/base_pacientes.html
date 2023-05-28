@@ -81,7 +81,7 @@
   <!-- Site wrapper -->
   <div class="wrapper">
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: #eef5f9;">
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item">
@@ -92,26 +92,22 @@
     <!-- /.navbar -->
   
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
-      <!-- Brand Logo -->
-      <a href="{%url 'index'%}" class="brand-link">
-        <img src="{% static 'img/logo.jpg' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">LOGO</span>
-      </a>
+    <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4" style="background-color: #eef5f9;">
+     
   
       <!-- Sidebar -->
       <div class="sidebar">
         
         <!-- Sidebar user (optional) -->
+        
         <div id="user-panel-content" class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
             <img src="{% static 'img/user4-128x128.jpg' %}" class="img-circle elevation-2" alt="User Image">
           </div>
-          <div class="info">
-            <a href="#" class="d-block">{{ user.first_name }}</a>
-
-            <a href="" class="logout-link" style="opacity: 0; pointer-events: none;">Cerrar Sesion</a>
-          </div>
+            <div class="info">
+              <a href="#" class="d-block"  style="opacity: 1; pointer-events: none; color: black;">{{ user.first_name }}</a>
+              <a href="{% url 'login-page' %}" class="logout-link" style="opacity: 1; pointer-events: none; color: black;">Cerrar Sesion</a>
+            </div>                      
         </div>
         
         <!-- Ventana emergente de confirmación de logout -->
@@ -130,48 +126,55 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
-              <li class="nav-item">
-                  <a href="{%url 'index'%}" class="nav-link">
-                    <i class="nav-icon fas fa-home "></i>
-                    <p>
-                    Inicio
-                    </p>
-                  </a>  
-              </li>
-              <li class="nav-item">
-                <a href="{%url 'GestionPacientes'%}" class="nav-link">
-                <i class="nav-icon fas fa-users "></i>
-                <p>
+            <li class="nav-item">
+              <a href="{%url 'index'%}" class="nav-link">
+                <i class="nav-icon fas fa-home" style="color: #000000; font-size: 1.25em;"></i>
+                <p style="color: #000000; font-size: 1.25em;">
+                  Inicio
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{%url 'GestionPacientes'%}" class="nav-link">
+                <i class="nav-icon fas fa-users" style="color: #000000; font-size: 1.25em;"></i>
+                <p style="color: #000000; font-size: 1.25em;">
                   Pacientes
                 </p>
-              </a>  
+              </a>
             </li>
             <li class="nav-item">
               <a href="" class="nav-link">
-                <i class="nav-icon fas fa-calendar-plus"></i>
-                <p>
+                <i class="nav-icon fas fa-calendar-plus" style="color: #000000; font-size: 1.25em;"></i>
+                <p style="color: #000000; font-size: 1.25em;">
                   Citas
                 </p>
               </a>
             </li>
+            {% for group in request.user.groups.all %}
+            {% if group.name == 'Administrador' %}
+            <!-- El usuario pertenece al grupo "Administrador", mostrar la sección de "Inventario" -->
             <li class="nav-item">
               <a href="" class="nav-link">
-                <i class="nav-icon fas fa-medkit"></i>
-                <p>
+                <i class="nav-icon fas fa-medkit" style="color: #000000; font-size: 1.25em;"></i>
+                <p style="color: #000000; font-size: 1.25em;">
                   Inventario
                 </p>
               </a>
             </li>
+            {% endif %}
+            {% endfor %}
+        
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-pie"></i>
-                <p>
-                  Reportes Estadisticos
+                <i class="nav-icon fas fa-chart-pie" style="color: #000000; font-size: 1.25em;"></i>
+                <p style="color: #000000; font-size: 1.25em;">
+                  Reportes
                 </p>
               </a>
-            </li>          
+            </li>
           </ul>
         </nav>
+
         <!-- /.sidebar-menu -->
       </div>
       <!-- /.sidebar -->
@@ -185,7 +188,7 @@
     
     
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="background-color: #ffffff;">
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <div class="container-fluid">
@@ -202,7 +205,7 @@
         <section class="content">
             <div class="container-fluid">
               <div class="container">
-                <div class="card bg-light rounded">
+                <div style="background-color: #eef5f9; border: 1px solid #dee2e6;">
                   <div class="card-body text-center">
                     <div class="row align-items-center">
                       <div class="col-12">
@@ -222,8 +225,8 @@
               <div class="row">
                 <div class="col-3 text-center">
                   <a href="#" class="nav-link" id="perfil-link" onclick="highlightIcon('perfil-link')">
-                    <i class="fas fa-user fa-2x" style="color: #422722;"></i>
-                    <p class="mt-2" style="color: #422722; font-weight: bold;">Perfil</p>
+                    <i class="fas fa-user fa-2x" style="color: #000000;"></i>
+                    <p class="mt-2" style="color: #000000; font-weight: bold;">Perfil</p>
                     <div class="bar"></div>
                   </a>
                 </div>
@@ -276,9 +279,7 @@
                 
                 </div>
                 <!-- /.card-body -->
-                <div class="card-footer">
-                
-                </div>
+
                 <!-- /.card-footer-->
               </div>
               <!-- /.card -->

@@ -5,6 +5,8 @@ from Pacientes.models import Consulta, Paciente
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from xhtml2pdf import pisa
+from django.template.loader import get_template
 
 @login_required
 def index(request):
@@ -107,3 +109,32 @@ def EliminarConsulta(request, paciente_id, consulta_id):
         return redirect('ListarConsultas', paciente_id=paciente_id)
     
     return render(request, 'Vistas_Consulta/EliminarConsulta.html', {'paciente': paciente, 'consulta': consulta})
+
+@login_required
+@csrf_exempt
+def generar_reporte_pdf(request, paciente_id, consulta_id):
+    # Obtiene los datos del paciente y la consulta
+    paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
+    consulta = get_object_or_404(Consulta, id_consulta=consulta_id, id_paciente=paciente)
+
+    # Obtiene la plantilla HTML
+    template = get_template('Reportes/R_DetallesConsulta.html') 
+
+    # Contexto de la plantilla
+    context = {
+        'paciente': paciente,
+        'consulta': consulta,
+    }
+
+    # Renderiza la plantilla HTML con el contexto
+    html = template.render(context)
+
+    # Crea el objeto HttpResponse con el tipo de contenido apropiado para un PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="reporte_consulta.pdf"'  
+
+    # Genera el PDF a partir del HTML renderizado
+    pisa.CreatePDF(html, dest=response)
+
+    return response
+
