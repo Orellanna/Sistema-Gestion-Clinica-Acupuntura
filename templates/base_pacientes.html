@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <link rel="shortcut icon" href="static/img/logo.jpg">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gestion Clinica Acupuntura</title>
@@ -82,14 +81,16 @@
   <!-- Site wrapper -->
   <div class="wrapper">
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: #eef5f9;">
-      <!-- Left navbar links -->
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-        </li>
-      </ul>
-    </nav>
+    <div class="wrapper">
+      <!-- Navbar -->
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: #eef5f9;">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars" style="color: #000000;"></i></a>
+          </li>
+        </ul>
+      </nav>
     <!-- /.navbar -->
   
     <!-- Main Sidebar Container -->
@@ -225,28 +226,28 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col-3 text-center">
-                  <a href="#" class="nav-link" id="perfil-link" onclick="highlightIcon('perfil-link')">
+                  <a href="{% url 'DatosPersonales' paciente.id_paciente %}" class="nav-link" id="perfil-link" onclick="highlightIcon('perfil-link')">
                     <i class="fas fa-user fa-2x" style="color: #000000;"></i>
                     <p class="mt-2" style="color: #000000; font-weight: bold;">Perfil</p>
                     <div class="bar"></div>
                   </a>
                 </div>
                 <div class="col-3 text-center">
-                  <a href="#" class="nav-link" id="consultas-link" onclick="highlightIcon('consultas-link')">
+                  <a href="{% url 'ListarConsultas' paciente_id=paciente.id_paciente %}" class="nav-link" id="consultas-link" onclick="highlightIcon('consultas-link')">
                     <i class="fas fa-stethoscope fa-2x" style="color: #36A2EB;"></i>
                     <p class="mt-2" style="color: #36A2EB; font-weight: bold;">Consultas</p>
                     <div class="bar"></div>
                   </a>
                 </div>
                 <div class="col-3 text-center">
-                  <a href="#" class="nav-link" id="terapia-link" onclick="highlightIcon('terapia-link')">
+                  {% comment %} <a href="#" class="nav-link" id="terapia-link" onclick="highlightIcon('terapia-link')"> {% endcomment %}
                     <i class="fas fa-heart fa-2x" style="color: #FF0000;"></i>
                     <p class="mt-2" style="color: #FF0000; font-weight: bold;">Terapia</p>
                     <div class="bar"></div>
                   </a>
                 </div>
                 <div class="col-3 text-center">
-                  <a href="#" class="nav-link" id="pagos-link" onclick="highlightIcon('pagos-link')">
+                  {% comment %} <a href="#" class="nav-link" id="pagos-link" onclick="highlightIcon('pagos-link')"> {% endcomment %}
                     <i class="fas fa-hand-holding-usd fa-2x" style="color: #00BB2D;"></i>
                     <p class="mt-2" style="color: #00BB2D; font-weight: bold;">Pagos</p>
                     <div class="bar"></div>
@@ -335,39 +336,15 @@
   $(function () {
     $('#example2').DataTable({
       "paging": true,
-      "lengthChange": true,
+      "lengthChange": false,
       "searching": true,
       "ordering": true,
       "info": true,
-      "autoWidth": true,
+      "autoWidth": false,
       "responsive": true,
-      "language": {
-        "decimal": "",
-        "emptyTable": "No hay datos disponibles en la tabla",
-        "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-        "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-        "infoFiltered": "(filtrado de _MAX_ registros totales)",
-        "infoPostFix": "",
-        "thousands": ",",
-        "lengthMenu": "Mostrar _MENU_ registros",
-        "loadingRecords": "Cargando...",
-        "processing": "Procesando...",
-        "search": "Buscar:",
-        "zeroRecords": "No se encontraron registros coincidentes",
-        "paginate": {
-          "first": "Primero",
-          "last": "Último",
-          "next": "Siguiente",
-          "previous": "Anterior"
-        },
-        "aria": {
-          "sortAscending": ": activar para ordenar la columna ascendente",
-          "sortDescending": ": activar para ordenar la columna descendente"
-        }
-      }
     });
   });
-  
+
 // Obtén el elemento del panel de usuario y el enlace de logout
 var userPanelContent = document.getElementById('user-panel-content');
 var logoutLink = document.querySelector('.logout-link');
@@ -412,8 +389,25 @@ function highlightIcon(id) {
     for (let i = 0; i < icons.length; i++) {
       icons[i].classList.remove('active');
     }
-    document.getElementById(id).classList.add('active');
+
+    $('#'+ id ).addClass('active');
+
+    document.cookie = "activeIcon=" + id + '; path=/';
   }
+
+$(document).ready(function() {
+  const activeIcon = getCookie('activeIcon');
+
+  if (activeIcon) {
+    $('#'+ activeIcon ).addClass('active');
+  }
+});	
+
+function getCookie(name) {
+  const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+  return cookieValue ? cookieValue.pop() : '';
+} 
+  
 
  </script>
 </body>
