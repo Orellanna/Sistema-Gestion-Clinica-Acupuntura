@@ -1,3 +1,4 @@
+from datetime import date
 from django.db import models
 
 # Create your models here.
@@ -12,6 +13,30 @@ class Paciente(models.Model):
     telefono_paciente = models.CharField(max_length=8, blank=True, null=True)
     email_paciente = models.CharField(max_length=50, blank=True, null=True)
 
+    def save(self, *args, **kwargs):
+        if not self.id_paciente:  
+            fecha_actual = date.today().strftime('%d%m%y')
+            correlativo = self.obtener_correllativo(fecha_actual)
+            self.id_paciente = self.generar_id_paciente(fecha_actual, correlativo)
+        super().save(*args, **kwargs)
+        
+    def obtener_correllativo(self,fecha_actual):
+        pacientes_fecha_actual = Paciente.objects.filter(id_paciente__contains=fecha_actual)
+        correlativo_actual = pacientes_fecha_actual.count() + 1
+        
+        correlativo_str = str(correlativo_actual).zfill(2)
+        
+        return correlativo_str
+    
+    def generar_id_paciente(self, fecha_actual, correlativo):
+        
+        primera_letra_nombre = self.primer_nombre[0]
+        primera_letra_apellido = self.primer_apellido[0]
+        
+        id_paciente = f'{primera_letra_nombre}{primera_letra_apellido}{fecha_actual}{correlativo}'
+
+        return id_paciente
+        
     def __str__(self):
         return self.primer_nombre + ' ' + self.primer_apellido
     class Meta:
