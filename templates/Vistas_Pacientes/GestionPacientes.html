@@ -15,7 +15,7 @@
           <div class="col">
             <a href="{% url 'registrarPaciente' %}" class="btn btn-success"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Crear Paciente</a>
             <div class="row"> <div class="card"></div></div>
-            <form class="form-inline d-flex justify-content-end">
+           
           </div>
       </div>
 
@@ -43,19 +43,21 @@
                       </tr>
                     </thead>
                     <tbody>
-                    {% for paciente in pacientes %}
-                      <tr>
-                        <td>{{paciente.id_paciente}}</td>
-                        <td>{{paciente.primer_nombre}} {{paciente.primer_apellido}}</td>
-                        <td>{{paciente.sexo_paciente}}</td>
-                        <td>{{paciente.edad}}</td>
+                      {% for paciente in pacientes %}
+                    <tr>
+                      <td>{{paciente.id_paciente}}</td>
+                      <td>{{paciente.primer_nombre}} {{paciente.segundo_nombre}}</td>
+                      <td>{{paciente.sexo_paciente}}</td>
+                      <td>{{paciente.edad}}</td>
 
-                        <td>
-                          <a href="#" class="ver-pacientes" data-pacientes-id="{{paciente.id_paciente}}"><i class="nav-icon fas fa-eye"></i></a>
-                          <button type="button" class="btn"><i class="fas fa-trash"></i></button>
-                      </td>
-                      </tr>
-                      {% endfor %}
+                      <td>
+                        <a href="#" class="ver-pacientes" data-pacientes-id="{{paciente.id_paciente}}"><i class="nav-icon fas fa-eye"></i></a>
+                     </td>
+                     <td>
+                      <button class="btn" onclick="ocultarFila(this)"><i class="fas fa-ban"></i></button></td>
+                   </td>
+                    </tr>
+                    {% endfor %}
                     </tbody>
                   </table>
                 </div>
