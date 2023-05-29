@@ -101,40 +101,42 @@ def EliminarUsuario(request, username):
     
     return render(request, 'Cuentas/eliminarUsuario.html', {'usuario': usuario})
 
-# @login_required
-# def EditarUsuario(request, username):
-#     usuario = get_object_or_404(User, username=username)
-#     grupos_usuario = usuario.groups.values_list('name', flat=True)
-    
-#     if request.method == 'POST':
-#         nuevo_usuario = request.POST['username']
-#         nueva_contraseña = request.POST['password']
-#         confirmar_contraseña = request.POST['confirm_password']
-#         nuevo_primerNombre = request.POST['firstname']
-#         nuevo_primerApellido = request.POST['lastname']
-#         nuevo_correo = request.POST['email']
-#         nuevo_cargo = request.POST['cargo']
-        
-#         if nueva_contraseña != confirmar_contraseña:
-#             messages.error(request, 'Las contraseñas no coinciden')
-#             return redirect('editarUsuario', username=username)
-        
-#         usuario.username = nuevo_usuario
-#         if nueva_contraseña:
-#             usuario.set_password(nueva_contraseña)
-#         usuario.email = nuevo_correo
-#         usuario.first_name = nuevo_primerNombre
-#         usuario.last_name = nuevo_primerApellido
-#         usuario.save()
-        
-#         grupos_usuario = Group.objects.filter(name=nuevo_cargo)
-#         usuario.groups.set(grupos_usuario)
-        
-#         messages.success(request, 'El usuario se ha actualizado correctamente')
-#         return redirect('gestionUsuarios')
-    
-#     return render(request, 'Cuentas/editarUsuario.html', {
-#         'usuario': usuario,
-#         'grupos_usuario': grupos_usuario,
-#     })
+@login_required
+@csrf_exempt
+def EditarUsuario(request, username):
+    usuario = get_object_or_404(User, username=username)
+    grupos_usuario = usuario.groups.values_list('name', flat=True)
+
+    if request.method == 'POST':
+        usuario.username = request.POST['username']
+        contraseña = request.POST['password']
+        primerNombre = request.POST['firstname']
+        primerApellido = request.POST['lastname']
+        correo = request.POST['email']
+        cargo = request.POST['cargo']
+
+        usuario.set_password(contraseña)
+        usuario.first_name = primerNombre
+        usuario.last_name = primerApellido
+        usuario.email = correo
+        usuario.save()
+
+        grupos_usuario = usuario.groups.all()
+
+        if cargo == "administrador" and 'Administrador' not in grupos_usuario:
+            grupo_administrador = Group.objects.get(name='Administrador')
+            usuario.groups.add(grupo_administrador)
+        elif cargo == "acupunturista" and 'Acupunturista' not in grupos_usuario:
+            grupo_acupunturista = Group.objects.get(name='Acupunturista')
+            usuario.groups.add(grupo_acupunturista)
+        elif cargo == "":
+            usuario.groups.clear()
+
+        messages.success(request, "El Usuario se ha actualizado satisfactoriamente")
+        return redirect('gestionUsuarios')
+
+    return render(request, 'Cuentas/editarUsuario.html', {
+        'usuario': usuario,
+        'grupos_usuario': grupos_usuario
+    })
 

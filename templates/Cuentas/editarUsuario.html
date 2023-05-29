@@ -59,12 +59,20 @@
                             <input type="text" class="form-control" id="inputUser" placeholder="Ingrese su usuario" name="username" value="{{ usuario.username }}">
                         </div>
                         <div class="form-group">
-                            <label for="inputPassword">Contraseña*</label>
-                            <input class="form-control" type="password" name="password" placeholder="Ingrese una contraseña">
+                            <input type="checkbox" id="cambiarContrasenaCheckbox" name="cambiar_contrasena">
+                            <label for="cambiarContrasenaCheckbox">Cambiar contraseña</label>
                         </div>
-                        <div class="form-group">
-                            <label for="inputConfirmPassword">Confirmar Contraseña*</label>
-                            <input class="form-control" type="password" name="confirm_password" placeholder="Ingrese la contraseña nuevamente">
+                    
+                        <div id="divContrasena" style="display: none;">
+                            <div class="form-group">
+                                <label for="inputContrasena">Contraseña</label>
+                                <input type="password" class="form-control" id="inputContrasena" name="password" disabled>
+                            </div>
+                    
+                            <div class="form-group">
+                                <label for="inputConfirmarContrasena">Confirmar Contraseña</label>
+                                <input type="password" class="form-control" id="inputConfirmarContrasena" name="password" disabled>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="selectCargo">Cargo*</label>
@@ -132,5 +140,23 @@
 
 </div>
 </div>
+
+<script>
+    document.getElementById("cambiarContrasenaCheckbox").addEventListener("change", function() {
+        var divContrasena = document.getElementById("divContrasena");
+        var inputContrasena = document.getElementById("inputContrasena");
+        var inputConfirmarContrasena = document.getElementById("inputConfirmarContrasena");
+
+        if (this.checked) {
+            divContrasena.style.display = "block";
+            inputContrasena.disabled = false;
+            inputConfirmarContrasena.disabled = false;
+        } else {
+            divContrasena.style.display = "none";
+            inputContrasena.disabled = true;
+            inputConfirmarContrasena.disabled = true;
+        }
+    });
+</script>
 
 {% endblock %}
