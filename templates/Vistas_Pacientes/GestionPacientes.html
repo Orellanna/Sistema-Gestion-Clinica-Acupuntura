@@ -52,10 +52,8 @@
 
                       <td>
                         <a href="#" class="ver-pacientes" data-pacientes-id="{{paciente.id_paciente}}"><i class="nav-icon fas fa-eye"></i></a>
+                        <button class="btn" onclick="ocultarFila(this)"><i class="fas fa-ban"></i></button></td>
                      </td>
-                     <td>
-                      <button class="btn" onclick="ocultarFila(this)"><i class="fas fa-ban"></i></button></td>
-                   </td>
                     </tr>
                     {% endfor %}
                     </tbody>
