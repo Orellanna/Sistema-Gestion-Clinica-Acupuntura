@@ -5,7 +5,7 @@ from Pacientes.models import Consulta, Paciente
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from xhtml2pdf import pisa
+
 from django.template.loader import get_template
 
 @login_required
