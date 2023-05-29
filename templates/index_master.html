@@ -79,6 +79,13 @@
         <li class="nav-item">
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars" style="color: #000000;"></i></a>
         </li>
+        <li class="nav-item">
+          <div class="image">
+            <img src="{% static 'img/logo.jpg' %}" width="65" height="50">&nbsp;&nbsp;&nbsp;
+            <strong>Sistema de Gestion de Clinica Terapia-Holistica de Acupuntura</strong>
+          </div>
+        </li>
+        
       </ul>
     </nav>
     
@@ -175,10 +182,17 @@
 
       {% for group in request.user.groups.all %}
           {% if group.name == 'Administrador' %}
+          <div class="row mb-5">
+            <div class="row mb-4">
+              <div class="row mb-2">
+        
+              </div>
+            </div>
+          </div>
               <!-- Si El usuario pertenece al grupo "Administrador", mostrara la sección de "Administración" -->
               <div class="sidebar-custom">
                   <a href="{% url 'administracion' %}" class="btn btn-secondary hide-on-collapse pos-left admin-btn-link text-truncate">
-                      <i class="nav-icon fas fa-bars"></i>Administracion
+                      <i class="nav-icon fas fa-bars">&nbsp;</i>Administracion
                   </a>
               </div>
           {% endif %}

@@ -12,7 +12,8 @@ class Paciente(models.Model):
     sexo_paciente = models.CharField(max_length=1)
     telefono_paciente = models.CharField(max_length=8, blank=True, null=True)
     email_paciente = models.CharField(max_length=50, blank=True, null=True)
-
+    deshabilitado = models.BooleanField(default=False)
+    
     def save(self, *args, **kwargs):
         if not self.id_paciente:  
             fecha_actual = date.today().strftime('%d%m%y')

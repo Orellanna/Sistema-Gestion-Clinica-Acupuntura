@@ -16,5 +16,5 @@ urlpatterns = [
     path('GestionUsuarios/', views.GestionUsuarios, name='gestionUsuarios'),
     path('verUsuario/<str:username>/',views.VerUsuario,name='verUsuario'),
     path('eliminarUsuario/<str:username>/', views.EliminarUsuario, name='eliminarUsuario'),
-    # path('editarUsuario/<str:username>/', views.EditarUsuario, name='editarUsuario'),
+    path('editarUsuario/<str:username>/', views.EditarUsuario, name='editarUsuario'),
     ]
