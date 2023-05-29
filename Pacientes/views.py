@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import Paciente
+from django.db.models import Q
 
 @login_required
 def index(request):
@@ -11,17 +12,17 @@ def index(request):
 @login_required
 def GestionPacientes(request):
     pacientes = Paciente.objects.all()
-
     fecha_actual = datetime.today()
-    
+
     for paciente in pacientes:
         edad= fecha_actual.year - paciente.fechanac_paciente.year
         if fecha_actual.month < paciente.fechanac_paciente.month and fecha_actual.day < paciente.fechanac_paciente.day:
             edad -=1
         elif fecha_actual.month == paciente.fechanac_paciente.month and fecha_actual.day < paciente.fechanac_paciente.day:
             edad -=1
-        paciente.edad = edad
-    
+        paciente.edad = edad    
+            
+
     return render(request, 'Vistas_Pacientes/GestionPacientes.html', {
         'pacientes': pacientes,
     })

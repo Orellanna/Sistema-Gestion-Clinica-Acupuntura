@@ -15,13 +15,11 @@
           <div class="col">
             <a href="{% url 'registrarPaciente' %}" class="btn btn-success"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Crear Paciente</a>
             <div class="row"> <div class="card"></div></div>
-            <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
-              </form>
+            <form class="form-inline d-flex justify-content-end">
           </div>
       </div>
 
-    </form>
+        </form>
       </div><!-- /.container-fluid -->
       <div class="row"> <div class="card"></div></div>
 
@@ -34,31 +32,31 @@
                 
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="example2" class="table table-bordered table-hover">
+                  <table id="example1" class="table table-bordered table-hover">
                     <thead>
-                    <tr>
-                      <th>Codigo</th>
-                      <th>Paciente</th>
-                      <th>Genero</th>
-                      <th>Edad</th>
-                      <th>Acciones</th>
-                    </tr>
+                      <tr>
+                        <th>Codigo</th>
+                        <th>Paciente</th>
+                        <th>Genero</th>
+                        <th>Edad</th>
+                        <th>Acciones</th>
+                      </tr>
                     </thead>
                     <tbody>
-                      {% for paciente in pacientes %}
-                    <tr>
-                      <td>{{paciente.id_paciente}}</td>
-                      <td>{{paciente.primer_nombre}} {{paciente.segundo_nombre}}</td>
-                      <td>{{paciente.sexo_paciente}}</td>
-                      <td>{{paciente.edad}}</td>
+                    {% for paciente in pacientes %}
+                      <tr>
+                        <td>{{paciente.id_paciente}}</td>
+                        <td>{{paciente.primer_nombre}} {{paciente.primer_apellido}}</td>
+                        <td>{{paciente.sexo_paciente}}</td>
+                        <td>{{paciente.edad}}</td>
 
-                      <td>
-                        <a href="#" class="ver-pacientes" data-pacientes-id="{{paciente.id_paciente}}"><i class="nav-icon fas fa-eye"></i></a>
-                        <button type="button" class="btn"><i class="fas fa-trash"></i></button>
-                     </td>
-                    </tr>
+                        <td>
+                          <a href="#" class="ver-pacientes" data-pacientes-id="{{paciente.id_paciente}}"><i class="nav-icon fas fa-eye"></i></a>
+                          <button type="button" class="btn"><i class="fas fa-trash"></i></button>
+                      </td>
+                      </tr>
+                      {% endfor %}
                     </tbody>
-                    {% endfor %}
                   </table>
                 </div>
                 <!-- /.card-body -->
