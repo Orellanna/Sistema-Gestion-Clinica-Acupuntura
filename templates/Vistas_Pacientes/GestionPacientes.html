@@ -44,17 +44,21 @@
                     </thead>
                     <tbody>
                       {% for paciente in pacientes %}
-                    <tr>
-                      <td>{{paciente.id_paciente}}</td>
-                      <td>{{paciente.primer_nombre}} {{paciente.primer_apellido}}</td>
-                      <td>{{paciente.sexo_paciente}}</td>
-                      <td>{{paciente.edad}}</td>
+                        {% if not paciente.deshabilitado %}
+                          <tr>
+                            <td>{{paciente.id_paciente}}</td>
+                            <td>{{paciente.primer_nombre}} {{paciente.primer_apellido}}</td>
+                            <td>{{paciente.sexo_paciente}}</td>
+                            <td>{{paciente.edad}}</td>
 
-                      <td>
-                        <a href="#" class="ver-pacientes" data-pacientes-id="{{paciente.id_paciente}}"><i class="nav-icon fas fa-eye"></i></a>
-                        <button class="btn" onclick="ocultarFila(this)"><i class="fas fa-ban"></i></button></td>
-                     </td>
-                    </tr>
+                            <td>
+                              <a href="#" class="ver-pacientes" data-pacientes-id="{{paciente.id_paciente}}"><i class="nav-icon fas fa-eye"></i></a>
+                              <a href="{% url 'eliminarPaciente' id_paciente=paciente.id_paciente %}" class="eliminar-paciente" data-paciente-id="{{paciente.id_paciente}}" >
+                                <i class="fas fa-ban fa-lg" style="color: #1e3152;"></i>
+                              </a>
+                          </td>
+                          </tr>
+                      {% endif %}
                     {% endfor %}
                     </tbody>
                   </table>
