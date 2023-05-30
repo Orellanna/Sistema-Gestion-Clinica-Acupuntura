@@ -108,14 +108,15 @@ def EditarUsuario(request, username):
     grupos_usuario = usuario.groups.values_list('name', flat=True)
 
     if request.method == 'POST':
-        usuario.username = request.POST['username']
-        contraseña = request.POST['password']
+        if 'password' in request.POST:
+            contraseña = request.POST['password']
+            usuario.set_password(contraseña)
         primerNombre = request.POST['firstname']
         primerApellido = request.POST['lastname']
         correo = request.POST['email']
         cargo = request.POST['cargo']
 
-        usuario.set_password(contraseña)
+        usuario.username = request.POST['username']
         usuario.first_name = primerNombre
         usuario.last_name = primerApellido
         usuario.email = correo
