@@ -98,6 +98,7 @@ def EditarPaciente(request, id_paciente):
     })
     
 
+@login_required
 def EliminarPaciente(request, id_paciente):
     
     paciente = get_object_or_404(Paciente, id_paciente=id_paciente)
