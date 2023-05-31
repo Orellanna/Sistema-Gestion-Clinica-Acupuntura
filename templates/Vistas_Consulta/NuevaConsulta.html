@@ -1,7 +1,15 @@
 {% extends 'base_pacientes.html' %} 
 
 {% block content %}
-
+{% if messages %}
+<div class="alert alert-danger" role="alert">
+  <ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -33,7 +41,7 @@
                     <div class="col-sm-5">
                       <input
                         type="date"
-                        class="limpiarinput"
+                        class=""
                         id="consulta_fecha"
                         name="consulta_fecha"
                       />
@@ -123,9 +131,4 @@
   </section>
 </form>
 
-<script>
-  document.getElementsByClassName("limpiarinput")[0].value = "";
-  document.getElementById("motivo").value = "";
-  document.getElementById("observacion").value = "";
-</script>
 {% endblock %}

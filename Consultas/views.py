@@ -5,8 +5,10 @@ from Pacientes.models import Consulta, Paciente
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 from django.template.loader import get_template
+from xhtml2pdf import pisa
+
 
 @login_required
 def index(request):
@@ -22,19 +24,30 @@ def ListarConsultas(request, paciente_id):
         'paciente': paciente,
     })
 
+from django.contrib import messages
+
 @login_required
 @csrf_exempt
 def NuevaConsulta(request, paciente_id):
-    
     paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
     
     if request.method == 'POST':
         
-        # obtenemos los datos del formulario
+        # Obtenemos los datos del formulario
         fecha_consulta = request.POST['consulta_fecha']
         motivo_consulta = request.POST['motivo_consulta']
         observacion_consulta = request.POST['observacion_consulta']
         hora_consulta = request.POST['hora_consulta']
+        
+        # Validamos los campos requeridos
+        if not fecha_consulta or not hora_consulta:
+            messages.error(request, "Debe ingresar la fecha y la hora de inicio.")
+            return render(request, 'Vistas_Consulta/NuevaConsulta.html', {'paciente': paciente})
+        
+        # Validamos el motivo de la consulta
+        if motivo_consulta.isdigit():
+            messages.error(request, "El motivo de la consulta no puede contener solo números.")
+            return render(request, 'Vistas_Consulta/NuevaConsulta.html', {'paciente': paciente})
         
         # Creamos la nueva consulta para el paciente
         consulta = Consulta.objects.create(
@@ -52,6 +65,7 @@ def NuevaConsulta(request, paciente_id):
         return redirect(url)
     
     return render(request, 'Vistas_Consulta/NuevaConsulta.html', {'paciente': paciente})
+
            
 
 @login_required
