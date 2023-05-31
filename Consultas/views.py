@@ -39,11 +39,6 @@ def NuevaConsulta(request, paciente_id):
         observacion_consulta = request.POST['observacion_consulta']
         hora_consulta = request.POST['hora_consulta']
         
-        # Validamos los campos requeridos
-        if not fecha_consulta or not hora_consulta:
-            messages.error(request, "Debe ingresar la fecha y la hora de inicio.")
-            return render(request, 'Vistas_Consulta/NuevaConsulta.html', {'paciente': paciente})
-        
         # Validamos el motivo de la consulta
         if motivo_consulta.isdigit():
             messages.error(request, "El motivo de la consulta no puede contener solo números.")
@@ -67,7 +62,6 @@ def NuevaConsulta(request, paciente_id):
     return render(request, 'Vistas_Consulta/NuevaConsulta.html', {'paciente': paciente})
 
            
-
 @login_required
 @csrf_exempt
 def DetallesConsulta(request, paciente_id, consulta_id):

@@ -44,6 +44,7 @@
                         class=""
                         id="consulta_fecha"
                         name="consulta_fecha"
+                        required
                       />
                     </div>
                   </div>
@@ -53,7 +54,7 @@
                     <label for="horainicio" class="col-sm-4 col-form-label"
                       >Hora de inicio:</label>
                     <div class="col-sm-5">
-                      <input type="time" class="limpiarinput" id="hora_consulta" name="hora_consulta" />
+                      <input type="time" class="limpiarinput" id="hora_consulta" name="hora_consulta" required/>
                     </div>
                   </div>
                 </div>
@@ -65,7 +66,7 @@
                       >Motivo:</label
                     >
                     <div class="col-sm-10">
-                      <input class="form-control" id="motivo_consulta" name="motivo_consulta" />
+                      <input class="form-control" id="motivo_consulta" name="motivo_consulta" required/>
                     </div>
                   </div>
                 </div>
@@ -80,7 +81,8 @@
                         class="form-control" 
                         rows="3"
                         name="observacion_consulta"
-                        id="observacion_consulta">
+                        id="observacion_consulta" required>
+                        
                       </textarea>
                     </div>
                   </div>
