@@ -58,6 +58,8 @@ def GestionUsuarios(request):
     })
 
 
+from django.contrib import messages
+
 @login_required
 @csrf_exempt
 def NuevoUsuario(request):
@@ -69,6 +71,20 @@ def NuevoUsuario(request):
         correo = request.POST['email']
         cargo = request.POST['cargo']
         
+        # Verificar si el usuario ya existe
+        if User.objects.filter(username=usuario).exists():
+            messages.error(request, 'El usuario ya está registrado. Intente con otro.')
+            
+            context = {
+                'usuario': usuario,
+                'contraseña': contraseña,
+                'primerNombre': primerNombre,
+                'primerApellido': primerApellido,
+                'correo': correo,
+                'cargo': cargo,
+            }
+            return render(request, 'Cuentas/Registro.html', context=context)
+
         nuevo_usuario = User.objects.create_user(username=usuario, password=contraseña, email=correo, first_name=primerNombre, last_name=primerApellido)
         
         if cargo == "administrador":
@@ -81,7 +97,8 @@ def NuevoUsuario(request):
            
         return redirect('gestionUsuarios')
     
-    return render(request, 'Cuentas/Registro.html', {})
+    return render(request, 'Cuentas/Registro.html')
+
 
 @login_required
 def VerUsuario(request, username):

@@ -142,7 +142,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="" class="nav-link">
+              <a href="{% url 'construccion' %}" class="nav-link">
                 <i class="nav-icon fas fa-calendar-plus" style="color: #000000; font-size: 1.25em;"></i>
                 <p style="color: #000000; font-size: 1.25em;">
                   Citas
@@ -153,7 +153,7 @@
             {% if group.name == 'Administrador' %}
             <!-- El usuario pertenece al grupo "Administrador", mostrar la sección de "Inventario" -->
             <li class="nav-item">
-              <a href="" class="nav-link">
+              <a href="{% url 'construccion' %}" class="nav-link">
                 <i class="nav-icon fas fa-medkit" style="color: #000000; font-size: 1.25em;"></i>
                 <p style="color: #000000; font-size: 1.25em;">
                   Inventario
@@ -164,7 +164,7 @@
             {% endfor %}
         
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="{% url 'construccion' %}" class="nav-link">
                 <i class="nav-icon fas fa-chart-pie" style="color: #000000; font-size: 1.25em;"></i>
                 <p style="color: #000000; font-size: 1.25em;">
                   Reportes
@@ -274,12 +274,11 @@
   $(function () {
     $('#example1').DataTable({
       "paging": true,
-      "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,
-      "autoWidth": true,
-      "responsive": true,
+      "buttons": ["copy","excel", "pdf", "print"],
+      "dom": 'Bfrtip',
       "language": {
         "decimal": "",
         "emptyTable": "No hay datos disponibles en la tabla",
@@ -302,6 +301,12 @@
         "aria": {
           "sortAscending": ": activar para ordenar la columna ascendente",
           "sortDescending": ": activar para ordenar la columna descendente"
+        },
+        "buttons": {
+          "copy": "Copiar",
+          "excel": "Excel",
+          "pdf": "PDF",
+          "print": "Imprimir"
         }
       }
     });
@@ -338,7 +343,6 @@ logoutLink.addEventListener('click', function(event) {
   // Muestra la ventana emergente de confirmación de logout
   logoutDialog.style.display = 'block';
 });
-
 
 
 // Agrega un evento de clic al botón de cancelar
