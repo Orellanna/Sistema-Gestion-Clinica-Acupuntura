@@ -57,37 +57,6 @@ def GestionUsuarios(request):
         'usuarios': usuarios,
     })
 
-<<<<<<< HEAD
-def RegistrarUsuario(request):
-    return render(request,'Cuentas/Registro.html')
-
-@login_required
-@csrf_exempt
-def NuevoUsuario(request):
-    if request.method == 'POST':
-        usuario = request.POST['username']
-        contraseña = request.POST['password']
-        primerNombre = request.POST['firstname']
-        primerApellido = request.POST['lastname']
-        correo = request.POST['email']
-        cargo = request.POST['cargo']
-        
-        nuevo_usuario = User.objects.create_user(username=usuario, password=contraseña, email=correo, first_name=primerNombre, last_name=primerApellido)
-        
-        if cargo == "administrador":
-            nuevo_usuario.is_superuser = True
-            nuevo_usuario.is_staff = True
-        else:
-            nuevo_usuario.is_superuser = False
-            nuevo_usuario.is_staff = False
-        nuevo_usuario.save()
-           
-        return redirect('gestionUsuarios')
-    
-    return render(request, 'Cuentas/Registro.html', {})
-
-=======
->>>>>>> main
 
 @login_required
 @csrf_exempt
