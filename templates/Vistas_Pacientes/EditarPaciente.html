@@ -20,16 +20,16 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form action ="{% url 'editarPaciente' paciente.id_paciente %}" method="POST">
+              <form action ="{% url 'editarPaciente' paciente.id_paciente %}" method="POST" id="registroForm">
                 {% csrf_token %}
                             <div class="card-body ">
                                 <div class="form-group">
                                     <label for="inputNombre">Nombre</label>
-                                    <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="primer_nombre" value="{{paciente.primer_nombre}}">
+                                    <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="primer_nombre" value="{{paciente.primer_nombre}}" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputApellidos">Apellidos</label>
-                                    <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="primer_apellido" value="{{paciente.primer_apellido}}">
+                                    <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="primer_apellido" value="{{paciente.primer_apellido}}" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="fechanacimiento" class="sm-4 col-form-label">Fecha de Nacimiento:</label>
@@ -38,14 +38,14 @@
                                         class="limpiarinput"
                                         id="nacimiento_fecha"
                                         name="fechanac_paciente"
-                                        value="{{paciente.fechanac_paciente|date:'Y-m-d'}}"
+                                        value="{{paciente.fechanac_paciente|date:'Y-m-d'}}" required
                                         />
                                         
                             
                                 </div>
                                 <div class="form-group">
                                     <label for="selectSexo">Sexo</label>
-                                    <select class="form-control" id="selectSexo" name="sexo_paciente">
+                                    <select class="form-control" id="selectSexo" name="sexo_paciente" required>
                                         <option value="">Seleccione su sexo</option>
                                         <option value="M" {% if paciente.sexo_paciente == 'M'%} selected {% endif %}>Masculino</option>
                                         <option value="F" {% if paciente.sexo_paciente == 'F'%} selected {% endif %}>Femenino</option>
@@ -93,5 +93,63 @@
       
   </div>
 </div>
+<script>
+    // Obtiene el formulario y los campos de entrada
+    const form = document.getElementById('registroForm');
+    const inputNombre = document.getElementById('inputNombre');
+    const inputApellidos = document.getElementById('inputApellidos');
+    const nacimiento_fecha = document.getElementById('nacimiento_fecha');
+    const selectSexo = document.getElementById('selectSexo');
+    const inputCorreo = document.getElementById('inputCorreo');
+    const inputTelefono = document.getElementById('inputTelefono');
+  
+    // Agrega un evento de escucha al enviar el formulario
+    form.addEventListener('submit', (event) => {
+      // Verifica la validez del campo de Nombre
+      if (/^\d+$/.test(inputNombre.value) || /[^\w]+/.test(inputNombre.value) || /\s/.test(inputNombre.value) || inputNombre.value.length > 20) {
+        event.preventDefault();
+        inputNombre.setAttribute('data-toggle', 'tooltip');
+        inputNombre.setAttribute('data-placement', 'top');
+        inputNombre.setAttribute('title', 'El nombre contiene carácteres incorrectos o es muy Largo');
+        $(inputNombre).tooltip('show');
+    }
+  
+      // Verifica la validez del campo de Apellidos
+      if (/^\d+$/.test(inputApellidos.value) || /[^\w\s]+/.test(inputApellidos.value) || /\s/.test(inputApellidos.value) || inputApellidos.value.split(/\s+/).length > 20) {
+        event.preventDefault();
+        inputApellidos.setAttribute('data-toggle', 'tooltip');
+        inputApellidos.setAttribute('data-placement', 'top');
+        inputApellidos.setAttribute('title', 'El apellido contiene carácteres incorrectos o es muy largo');
+        $(inputApellidos).tooltip({
+          trigger: 'manual',
+          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+        }).tooltip('show');
+      }
+  
+      // Verifica la validez del campo de Correo
+      if (inputCorreo.value !== '' && !/^\s*$|^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputCorreo.value)) {
+        event.preventDefault();
+        inputCorreo.setAttribute('data-toggle', 'tooltip');
+        inputCorreo.setAttribute('data-placement', 'top');
+        inputCorreo.setAttribute('title', 'El correo debe tener un formato válido (ej: usuario1@gmail.com)');
+        $(inputCorreo).tooltip({
+          trigger: 'manual',
+          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+        }).tooltip('show');
+      }
+      if (inputTelefono.value !== '' && !/^\d{8}$/.test(inputTelefono.value)) {
+        event.preventDefault();
+        inputTelefono.setAttribute('data-toggle', 'tooltip');
+        inputTelefono.setAttribute('data-placement', 'top');
+        inputTelefono.setAttribute('title', 'El teléfono debe tener 8 dígitos numéricos sin guion');
+        $(inputTelefono).tooltip({
+          trigger: 'manual',
+          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+        }).tooltip('show');
+      }
+      
+
+    });
+</script>
 
 {% endblock %}
