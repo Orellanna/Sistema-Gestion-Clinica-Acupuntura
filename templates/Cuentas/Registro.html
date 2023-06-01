@@ -28,8 +28,15 @@
                     <div class="card-body ">
                         
                         <div class="form-group">
+                            {% if messages %}
+                                <div class="alert alert-danger" role="alert">
+                                    {% for message in messages %}
+                                        {{ message }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
                             <label for="inputUser">Usuario*</label>
-                            <input type="text" class="form-control" id="inputUser" placeholder="Ingrese su usuario" name="username" required>
+                            <input type="text" class="form-control" id="inputUser" placeholder="Ingrese su usuario" name="username" required value="{{ usuario }}">
                         </div>
 
                         <div class="form-group">
@@ -38,13 +45,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="selectCargo">Cargo*</label>
-                            <select class="form-control" id="selectCargo" name="cargo" required>
-                                <option value="">Seleccione el cargo</option>
-                                <option value="administrador">Administrador</option>
-                                <option value="acupunturista">Acupunturista</option>
-                            </select>
-                        </div>
+                          <label for="selectCargo">Cargo*</label>
+                          <select class="form-control" id="selectCargo" name="cargo" required>
+                              <option value="">Seleccione el cargo</option>
+                              <option value="administrador" {% if request.POST.cargo == 'administrador' %}selected{% endif %}>Administrador</option>
+                              <option value="acupunturista" {% if request.POST.cargo == 'acupunturista' %}selected{% endif %}>Acupunturista</option>
+                          </select>
+                      </div>
 
                         </div>
                         </div>
@@ -60,17 +67,17 @@
                         <div class="card-body">   
                             <div class="form-group">
                             <label for="inputNombre">Nombre</label>
-                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="firstname" required>
+                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="firstname" required value="{{ primerNombre}}">
                         </div>
 
                         <div class="form-group">
                             <label for="inputApellidos">Apellido</label>
-                            <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="lastname" required>
+                            <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="lastname" required value="{{ primerApellido }}">
                         </div>
 
                         <div class="form-group">
                             <label for="inputTelefono">Correo</label>
-                            <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email" required>
+                            <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email" required value="{{ correo }}">
                         </div>
 
                     </div>
@@ -113,7 +120,7 @@
         event.preventDefault();
         inputUser.setAttribute('data-toggle', 'tooltip');
         inputUser.setAttribute('data-placement', 'top');
-        inputUser.setAttribute('title', 'El formato del usuario es incorrecto o tiene un máximo de 10 caracteres');
+        inputUser.setAttribute('title', 'El formato del usuario es incorrecto ó es muy largo');
         $(inputUser).tooltip({
           trigger: 'manual',
           template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
@@ -125,7 +132,7 @@
         event.preventDefault();
         inputPassword.setAttribute('data-toggle', 'tooltip');
         inputPassword.setAttribute('data-placement', 'top');
-        inputPassword.setAttribute('title', 'La contraseña debe tener un máximo de 20 caracteres');
+        inputPassword.setAttribute('title', 'La contraseña debe tener un máximo de 20 carácteres');
         $(inputPassword).tooltip({
           trigger: 'manual',
           template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
@@ -137,7 +144,7 @@
             event.preventDefault();
             inputNombre.setAttribute('data-toggle', 'tooltip');
             inputNombre.setAttribute('data-placement', 'top');
-            inputNombre.setAttribute('title', 'El nombre contiene caracteres incorrectos y debe tener un máximo de 20 caracteres');
+            inputNombre.setAttribute('title', 'El nombre contiene carácteres incorrectos o es muy Largo');
             $(inputNombre).tooltip('show');
         }
   
@@ -146,7 +153,7 @@
         event.preventDefault();
         inputApellidos.setAttribute('data-toggle', 'tooltip');
         inputApellidos.setAttribute('data-placement', 'top');
-        inputApellidos.setAttribute('title', 'El apellido contiene caracterires incorrectos y debe tener un máximo de 20 palabras');
+        inputApellidos.setAttribute('title', 'El apellido contiene carácteres incorrectos o es muy largo');
         $(inputApellidos).tooltip({
           trigger: 'manual',
           template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
