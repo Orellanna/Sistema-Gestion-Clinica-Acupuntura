@@ -19,6 +19,7 @@ class Paciente(models.Model):
             fecha_actual = date.today().strftime('%d%m%y')
             correlativo = self.obtener_correllativo(fecha_actual)
             self.id_paciente = self.generar_id_paciente(fecha_actual, correlativo)
+            self.id_paciente = self.id_paciente.upper()
         super().save(*args, **kwargs)
         
     def obtener_correllativo(self,fecha_actual):
@@ -45,7 +46,7 @@ class Paciente(models.Model):
         db_table = 'paciente'
         
 class Consulta(models.Model):
-    id_consulta = models.CharField(primary_key=True, max_length=10)
+    id_consulta = models.CharField(primary_key=True, max_length=15)
     id_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='id_paciente')
     motivo_consulta = models.CharField(max_length=500)
     observacion_consulta = models.CharField(max_length=1000, blank=True, null=True)
@@ -54,9 +55,8 @@ class Consulta(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id_consulta:  
-            nombre_paciente = self.id_paciente.primer_nombre
-            apellido_paciente = self.id_paciente.primer_apellido
-            id_paciente = (nombre_paciente[0] + apellido_paciente[0]).upper()
+            id_paciente = self.id_paciente.id_paciente
+            id_paciente = id_paciente.upper()
             # Obtener el número de consultas previas para ese paciente
             consultas_previas = Consulta.objects.filter(id_paciente=self.id_paciente).count()
             numero_consulta = consultas_previas + 1

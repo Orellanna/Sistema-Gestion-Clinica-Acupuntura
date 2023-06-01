@@ -1,15 +1,6 @@
 {% extends 'base_pacientes.html' %} 
 
 {% block content %}
-{% if messages %}
-<div class="alert alert-danger" role="alert">
-  <ul>
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-  </ul>
-</div>
-{% endif %}
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -24,7 +15,7 @@
 </section>
 
 <!-- Main content -->
-<form action="{% url 'NuevaConsulta' paciente_id=paciente.id_paciente %}" method="POST">
+<form action="{% url 'NuevaConsulta' paciente_id=paciente.id_paciente %}" method="POST" id="formNuevaConsulta">
   {% csrf_token %}
   <section class="content">
     <div class="container-fluid">
@@ -132,5 +123,26 @@
     <!-- /.container-fluid -->
   </section>
 </form>
+
+<script>
+  // Obtiene el formulario y el campo de motivo
+  const form = document.getElementById('formNuevaConsulta');
+  const motivoInput = document.getElementById('motivo_consulta');
+
+  // Agrega un evento de escucha al enviar el formulario
+  form.addEventListener('submit', (event) => {
+      // Verifica si el campo de motivo contiene solo números o solo signos
+      if (/^\d+$/.test(motivoInput.value) || /^[^\w\s]+$/.test(motivoInput.value)) {
+          // Evita que se envíe el formulario
+          event.preventDefault();
+
+          // Muestra el mensaje de error en un tooltip (puedes usar alguna librería de tooltips, como Bootstrap)
+          motivoInput.setAttribute('data-toggle', 'tooltip');
+          motivoInput.setAttribute('data-placement', 'top');
+          motivoInput.setAttribute('title', 'El formato del motivo es incorrecto');
+          $(motivoInput).tooltip('show');
+      }
+  });
+</script>
 
 {% endblock %}

@@ -63,13 +63,14 @@
                       </td>
                       <td class="text-center">
                         <div class="d-inline-flex flex-row align-items-center">
-                          <a href="" class="ver-usuario mr-5" data-usuario-username="{{usuario.username}}">
-                            <i class="nav-icon fas fa-eye"></i>
+                          <a href="#" class="ver-usuario mr-5" data-usuario-username="{{usuario.username}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Usuario">
+                            <i class="fas fa-eye fa-lg" style="color: #0a3461;"></i>
                           </a>
-                          <a href="{% url 'eliminarUsuario' usuario.username %}" class="eliminar-usuario" data-usuario-username="{{usuario.username}}">
-                            <i class="nav-icon fas fa-trash"></i>
+                          <a href="{% url 'eliminarUsuario' usuario.username %}" class="eliminar-usuario" data-usuario-username="{{usuario.username}}"
+                             onclick="confirmarEliminacion(event)" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Usuario">
+                            <i class="fas fa-trash fa-lg" style="color: #1e3152;"></i>
                           </a>
-                        </div>
+                        </div>    
                       </td>
                     </tr>
                     {% endfor %}
