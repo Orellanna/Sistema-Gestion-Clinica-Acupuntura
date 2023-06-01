@@ -140,7 +140,7 @@
       }
   
       // Verifica la validez del campo inputNombre
-        if (inputCorreo.value !== '' && /^\d+$/.test(inputNombre.value) || /[^\w]+/.test(inputNombre.value) || /\s/.test(inputNombre.value) || inputNombre.value.length > 20) {
+        if (inputNombre.value !== '' && /^\d+$/.test(inputNombre.value) || /[^\w]+/.test(inputNombre.value) || /\s/.test(inputNombre.value) || inputNombre.value.length > 20) {
             event.preventDefault();
             inputNombre.setAttribute('data-toggle', 'tooltip');
             inputNombre.setAttribute('data-placement', 'top');
@@ -149,7 +149,7 @@
         }
   
       // Verifica la validez del campo de Apellidos
-      if (inputCorreo.value !== '' && /^\d+$/.test(inputApellidos.value) || /[^\w\s]+/.test(inputApellidos.value) || /\s/.test(inputApellidos.value) || inputApellidos.value.split(/\s+/).length > 20) {
+      if (inputApellidos.value !== '' && /^\d+$/.test(inputApellidos.value) || /[^\w\s]+/.test(inputApellidos.value) || /\s/.test(inputApellidos.value) || inputApellidos.value.split(/\s+/).length > 20) {
         event.preventDefault();
         inputApellidos.setAttribute('data-toggle', 'tooltip');
         inputApellidos.setAttribute('data-placement', 'top');
