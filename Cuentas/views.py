@@ -19,8 +19,10 @@ def HomePage(request):
     contexto = {'usuario':request.user}
     return render(request,'index.html',contexto)
 
+@login_required
 def Administracion(request):
     return render(request,'Administracion/administracion.html')
+
 
 def Login(request):
   
@@ -81,6 +83,7 @@ def NuevoUsuario(request):
     
     return render(request, 'Cuentas/Registro.html', {})
 
+@login_required
 def VerUsuario(request, username):
     usuario = get_object_or_404(User, username=username)
     
