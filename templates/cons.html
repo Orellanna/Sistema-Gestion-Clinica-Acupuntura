@@ -1,0 +1,79 @@
+{% extends 'index_master.html' %}
+
+{% block content %} 
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página en construcción</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #ffffff; /* Fondo blanco */
+      color: #000000; /* Texto negro */
+    }
+    
+    .construction-container {
+      text-align: center;
+      padding: 40px;
+      background-color: #ffffff; /* Fondo blanco */
+      border-radius: 10px;
+    }
+    
+    .construction-icon {
+      font-size: 100px;
+      color: #000000; /* Texto negro */
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    .construction-heading {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    
+    .construction-text {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    
+    .construction-progress {
+      margin-top: 30px;
+    }
+    
+    .progress-bar {
+      height: 10px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="construction-container">
+      <span class="construction-icon">&#128679;</span>
+      <h2 class="construction-heading">Página en construcción</h2>
+      <p class="construction-text">Pronto estará disponible.</p>
+      
+      <div class="construction-progress">
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+        </div>
+      </div>
+      
+      <p class="construction-text"></p>
+    </div>
+  </div>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
+
+{% endblock %}

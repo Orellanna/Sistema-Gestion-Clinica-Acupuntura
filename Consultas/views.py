@@ -146,3 +146,6 @@ def generar_reporte_pdf(request, paciente_id, consulta_id):
 
     return response
 
+def EnConstruccion(request):
+    return render(request,'cons.html')
+
