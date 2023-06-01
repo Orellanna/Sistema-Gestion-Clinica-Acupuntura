@@ -11,86 +11,160 @@
         </div>
     </div>
     
-<div class="row">
-    <div class="col-md-6">
+    <div class="row">
+        <div class="col-md-6">
         
-        <div class="card card-secondary">
-            <div class="card-header">
-                <h3 class="card-title">Información de Registro</h3>
-            </div>
-            <!-- /.card-header -->
+            <div class="card card-secondary">
 
+                <div class="card-header">
+                    <h3 class="card-title">Información de Registro</h3>
+                </div>
+                <!-- /.card-header -->
 
-            <!-- form start -->
-            <form action="{% url 'registroUsuario' %}" method="POST">
-            {% csrf_token %}
+                <!-- form start -->
+                <form action="{% url 'registroUsuario' %}" method="POST" id="registroForm">
+                {% csrf_token %}
                     
-                        <div class="card-body ">
+                    <div class="card-body ">
+                        
                         <div class="form-group">
                             <label for="inputUser">Usuario*</label>
-                            <input type="text" class="form-control" id="inputUser" placeholder="Ingrese su usuario" name="username">
+                            <input type="text" class="form-control" id="inputUser" placeholder="Ingrese su usuario" name="username" required>
                         </div>
+
                         <div class="form-group">
                             <label for="inputPassword">Contraseña*</label>
-                            <input class="form-control" type="password" name="password" placeholder="Ingrese una contraseña">
+                            <input class="form-control" type="password" name="password" placeholder="Ingrese una contraseña" id="inputPassword" required>
                         </div>
+
                         <div class="form-group">
                             <label for="selectCargo">Cargo*</label>
-                            <select class="form-control" id="selectCargo" name="cargo">
+                            <select class="form-control" id="selectCargo" name="cargo" required>
                                 <option value="">Seleccione el cargo</option>
                                 <option value="administrador">Administrador</option>
                                 <option value="acupunturista">Acupunturista</option>
                             </select>
                         </div>
-    
+
                         </div>
-                        <!-- /.card-body -->
-                   
-                </div>
-                <!-- /.card -->
-            </div>
-            <div class="col-md-6">
-                <div class="card card-secondary">
-                    <div class="card-header">
-                        <h3 class="card-title">Información Adicional</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    <form role="form">
+                        </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title">Información Adicional</h3>
+                        </div>
+
                         <div class="card-body">   
                             <div class="form-group">
                             <label for="inputNombre">Nombre</label>
-                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="firstname">
+                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="firstname" required>
                         </div>
+
                         <div class="form-group">
                             <label for="inputApellidos">Apellido</label>
-                            <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="lastname">
+                            <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="lastname" required>
                         </div>
+
                         <div class="form-group">
                             <label for="inputTelefono">Correo</label>
-                            <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email">
+                            <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email" required>
                         </div>
-    
+
                     </div>
-                    
+   
+                    </div>
+                    </div>
+
+                    <div class="container my-6">
+                        <div class="row mt-4">
+                        <div class="col-md-12 text-center">
+                            <a href="{% url 'gestionUsuarios' %}" class="btn btn-danger"><i class="fas fa-times"></i>&nbsp; Cancelar</a>
+                            <button type="submit" class="btn btn-primary" > <i class="nav-icon fas fa-save"> </i>&nbsp; Guardar</button>
+                        </div>
+                        </div>
+                    </div>
+
+                </form>
+
+                </div>
+
                 </div>
             </div>
-            <div class="container my-6">
-            <div class="row mt-4">
-                <div class="col-md-12 text-center">
-                    <button type="submit" name="submit" class="btn btn-primary"> <i class="nav-icon fas fa-save"> </i>&nbsp;&nbsp;Guardar</button>
-                    <button type="reset" class="btn btn-secondary">Cancelar</button>
-                </div>
-
-            </form>
-            <!--End For-->
-
         </div>
     </div>
-
-
-
-</div>
 </div>
 
+<script>
+    // Obtiene el formulario y los campos de entrada
+    const form = document.getElementById('registroForm');
+    const inputUser = document.getElementById('inputUser');
+    const inputPassword = document.getElementById('inputPassword');
+    const inputNombre = document.getElementById('inputNombre');
+    const inputApellidos = document.getElementById('inputApellidos');
+    const inputCorreo = document.getElementById('inputCorreo');
+  
+    // Agrega un evento de escucha al enviar el formulario
+    form.addEventListener('submit', (event) => {
+      // Verifica la validez del campo de Usuario
+      if (!/^[\w\d]+$/.test(inputUser.value) || inputUser.value.length > 10) {
+        event.preventDefault();
+        inputUser.setAttribute('data-toggle', 'tooltip');
+        inputUser.setAttribute('data-placement', 'top');
+        inputUser.setAttribute('title', 'El formato del usuario es incorrecto o tiene un máximo de 10 caracteres');
+        $(inputUser).tooltip({
+          trigger: 'manual',
+          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+        }).tooltip('show');
+      }
+  
+      // Verifica la validez del campo de Contraseña
+      if (inputPassword.value.length > 20) {
+        event.preventDefault();
+        inputPassword.setAttribute('data-toggle', 'tooltip');
+        inputPassword.setAttribute('data-placement', 'top');
+        inputPassword.setAttribute('title', 'La contraseña debe tener un máximo de 20 caracteres');
+        $(inputPassword).tooltip({
+          trigger: 'manual',
+          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+        }).tooltip('show');
+      }
+  
+      // Verifica la validez del campo inputNombre
+        if (/^\d+$/.test(inputNombre.value) || /[^\w]+/.test(inputNombre.value) || /\s/.test(inputNombre.value) || inputNombre.value.length > 20) {
+            event.preventDefault();
+            inputNombre.setAttribute('data-toggle', 'tooltip');
+            inputNombre.setAttribute('data-placement', 'top');
+            inputNombre.setAttribute('title', 'El nombre contiene caracteres incorrectos y debe tener un máximo de 20 caracteres');
+            $(inputNombre).tooltip('show');
+        }
+  
+      // Verifica la validez del campo de Apellidos
+      if (/^\d+$/.test(inputApellidos.value) || /[^\w\s]+/.test(inputApellidos.value) || /\s/.test(inputApellidos.value) || inputApellidos.value.split(/\s+/).length > 20) {
+        event.preventDefault();
+        inputApellidos.setAttribute('data-toggle', 'tooltip');
+        inputApellidos.setAttribute('data-placement', 'top');
+        inputApellidos.setAttribute('title', 'El apellido contiene caracterires incorrectos y debe tener un máximo de 20 palabras');
+        $(inputApellidos).tooltip({
+          trigger: 'manual',
+          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+        }).tooltip('show');
+      }
+  
+      // Verifica la validez del campo de Correo
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputCorreo.value)) {
+        event.preventDefault();
+        inputCorreo.setAttribute('data-toggle', 'tooltip');
+        inputCorreo.setAttribute('data-placement', 'top');
+        inputCorreo.setAttribute('title', 'El correo debe tener un formato válido (ej: usuario1@gmail.com)');
+        $(inputCorreo).tooltip({
+          trigger: 'manual',
+          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+        }).tooltip('show');
+      }
+    });
+  </script>
+  
 {% endblock %}

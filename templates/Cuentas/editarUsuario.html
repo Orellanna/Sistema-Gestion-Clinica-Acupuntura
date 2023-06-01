@@ -1,0 +1,225 @@
+{% extends 'index_master.html' %}
+
+{% block content %}
+
+<style>
+    ul.messages {
+        list-style-type: none;
+        padding: 0;
+      }
+      
+      .message {
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 4px;
+      }
+      
+      .success {
+        background-color: #dff0d8;
+        color: #3c763d;
+      }
+      
+      .error {
+        background-color: #f2dede;
+        color: #a94442;
+      }
+      
+      .warning {
+        background-color: #fcf8e3;
+        color: #8a6d3b;
+      }
+</style>
+<div class="container my-4">
+
+    
+    <div class="container-fluid">
+        <form>
+        <div class="row mb-3">
+            <h2>Editar Usuario</h2>
+        </form>
+        </div>
+    </div>
+    
+<div class="row">
+    <div class="col-md-6">
+        
+        <div class="card card-secondary">
+            <div class="card-header">
+                <h3 class="card-title">Información de Registro</h3>
+            </div>
+            <!-- /.card-header -->
+
+            <!-- form start -->
+            <form action="{% url 'editarUsuario' usuario.username %}" method="POST" id="editarForm">
+            {% csrf_token %}
+                    
+                        <div class="card-body">
+                        <div class="form-group">
+                            <label for="inputUser">Usuario*</label>
+                            <input type="text" class="form-control" id="inputUser" placeholder="Ingrese su usuario" name="username" value="{{ usuario.username }}">
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" id="cambiarContrasenaCheckbox" name="cambiar_contrasena">
+                            <label for="cambiarContrasenaCheckbox">Cambiar contraseña</label>
+                        </div>
+                    
+                        <div id="divContrasena" style="display: none;">
+                            <div class="form-group">
+                                <label for="inputContrasena">Contraseña</label>
+                                <input type="password" class="form-control" id="inputContrasena" name="password" disabled>
+                            </div>
+                    
+                            <div class="form-group">
+                                <label for="inputConfirmarContrasena">Confirmar Contraseña</label>
+                                <input type="password" class="form-control" id="inputConfirmarContrasena" name="password" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="selectCargo">Cargo*</label>
+                            <select class="form-control" id="selectCargo" name="cargo">
+                                <option value="">Seleccione el cargo</option>
+                                <option value="administrador" {% if 'Administrador' in grupos_usuario %}selected{% endif %}>Administrador</option>
+                                <option value="acupunturista" {% if 'Acupunturista' in grupos_usuario %}selected{% endif %}>Acupunturista</option>
+                            </select>
+                        </div>
+
+                        </div>
+                        <!-- /.card-body -->
+                   
+                </div>
+                <!-- /.card -->
+            </div>
+            <div class="col-md-6">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">Información Adicional</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    
+                        <div class="card-body">   
+                            <div class="form-group">
+                            <label for="inputNombre">Nombre</label>
+                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="firstname" value="{{ usuario.first_name }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputApellidos">Apellido</label>
+                            <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="lastname" value="{{ usuario.last_name }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputCorreo">Correo</label>
+                            <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email" value="{{ usuario.email }}">
+                        </div>
+    
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="container my-6">
+                <div class="row mt-4">
+                <div class="col-md-12 text-center">
+                    <a href="{% url 'verUsuario' usuario.username   %}" class="btn btn-danger"><i class="fas fa-times"></i>&nbsp; Cancelar</a>
+                    <button type="submit" class="btn btn-primary" > <i class="nav-icon fas fa-save"> </i>&nbsp; Guardar</button>
+                </div>
+                </div>
+            </div>
+
+            </form>
+            <!--End Form-->
+
+        </div>
+    </div>
+
+</div>
+</div>
+
+<script>
+    document.getElementById("cambiarContrasenaCheckbox").addEventListener("change", function() {
+        var divContrasena = document.getElementById("divContrasena");
+        var inputContrasena = document.getElementById("inputContrasena");
+        var inputConfirmarContrasena = document.getElementById("inputConfirmarContrasena");
+
+        if (this.checked) {
+            divContrasena.style.display = "block";
+            inputContrasena.disabled = false;
+            inputConfirmarContrasena.disabled = false;
+        } else {
+            divContrasena.style.display = "none";
+            inputContrasena.disabled = true;
+            inputConfirmarContrasena.disabled = true;
+        }
+    });
+</script>
+
+<script>
+    // Obtiene el formulario y los campos de entrada
+    const form = document.getElementById('editarForm');
+    const inputUser = document.getElementById('inputUser');
+    const inputPassword = document.getElementById('inputContrasena');
+    const inputNombre = document.getElementById('inputNombre');
+    const inputApellidos = document.getElementById('inputApellidos');
+    const inputCorreo = document.getElementById('inputCorreo');
+  
+    // Agrega un evento de escucha al enviar el formulario
+    form.addEventListener('submit', (event) => {
+      // Verifica la validez del campo de Usuario
+      if (!/^[\w\d]+$/.test(inputUser.value) || inputUser.value.length > 20) {
+        event.preventDefault();
+        inputUser.setAttribute('data-toggle', 'tooltip');
+        inputUser.setAttribute('data-placement', 'top');
+        inputUser.setAttribute('title', 'El formato del usuario es incorrecto o tiene un mas de 20 caracteres');
+        $(inputUser).tooltip({
+          trigger: 'manual',
+          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+        }).tooltip('show');
+      }
+  
+      // Verifica la validez del campo de Contraseña
+      if (inputPassword.value.length > 20) {
+        event.preventDefault();
+        inputPassword.setAttribute('data-toggle', 'tooltip');
+        inputPassword.setAttribute('data-placement', 'top');
+        inputPassword.setAttribute('title', 'La contraseña debe tener un máximo de 20 caracteres');
+        $(inputPassword).tooltip({
+          trigger: 'manual',
+          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+        }).tooltip('show');
+      }
+  
+      // Verifica la validez del campo inputNombre
+        if (/^\d+$/.test(inputNombre.value) || /[^\w]+/.test(inputNombre.value) || /\s/.test(inputNombre.value) || inputNombre.value.length > 20) {
+            event.preventDefault();
+            inputNombre.setAttribute('data-toggle', 'tooltip');
+            inputNombre.setAttribute('data-placement', 'top');
+            inputNombre.setAttribute('title', 'El nombre contiene caracteres incorrectos y debe tener un máximo de 20 caracteres');
+            $(inputNombre).tooltip('show');
+        }
+  
+      // Verifica la validez del campo de Apellidos
+      if (/^\d+$/.test(inputApellidos.value) || /[^\w\s]+/.test(inputApellidos.value) || /\s/.test(inputApellidos.value) || inputApellidos.value.split(/\s+/).length > 20) {
+        event.preventDefault();
+        inputApellidos.setAttribute('data-toggle', 'tooltip');
+        inputApellidos.setAttribute('data-placement', 'top');
+        inputApellidos.setAttribute('title', 'El apellido contiene caracterires incorrectos y debe tener un máximo de 20 palabras');
+        $(inputApellidos).tooltip({
+          trigger: 'manual',
+          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+        }).tooltip('show');
+      }
+  
+      // Verifica la validez del campo de Correo
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputCorreo.value)) {
+        event.preventDefault();
+        inputCorreo.setAttribute('data-toggle', 'tooltip');
+        inputCorreo.setAttribute('data-placement', 'top');
+        inputCorreo.setAttribute('title', 'El correo debe tener un formato válido (ej: usuario1@gmail.com)');
+        $(inputCorreo).tooltip({
+          trigger: 'manual',
+          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+        }).tooltip('show');
+      }
+    });
+  </script>
+
+{% endblock %}
