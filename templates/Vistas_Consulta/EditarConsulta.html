@@ -138,23 +138,36 @@
 </script>
 
 <script>
-  // Obtiene el formulario y el campo de motivo
-  const form = document.getElementById('formEditarConsulta');
-  const motivoInput = document.getElementById('motivo_consulta');
+  document.addEventListener("DOMContentLoaded", function() {
+    // Obtener referencias a los elementos del formulario
+    var motivoInput = document.getElementById("motivo_consulta");
+    var formulario = document.getElementById("formEditarConsulta");
 
-  // Agrega un evento de escucha al enviar el formulario
-  form.addEventListener('submit', (event) => {
-      // Verifica si el campo de motivo contiene solo números o solo signos
-      if (/^\d+$/.test(motivoInput.value) || /^[^\w\s]+$/.test(motivoInput.value)) {
-          // Evita que se envíe el formulario
-          event.preventDefault();
-
-          // Muestra el mensaje de error en un tooltip (puedes usar alguna librería de tooltips, como Bootstrap)
-          motivoInput.setAttribute('data-toggle', 'tooltip');
-          motivoInput.setAttribute('data-placement', 'top');
-          motivoInput.setAttribute('title', 'El formato del motivo es incorrecto');
-          $(motivoInput).tooltip('show');
+    // Agregar evento de validación al campo de motivo
+    motivoInput.addEventListener("input", function() {
+      if (validarMotivo(this.value)) {
+        this.classList.remove("is-invalid");
+        this.classList.add("is-valid");
+      } else {
+        this.classList.remove("is-valid");
+        this.classList.add("is-invalid");
       }
+    });
+
+    // Agregar evento de envío del formulario
+    formulario.addEventListener("submit", function(event) {
+      // Validar el campo de motivo antes de enviar el formulario
+      if (!validarMotivo(motivoInput.value)) {
+        motivoInput.classList.add("is-invalid");
+        event.preventDefault(); // Evitar el envío del formulario si hay errores
+      }
+    });
+
+    // Función de validación para el campo de motivo
+    function validarMotivo(valor) {
+      var motivoRegex = /^[a-zA-Z0-9\s]+$/; // Expresión regular para letras, números y espacios
+      return motivoRegex.test(valor);
+    }
   });
 </script>
 {% endblock %}

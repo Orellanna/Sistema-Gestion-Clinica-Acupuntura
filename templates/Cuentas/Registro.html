@@ -105,73 +105,96 @@
 </div>
 
 <script>
-    // Obtiene el formulario y los campos de entrada
-    const form = document.getElementById('registroForm');
-    const inputUser = document.getElementById('inputUser');
-    const inputPassword = document.getElementById('inputPassword');
-    const inputNombre = document.getElementById('inputNombre');
-    const inputApellidos = document.getElementById('inputApellidos');
-    const inputCorreo = document.getElementById('inputCorreo');
-  
-    // Agrega un evento de escucha al enviar el formulario
-    form.addEventListener('submit', (event) => {
-      // Verifica la validez del campo de Usuario
-      if (!/^[\w\d]+$/.test(inputUser.value) || inputUser.value.length > 10) {
-        event.preventDefault();
-        inputUser.setAttribute('data-toggle', 'tooltip');
-        inputUser.setAttribute('data-placement', 'top');
-        inputUser.setAttribute('title', 'El formato del usuario es incorrecto ó es muy largo');
-        $(inputUser).tooltip({
-          trigger: 'manual',
-          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
-        }).tooltip('show');
-      }
-  
-      // Verifica la validez del campo de Contraseña
-      if (inputPassword.value.length > 20) {
-        event.preventDefault();
-        inputPassword.setAttribute('data-toggle', 'tooltip');
-        inputPassword.setAttribute('data-placement', 'top');
-        inputPassword.setAttribute('title', 'La contraseña debe tener un máximo de 20 carácteres');
-        $(inputPassword).tooltip({
-          trigger: 'manual',
-          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
-        }).tooltip('show');
-      }
-  
-      // Verifica la validez del campo inputNombre
-        if (inputNombre.value !== '' && /^\d+$/.test(inputNombre.value) || /[^\w]+/.test(inputNombre.value) || /\s/.test(inputNombre.value) || inputNombre.value.length > 20) {
-            event.preventDefault();
-            inputNombre.setAttribute('data-toggle', 'tooltip');
-            inputNombre.setAttribute('data-placement', 'top');
-            inputNombre.setAttribute('title', 'El nombre contiene carácteres incorrectos o es muy Largo');
-            $(inputNombre).tooltip('show');
-        }
-  
-      // Verifica la validez del campo de Apellidos
-      if (inputApellidos.value !== '' && /^\d+$/.test(inputApellidos.value) || /[^\w\s]+/.test(inputApellidos.value) || /\s/.test(inputApellidos.value) || inputApellidos.value.split(/\s+/).length > 20) {
-        event.preventDefault();
-        inputApellidos.setAttribute('data-toggle', 'tooltip');
-        inputApellidos.setAttribute('data-placement', 'top');
-        inputApellidos.setAttribute('title', 'El apellido contiene carácteres incorrectos o es muy largo');
-        $(inputApellidos).tooltip({
-          trigger: 'manual',
-          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
-        }).tooltip('show');
-      }
-  
-      // Verifica la validez del campo de Correo
-      if (inputCorreo.value !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputCorreo.value)) {
-        event.preventDefault();
-        inputCorreo.setAttribute('data-toggle', 'tooltip');
-        inputCorreo.setAttribute('data-placement', 'top');
-        inputCorreo.setAttribute('title', 'El correo debe tener un formato válido (ej: usuario1@gmail.com)');
-        $(inputCorreo).tooltip({
-          trigger: 'manual',
-          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
-        }).tooltip('show');
-      }
-    });
-  </script>
+  // Función para validar un campo
+  function validarCampo(inputId, regex, minLength, maxLength) {
+    var input = document.getElementById(inputId);
+    var valor = input.value.trim();
+
+    if (valor === "") {
+      input.classList.remove("is-valid", "is-invalid");
+      return true; // No se ingresa ningún valor, no se muestra ninguna indicación de error
+    } else if (valor.length < minLength || valor.length > maxLength) {
+      input.classList.remove("is-valid");
+      input.classList.add("is-invalid");
+      return false; // Valor incorrecto, se muestra el estilo de error
+    } else if (!regex.test(valor)) {
+      input.classList.remove("is-valid");
+      input.classList.add("is-invalid");
+      return false; // Valor incorrecto, se muestra el estilo de error
+    } else {
+      input.classList.remove("is-invalid");
+      input.classList.add("is-valid");
+      return true; // Valor válido, se muestra el estilo de éxito
+    }
+  }
+
+  // Función para validar el usuario
+  function validarUsuario() {
+    var regex = /^[a-zA-Z0-9_]+$/;
+    var minLength = 1;
+    var maxLength = 20;
+    return validarCampo("inputUser", regex, minLength, maxLength);
+  }
+
+  // Función para validar la contraseña
+  function validarContraseña() {
+    var regex = /^[a-zA-Z][a-zA-Z0-9_]{7,19}$/;
+    var minLength = 8;
+    var maxLength = 20;
+    return validarCampo("inputPassword", regex, minLength, maxLength);
+  }
+
+  // Función para validar el nombre
+  function validarNombre() {
+    var regex = /^[a-zA-Z]+$/;
+    var minLength = 1;
+    var maxLength = 20;
+    return validarCampo("inputNombre", regex, minLength, maxLength);
+  }
+
+  // Función para validar el apellido
+  function validarApellido() {
+    var regex = /^[a-zA-Z]+$/;
+    var minLength = 1;
+    var maxLength = 20;
+    return validarCampo("inputApellidos", regex, minLength, maxLength);
+  }
+
+  // Función para validar el correo
+  function validarCorreo() {
+    var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return validarCampo("inputCorreo", regex, 0, 100);
+  }
+
+  // Función para validar el formulario completo
+  function validarFormulario(event) {
+    event.preventDefault(); // Evitar el envío del formulario por defecto
+
+    var usuarioValido = validarUsuario();
+    var contraseñaValida = validarContraseña();
+    var nombreValido = validarNombre();
+    var apellidoValido = validarApellido();
+    var correoValido = validarCorreo();
+
+    // Verificar si todos los campos son válidos
+    if (usuarioValido && contraseñaValida && nombreValido && apellidoValido && correoValido) {
+      document.getElementById("registroForm").submit(); // Enviar el formulario
+    } else {
+      // Mostrar un mensaje de error
+    }
+  }
+
+  // Agregar eventos de validación en tiempo real a los campos
+  document.getElementById("inputUser").addEventListener("input", validarUsuario);
+  document.getElementById("inputPassword").addEventListener("input", validarContraseña);
+  document.getElementById("inputNombre").addEventListener("input", validarNombre);
+  document.getElementById("inputApellidos").addEventListener("input", validarApellido);
+  document.getElementById("inputCorreo").addEventListener("input", validarCorreo);
+
+  // Agregar evento de envío del formulario
+  document.getElementById("registroForm").addEventListener("submit", validarFormulario);
+</script>
+
+
   
 {% endblock %}
