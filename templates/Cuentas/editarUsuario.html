@@ -58,7 +58,26 @@
                         <div class="card-body">
                         <div class="form-group">
                             <label for="inputUser">Usuario*</label>
-                            <input type="text" class="form-control" id="inputUser" placeholder="Ingrese su usuario" name="username" value="{{ usuario.username }}">
+                            <div class="input-group">
+
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                              </div>
+
+                              <input type="text" class="form-control" id="inputUser" placeholder="Ingrese su usuario" name="username" value="{{ usuario.username }}">
+
+                              <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                              </span>
+
+                            </div>
+
+                            <div class="instrucciones d-none">
+                              Ingrese el usuario utilizando solo letras, sin números ni símbolos.
+                            </div> 
+                            
                         </div>
                         <div class="form-group">
                             <input type="checkbox" id="cambiarContrasenaCheckbox" name="cambiar_contrasena">
@@ -68,21 +87,74 @@
                         <div id="divContrasena" style="display: none;">
                             <div class="form-group">
                                 <label for="inputContrasena">Contraseña</label>
-                                <input type="password" class="form-control" id="inputContrasena" name="password" title="Las contraseñas deben coincidir" disabled>
+                                <div class="input-group">
+
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                                  </div>
+                                  <input type="password" class="form-control" id="inputContrasena" name="password" title="Las contraseñas deben coincidir" disabled>
+                                  <span class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                      <i class="fas fa-info-circle"></i>
+                                    </button>
+                                  </span>
+    
+                                </div>
+    
+                                <div class="instrucciones d-none">
+                                  Debe Ingresar una contraseña de al menos 8 caracteres.
+                                </div>                              
                             </div>
                     
                             <div class="form-group">
                                 <label for="inputConfirmarContrasena">Confirmar Contraseña</label>
-                                <input type="password" class="form-control" id="inputConfirmarContrasena" name="password" title="Las contraseñas deben coincidir" disabled>
+                                <div class="input-group">
+
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                                  </div>
+                                  <input type="password" class="form-control" id="inputConfirmarContrasena" name="password" title="Las contraseñas deben coincidir" disabled>
+                                  <span class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                      <i class="fas fa-info-circle"></i>
+                                    </button>
+                                  </span>
+    
+                                </div>
+                                <div class="instrucciones d-none">
+                                  Las contraseñas deben coincidir.
+                                </div>
+                                
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label for="selectCargo">Cargo*</label>
-                            <select class="form-control" id="selectCargo" name="cargo">
+
+                            <div class="input-group">
+                            
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user-md"></i></span>
+                              </div>
+
+                              <select class="form-control" id="selectCargo" name="cargo" required>
                                 <option value="">Seleccione el cargo</option>
                                 <option value="administrador" {% if 'Administrador' in grupos_usuario %}selected{% endif %}>Administrador</option>
                                 <option value="acupunturista" {% if 'Acupunturista' in grupos_usuario %}selected{% endif %}>Acupunturista</option>
-                            </select>
+                              </select>
+
+                              <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                              </span>
+
+                            </div>
+
+                            <div class="instrucciones d-none">
+                              seleccione el cargo de el usuario.
+                            </div>
+
                         </div>
 
                         </div>
@@ -102,15 +174,70 @@
                         <div class="card-body">   
                             <div class="form-group">
                             <label for="inputNombre">Nombre</label>
-                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="firstname" value="{{ usuario.first_name }}">
+                            <div class = "input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                              </div>
+
+                              <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="firstname" value="{{ usuario.first_name }}">
+
+                              <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                              </span>
+
+                            </div>
+                        
+                            <div class="instrucciones d-none">
+                              Ingrese el Nombre utilizando solo letras, sin números ni símbolos.
+                            </div> 
+
                         </div>
+
                         <div class="form-group">
                             <label for="inputApellidos">Apellido</label>
-                            <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="lastname" value="{{ usuario.last_name }}">
+                            
+                            <div class = "input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                              </div>
+
+                              <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="lastname" value="{{ usuario.last_name }}">
+
+                              <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                              </span>
+
+                            </div>
+                        
+                            <div class="instrucciones d-none">
+                              Ingrese el apellido utilizando solo letras, sin números ni símbolos.
+                            </div> 
                         </div>
                         <div class="form-group">
                             <label for="inputCorreo">Correo</label>
-                            <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email" value="{{ usuario.email }}">
+                            <div class = "input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                              </div>
+
+                              <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email" value="{{ usuario.email }}">
+
+                              <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                              </span>
+
+                            </div>
+                        
+                            <div class="instrucciones d-none">
+                              Ingrese el correo electronico del usuario.
+                            </div> 
+                            
                         </div>
     
                     </div>
@@ -136,6 +263,13 @@
 
 </div>
 </div>
+<script>
+  // Función para mostrar u ocultar las instrucciones de un campo
+  function mostrarInstrucciones(boton) {
+    var instrucciones = boton.parentNode.parentNode.parentNode.querySelector(".instrucciones");
+    instrucciones.classList.toggle("d-none");
+  }
+</script>
 
 <script>
   // Función para validar un campo
@@ -172,7 +306,7 @@
   // Función para validar la contraseña
   function validarContraseña() {
     var regex = /^\d+$|^[a-zA-Z][a-zA-Z0-9_]{7,19}$/;
-    var minLength = 1;
+    var minLength = 8;
     var maxLength = 20;
     return validarCampo("inputContrasena", regex, minLength, maxLength);
   }

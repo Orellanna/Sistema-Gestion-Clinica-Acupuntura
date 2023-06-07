@@ -94,7 +94,8 @@ def NuevoUsuario(request):
         elif cargo == "acupunturista":
             grupo_acupunturista = Group.objects.get(name='Acupunturista')
             nuevo_usuario.groups.add(grupo_acupunturista)
-           
+        
+        messages.success(request, "El Usuario se ha creado satisfactoriamente")
         return redirect('gestionUsuarios')
     
     return render(request, 'Cuentas/Registro.html')
@@ -116,7 +117,7 @@ def EliminarUsuario(request, username):
     
     if request.method == 'POST':
         usuario.delete()
-        messages.info(request,"El Usuario se ha eliminado satisfactoriamente")
+        messages.success(request,"El Usuario se ha eliminado satisfactoriamente")
         return redirect('gestionUsuarios')
     
     return render(request, 'Cuentas/eliminarUsuario.html', {'usuario': usuario})

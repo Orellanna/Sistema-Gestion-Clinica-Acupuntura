@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import Paciente
 from django.db.models import Q
+from django.contrib import messages
 
 @login_required
 def index(request):
@@ -64,6 +65,7 @@ def Registrar(request):
         nuevo_paciente.email_paciente = email_paciente
         nuevo_paciente.save()
         
+        messages.success(request, "El Paciente se ha registrado satisfactoriamente")
         return redirect('GestionPacientes')
          
     return render(request,'Vistas_Pacientes/registrarPaciente.html')
@@ -90,7 +92,7 @@ def EditarPaciente(request, id_paciente):
         paciente.email_paciente = email_paciente
     
         paciente.save()
-        
+        messages.success(request, "El Paciente se ha editado satisfactoriamente")
         return redirect('DatosPersonales', id_paciente=id_paciente)
     
     return render(request,'Vistas_Pacientes/EditarPaciente.html', {
@@ -108,4 +110,5 @@ def EliminarPaciente(request, id_paciente):
     paciente.save()
 
     # Redirigir a la página de gestión de pacientes
+    messages.success(request, "El Paciente se ha desactivado satisfactoriamente")
     return redirect('GestionPacientes')
