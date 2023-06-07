@@ -20,42 +20,53 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form action ="{% url 'editarPaciente' paciente.id_paciente %}" method="POST" id="registroForm">
+              <form action="{% url 'editarPaciente' paciente.id_paciente %}" method="POST" id="registroForm">
                 {% csrf_token %}
-                            <div class="card-body ">
-                                <div class="form-group">
-                                    <label for="inputNombre">Nombre</label>
-                                    <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="primer_nombre" value="{{paciente.primer_nombre}}" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputApellidos">Apellidos</label>
-                                    <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="primer_apellido" value="{{paciente.primer_apellido}}" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="fechanacimiento" class="sm-4 col-form-label">Fecha de Nacimiento:</label>
-                                        <input
-                                        type="date"
-                                        class="limpiarinput"
-                                        id="nacimiento_fecha"
-                                        name="fechanac_paciente"
-                                        value="{{paciente.fechanac_paciente|date:'Y-m-d'}}" required
-                                        />
-                                        
-                            
-                                </div>
-                                <div class="form-group">
-                                    <label for="selectSexo">Sexo</label>
-                                    <select class="form-control" id="selectSexo" name="sexo_paciente" required>
-                                        <option value="">Seleccione su sexo</option>
-                                        <option value="M" {% if paciente.sexo_paciente == 'M'%} selected {% endif %}>Masculino</option>
-                                        <option value="F" {% if paciente.sexo_paciente == 'F'%} selected {% endif %}>Femenino</option>
-                                    </select>
-                                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="inputNombre">Nombre</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <!-- /.card-body -->
-                    
+                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="primer_nombre" value="{{paciente.primer_nombre}}" title="El nombre debe contener solo letras, no debe contener números ni símbolos" required>
+                        </div>
                     </div>
-                    <!-- /.card -->
+                    <div class="form-group">
+                        <label for="inputApellidos">Apellidos</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="primer_apellido" value="{{paciente.primer_apellido}}" title="El apellido debe contener solo letras, no debe contener números ni símbolos"required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="fechanacimiento" class="sm-4 col-form-label">Fecha de Nacimiento:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="limpiarinput form-control" id="nacimiento_fecha" name="fechanac_paciente" value="{{paciente.fechanac_paciente|date:'Y-m-d'}}" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="selectSexo">Sexo</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-venus-mars"></i></span>
+                            </div>
+                            <select class="form-control" id="selectSexo" name="sexo_paciente" required>
+                                <option value="">Seleccione su sexo</option>
+                                <option value="M" {% if paciente.sexo_paciente == 'M'%} selected {% endif %}>Masculino</option>
+                                <option value="F" {% if paciente.sexo_paciente == 'F'%} selected {% endif %}>Femenino</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
                 </div>
                 <div class="col-md-6">
                     <div class="card card-secondary">
@@ -64,92 +75,114 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="inputTelefono">Teléfono</label>
-                                    <input type="text" class="form-control" id="inputTelefono" placeholder="Ingrese su teléfono" name="telefono_paciente" value="{{paciente.telefono_paciente}}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputTelefono">Correo</label>
-                                    <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email_paciente" value="{{paciente.email_paciente}}">
+            
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="inputTelefono">Teléfono</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" id="inputTelefono" placeholder="Ingrese su teléfono" name="telefono_paciente" value="{{paciente.telefono_paciente}}" title="El teléfono debe tener 8 dígitos numéricos sin guiones. Por ej.: 12345678">
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="inputTelefono">Correo</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email_paciente" value="{{paciente.email_paciente}}" title="El correo debe contener el siguiente formato. Por ej.: paciente1@mail.com">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="container my-6">
                     <div class="row mt-4">
                         <div class="col-md-12 text-center">
-
-                            <a href="{% url 'DatosPersonales' paciente.id_paciente %}" class="btn btn-danger"><i class="fas fa-times"></i>&nbsp; Cancelar</a>
+                            <a href="{% url 'DatosPersonales' paciente.id_paciente %}" class="btn btn-danger"><i class="fas fa-times"></i> Cancelar</a>
                             <button type="submit" class="btn btn-primary">
                                 <i class="nav-icon fas fa-save"></i> Guardar
                             </button>
                         </div>
                     </div>
                 </div>
-      
+            
             </form>
+            
       
   </div>
 </div>
 <script>
-    // Obtiene el formulario y los campos de entrada
-    const form = document.getElementById('registroForm');
-    const inputNombre = document.getElementById('inputNombre');
-    const inputApellidos = document.getElementById('inputApellidos');
-    const nacimiento_fecha = document.getElementById('nacimiento_fecha');
-    const selectSexo = document.getElementById('selectSexo');
-    const inputCorreo = document.getElementById('inputCorreo');
-    const inputTelefono = document.getElementById('inputTelefono');
+    // Función para validar un campo
+    function validarCampo(inputId, regex) {
+      var input = document.getElementById(inputId);
+      var valor = input.value.trim();
   
-    // Agrega un evento de escucha al enviar el formulario
-    form.addEventListener('submit', (event) => {
-      // Verifica la validez del campo de Nombre
-      if (/^\d+$/.test(inputNombre.value) || /[^\w]+/.test(inputNombre.value) || /\s/.test(inputNombre.value) || inputNombre.value.length > 20) {
-        event.preventDefault();
-        inputNombre.setAttribute('data-toggle', 'tooltip');
-        inputNombre.setAttribute('data-placement', 'top');
-        inputNombre.setAttribute('title', 'El nombre contiene carácteres incorrectos o es muy Largo');
-        $(inputNombre).tooltip('show');
+      if (valor === "") {
+        input.classList.remove("is-valid", "is-invalid");
+        return true; // No se ingresa ningún valor, no se muestra ninguna indicación de error
+      } else if (!regex.test(valor)) {
+        input.classList.remove("is-valid");
+        input.classList.add("is-invalid");
+        return false; // Valor incorrecto, se muestra el estilo de error
+      } else {
+        input.classList.remove("is-invalid");
+        input.classList.add("is-valid");
+        return true; // Valor válido, se muestra el estilo de éxito
+      }
     }
   
-      // Verifica la validez del campo de Apellidos
-      if (/^\d+$/.test(inputApellidos.value) || /[^\w\s]+/.test(inputApellidos.value) || /\s/.test(inputApellidos.value) || inputApellidos.value.split(/\s+/).length > 20) {
-        event.preventDefault();
-        inputApellidos.setAttribute('data-toggle', 'tooltip');
-        inputApellidos.setAttribute('data-placement', 'top');
-        inputApellidos.setAttribute('title', 'El apellido contiene carácteres incorrectos o es muy largo');
-        $(inputApellidos).tooltip({
-          trigger: 'manual',
-          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
-        }).tooltip('show');
-      }
+    // Función para validar el nombre
+    function validarNombre() {
+      var regex = /^[a-zA-Z]+$/;
+      return validarCampo("inputNombre", regex);
+    }
   
-      // Verifica la validez del campo de Correo
-      if (inputCorreo.value !== '' && !/^\s*$|^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputCorreo.value)) {
-        event.preventDefault();
-        inputCorreo.setAttribute('data-toggle', 'tooltip');
-        inputCorreo.setAttribute('data-placement', 'top');
-        inputCorreo.setAttribute('title', 'El correo debe tener un formato válido (ej: usuario1@gmail.com)');
-        $(inputCorreo).tooltip({
-          trigger: 'manual',
-          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
-        }).tooltip('show');
+    // Función para validar el apellido
+    function validarApellido() {
+      var regex = /^[a-zA-Z]+$/;
+      return validarCampo("inputApellidos", regex);
+    }
+  
+    // Función para validar el teléfono
+    function validarTelefono() {
+      var regex = /^\d{8}$/;
+      return validarCampo("inputTelefono", regex);
+    }
+  
+    // Función para validar el correo
+    function validarCorreo() {
+      var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      return validarCampo("inputCorreo", regex);
+    }
+  
+    // Función para validar el formulario completo
+    function validarFormulario(event) {
+      event.preventDefault(); // Evitar el envío del formulario por defecto
+  
+      var nombreValido = validarNombre();
+      var apellidoValido = validarApellido();
+      var telefonoValido = validarTelefono();
+      var correoValido = validarCorreo();
+  
+      // Verificar si todos los campos son válidos
+      if (nombreValido && apellidoValido && telefonoValido && correoValido) {
+        document.getElementById("registroForm").submit(); // Enviar el formulario
+      } else {
+        // Mostrar un mensaje de error
       }
-      if (inputTelefono.value !== '' && !/^\d{8}$/.test(inputTelefono.value)) {
-        event.preventDefault();
-        inputTelefono.setAttribute('data-toggle', 'tooltip');
-        inputTelefono.setAttribute('data-placement', 'top');
-        inputTelefono.setAttribute('title', 'El teléfono debe tener 8 dígitos numéricos sin guion');
-        $(inputTelefono).tooltip({
-          trigger: 'manual',
-          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
-        }).tooltip('show');
-      }
-      
-
-    });
-</script>
+    }
+  
+    // Agregar eventos de validación en tiempo real a los campos
+    document.getElementById("inputNombre").addEventListener("input", validarNombre);
+    document.getElementById("inputApellidos").addEventListener("input", validarApellido);
+    document.getElementById("inputTelefono").addEventListener("input", validarTelefono);
+    document.getElementById("inputCorreo").addEventListener("input", validarCorreo);
+  
+    // Agregar evento de validación al enviar el formulario
+    document.getElementById("registroForm").addEventListener("submit", validarFormulario);
+  </script>
 
 {% endblock %}
