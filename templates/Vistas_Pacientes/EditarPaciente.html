@@ -29,7 +29,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="primer_nombre" value="{{paciente.primer_nombre}}" required>
+                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="primer_nombre" value="{{paciente.primer_nombre}}" title="El nombre debe contener solo letras, no debe contener números ni símbolos" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -38,7 +38,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="primer_apellido" value="{{paciente.primer_apellido}}" required>
+                            <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="primer_apellido" value="{{paciente.primer_apellido}}" title="El apellido debe contener solo letras, no debe contener números ni símbolos"required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -83,7 +83,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                     </div>
-                                    <input type="text" class="form-control" id="inputTelefono" placeholder="Ingrese su teléfono" name="telefono_paciente" value="{{paciente.telefono_paciente}}">
+                                    <input type="text" class="form-control" id="inputTelefono" placeholder="Ingrese su teléfono" name="telefono_paciente" value="{{paciente.telefono_paciente}}" title="El teléfono debe tener 8 dígitos numéricos sin guiones. Por ej.: 12345678">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -92,7 +92,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                     </div>
-                                    <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email_paciente" value="{{paciente.email_paciente}}">
+                                    <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email_paciente" value="{{paciente.email_paciente}}" title="El correo debe contener el siguiente formato. Por ej.: paciente1@mail.com">
                                 </div>
                             </div>
                         </div>
