@@ -29,9 +29,16 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="primer_nombre" required title="El nombre debe contener solo letras, no debe contener números ni símbolos">
+                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="primer_nombre" required>
+                            <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-question-circle"></i>
+                              </button>
+                            </span>
                         </div>
-                        <small id="nombreError" class="text-danger"></small> <!-- Agregamos un elemento para mostrar el mensaje de error -->
+                        <div class="instrucciones d-none">
+                          Ingrese el nombre utilizando solo letras, sin números ni símbolos.
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="inputApellidos">Apellido*</label>
@@ -39,8 +46,16 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="primer_apellido" required title="El apellido debe contener solo letras, no debe contener números ni símbolos">
-                        </div>
+                            <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="primer_apellido" required>
+                            <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-question-circle"></i>
+                              </button>
+                            </span>
+                          </div>
+                          <div class="instrucciones d-none">
+                            Ingrese el apellido utilizando solo letras, sin números ni símbolos.
+                          </div>
                     </div>
                     <div class="form-group">
                         <label for="fechanacimiento" class="sm-4 col-form-label">Fecha de Nacimiento:*</label>
@@ -49,6 +64,14 @@
                                 <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                             </div>
                             <input type="date" class="limpiarinput form-control" id="nacimiento_fecha" name="fechanac_paciente" required>
+                            <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-question-circle"></i>
+                              </button>
+                            </span>
+                        </div>
+                        <div class="instrucciones d-none">
+                          Ingrese la fecha Nacimiento correctamente.
                         </div>
                     </div>
                     <div class="form-group">
@@ -62,6 +85,14 @@
                                 <option value="M">Masculino</option>
                                 <option value="F">Femenino</option>
                             </select>
+                            <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-question-circle"></i>
+                              </button>
+                            </span>
+                        </div>
+                        <div class="instrucciones d-none">
+                          Debe seleccionar el sexo del paciente, si es masculino o femenino.
                         </div>
                     </div>
                 </div>
@@ -84,7 +115,15 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                     </div>
-                                    <input type="text" class="form-control" id="inputTelefono" name="telefono_paciente" placeholder="Ingrese su teléfono" title="El teléfono debe tener 8 dígitos numéricos sin guiones. Por ej.: 12345678">
+                                    <input type="text" class="form-control" id="inputTelefono" name="telefono_paciente" placeholder="Ingrese su teléfono">
+                                    <span class="input-group-append">
+                                      <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                        <i class="fas fa-question-circle"></i>
+                                      </button>
+                                    </span>
+                                </div>
+                                <div class="instrucciones d-none">
+                                  El teléfono debe tener 8 dígitos numéricos sin guiones. Por ej.: 12345678
                                 </div>
                             </div>
                             <div class="form-group">
@@ -93,8 +132,16 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                     </div>
-                                    <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email_paciente" title="El correo debe contener el siguiente formato. Por ej.: paciente1@mail.com">
-                                </div>
+                                    <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email_paciente">
+                                    <span class="input-group-append">
+                                      <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                        <i class="fas fa-question-circle"></i>
+                                      </button>
+                                    </span>
+                                  </div>
+                                  <div class="instrucciones d-none">
+                                    El correo debe contener el siguiente formato. Por ej.: paciente1@mail.com
+                                  </div>
                             </div>
                         </div>
                     </div>
@@ -113,6 +160,14 @@
       
   </div>
 </div>
+
+<script>
+  // Función para mostrar u ocultar las instrucciones de un campo
+  function mostrarInstrucciones(boton) {
+    var instrucciones = boton.parentNode.parentNode.parentNode.querySelector(".instrucciones");
+    instrucciones.classList.toggle("d-none");
+  }
+</script>
 
 <script>
   // Función para validar un campo
@@ -185,6 +240,7 @@
 
   // Agregar evento de validación al enviar el formulario
   document.getElementById("registroForm").addEventListener("submit", validarFormulario);
+
 </script>
 
 {% endblock %}
