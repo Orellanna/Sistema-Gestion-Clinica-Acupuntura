@@ -24,12 +24,12 @@
                 {% csrf_token %}
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="inputNombre">Nombre*</label>
+                        <label for="inputNombre">Primer Nombre*</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="primer_nombre" required>
+                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese el primer nombre" name="primer_nombre" required>
                             <span class="input-group-append">
                               <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
                                 <i class="fas fa-info-circle"></i>
@@ -41,7 +41,24 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputApellidos">Apellido*</label>
+                      <label for="inputNombre">Segundo Nombre </label>
+                      <div class="input-group">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-user"></i></span>
+                          </div>
+                          <input type="text" class="form-control" id="inputSegundoNombre" placeholder="Ingrese el segundo nombre" name="segundo_nombre">
+                          <span class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                              <i class="fas fa-info-circle"></i>
+                            </button>
+                          </span>
+                      </div>
+                      <div class="instrucciones d-none">
+                        Ingrese el nombre utilizando solo letras, sin números ni símbolos.
+                      </div>
+                  </div>
+                    <div class="form-group">
+                        <label for="inputApellidos">Primer Apellido*</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -57,6 +74,23 @@
                             Ingrese el apellido utilizando solo letras, sin números ni símbolos.
                           </div>
                     </div>
+                    <div class="form-group">
+                      <label for="inputApellidos">Segundo Apellido</label>
+                      <div class="input-group">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-user"></i></span>
+                          </div>
+                          <input type="text" class="form-control" id="inputSegundoApellidos" placeholder="Ingrese sus apellidos" name="segundo_apellido">
+                          <span class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                              <i class="fas fa-info-circle"></i>
+                            </button>
+                          </span>
+                        </div>
+                        <div class="instrucciones d-none">
+                          Ingrese el apellido utilizando solo letras, sin números ni símbolos.
+                        </div>
+                  </div>
                     <div class="form-group">
                         <label for="fechanacimiento" class="sm-4 col-form-label">Fecha de Nacimiento:*</label>
                         <div class="input-group">
@@ -192,12 +226,21 @@
     return validarCampo("inputNombre", regex);
   }
 
+ // Función para validar el segundo nombre
+ function validarSegundoNombre() {
+  var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
+  return validarCampo("inputSegundoNombre", regex);
+}
   // Función para validar el apellido
   function validarApellido() {
     var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
     return validarCampo("inputApellidos", regex);
   }
-
+// Función para validar el segundo apellido
+function validarSegundoApellido() {
+  var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
+  return validarCampo("inputSegundoApellidos", regex);
+}
   // Función para validar el teléfono
   function validarTelefono() {
     var regex = /^\d{8}$/;
@@ -215,12 +258,14 @@
     event.preventDefault(); // Evitar el envío del formulario por defecto
 
     var nombreValido = validarNombre();
+    var SegundonombreValido = validarSegundoNombre();
     var apellidoValido = validarApellido();
+    var SegundoapellidoValido = validarSegundoApellido();
     var telefonoValido = validarTelefono();
     var correoValido = validarCorreo();
 
     // Verificar si todos los campos son válidos
-    if (nombreValido && apellidoValido && telefonoValido && correoValido) {
+    if (nombreValido && apellidoValido && telefonoValido && correoValido && SegundonombreValido && SegundoapellidoValido) {
       document.getElementById("registroForm").submit(); // Enviar el formulario
     } else {
       // Mostrar un mensaje de error
@@ -229,7 +274,9 @@
 
   // Agregar eventos de validación en tiempo real a los campos
   document.getElementById("inputNombre").addEventListener("input", validarNombre);
+  document.getElementById("inputSegundoNombre").addEventListener("input", validarSegundoNombre);
   document.getElementById("inputApellidos").addEventListener("input", validarApellido);
+  document.getElementById("inputSegundoApellidos").addEventListener("input", validarSegundoApellido);
   document.getElementById("inputTelefono").addEventListener("input", validarTelefono);
   document.getElementById("inputCorreo").addEventListener("input", validarCorreo);
 

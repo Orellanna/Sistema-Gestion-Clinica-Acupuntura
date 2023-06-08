@@ -30,13 +30,7 @@
                     <label for="fechacita" class="col-sm-4 col-form-label"
                       >Fecha de Consulta:</label>
                     <div class="col-sm-5">
-                      <input
-                        type="date"
-                        class=""
-                        id="consulta_fecha"
-                        name="consulta_fecha"
-                        required
-                      />
+                      <input type="date" class="" id="consultafecha" name="consulta_fecha" required readonly/>
                     </div>
                   </div>
                 </div>
@@ -45,7 +39,7 @@
                     <label for="horainicio" class="col-sm-4 col-form-label"
                       >Hora de inicio:</label>
                     <div class="col-sm-5">
-                      <input type="time" class="limpiarinput" id="hora_consulta" name="hora_consulta" required/>
+                      <input type="time" class="limpiarinput" id="hora_consulta" name="hora_consulta" required readonly/>
                     </div>
                   </div>
                 </div>
@@ -68,7 +62,6 @@
                           <i class="fas fa-info-circle"></i>
                         </button>
                       </span>
-                    
                     </div>
                     <div class="instrucciones d-none">
                       Ingrese el usuario utilizando solo letras, sin números ni símbolos.
@@ -183,5 +176,15 @@
   });
 </script>
 
+<script>
+  // Obtener la fecha y hora actual
+  var fechaActual = new Date();
+  var fecha = fechaActual.toISOString().slice(0, 10);
+  var hora = fechaActual.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  // Establecer la fecha y hora actual en los campos de entrada
+  document.getElementById('consultafecha').value = fecha;
+  document.getElementById('hora_consulta').value = hora;
+</script>
 
 {% endblock %}

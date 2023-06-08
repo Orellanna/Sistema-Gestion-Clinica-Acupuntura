@@ -50,7 +50,9 @@ def Registrar(request):
     
     if request.method == 'POST':
         primer_nombre = request.POST['primer_nombre']
+        segundo_nombre = request.POST['segundo_nombre']
         primer_apellido = request.POST['primer_apellido']
+        segundo_apellido = request.POST['segundo_apellido']
         fechanac_paciente = request.POST['fechanac_paciente']
         sexo_paciente = request.POST['sexo_paciente']
         telefono_paciente = request.POST['telefono_paciente']
@@ -58,15 +60,18 @@ def Registrar(request):
         
         nuevo_paciente = Paciente()
         nuevo_paciente.primer_nombre = primer_nombre
+        nuevo_paciente.segundo_nombre = segundo_nombre
         nuevo_paciente.primer_apellido = primer_apellido
+        nuevo_paciente.segundo_apellido = segundo_apellido
         nuevo_paciente.fechanac_paciente = fechanac_paciente
         nuevo_paciente.sexo_paciente = sexo_paciente
         nuevo_paciente.telefono_paciente = telefono_paciente
         nuevo_paciente.email_paciente = email_paciente
+        nuevo_paciente.fecharegistro_paciente = datetime.now()
         nuevo_paciente.save()
         
         messages.success(request, "El Paciente se ha registrado satisfactoriamente")
-        return redirect('GestionPacientes')
+        return redirect('DatosPersonales', id_paciente=nuevo_paciente.id_paciente)
          
     return render(request,'Vistas_Pacientes/registrarPaciente.html')
     
@@ -78,14 +83,18 @@ def EditarPaciente(request, id_paciente):
     
     if request.method == 'POST':
         primer_nombre = request.POST['primer_nombre']
+        segundo_nombre = request.POST['segundo_nombre']
         primer_apellido = request.POST['primer_apellido']
+        segundo_apellido = request.POST['segundo_apellido']
         fechanac_paciente = request.POST['fechanac_paciente']
         sexo_paciente = request.POST['sexo_paciente']
         telefono_paciente = request.POST['telefono_paciente']
         email_paciente = request.POST['email_paciente']
         
         paciente.primer_nombre = primer_nombre
+        paciente.segundo_nombre = segundo_nombre
         paciente.primer_apellido = primer_apellido
+        paciente.segundo_apellido = segundo_apellido
         paciente.fechanac_paciente = fechanac_paciente
         paciente.sexo_paciente = sexo_paciente
         paciente.telefono_paciente = telefono_paciente
