@@ -52,12 +52,29 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <div class="form-group row">
-                    <label for="motivo" class="col-sm-2 col-form-label"
-                      >Motivo:</label
-                    >
-                    <div class="col-sm-10">
+                  <div class="form-group">
+                    <label for="motivo" 
+                      >Motivo:</label>
+                    <div class="input-group">
+
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                      </div>
+
                       <input class="form-control" id="motivo_consulta" name="motivo_consulta" required/>
+
+                      <span class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                          <i class="fas fa-info-circle"></i>
+                        </button>
+                      </span>
+                    
+                    </div>
+                    <div class="instrucciones d-none">
+                      Ingrese el usuario utilizando solo letras, sin números ni símbolos.
+                    </div>
+                    <div class="col-sm-10">
+                      
                     </div>
                   </div>
                 </div>
@@ -123,6 +140,14 @@
     <!-- /.container-fluid -->
   </section>
 </form>
+
+<script>
+  // Función para mostrar u ocultar las instrucciones de un campo
+  function mostrarInstrucciones(boton) {
+    var instrucciones = boton.parentNode.parentNode.parentNode.querySelector(".instrucciones");
+    instrucciones.classList.toggle("d-none");
+  }
+</script>
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {

@@ -30,6 +30,14 @@
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
                             <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="primer_nombre" value="{{paciente.primer_nombre}}" title="El nombre debe contener solo letras, no debe contener números ni símbolos" required>
+                            <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="instrucciones d-none">
+                            Ingrese el nombre utilizando solo letras, sin números ni símbolos.
                         </div>
                     </div>
                     <div class="form-group">
@@ -39,6 +47,14 @@
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
                             <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="primer_apellido" value="{{paciente.primer_apellido}}" title="El apellido debe contener solo letras, no debe contener números ni símbolos"required>
+                            <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="instrucciones d-none">
+                            Ingrese el apellido utilizando solo letras, sin números ni símbolos.
                         </div>
                     </div>
                     <div class="form-group">
@@ -48,6 +64,14 @@
                                 <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                             </div>
                             <input type="date" class="limpiarinput form-control" id="nacimiento_fecha" name="fechanac_paciente" value="{{paciente.fechanac_paciente|date:'Y-m-d'}}" required>
+                            <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="instrucciones d-none">
+                            Ingrese la fecha Nacimiento correctamente.
                         </div>
                     </div>
                     <div class="form-group">
@@ -61,6 +85,14 @@
                                 <option value="M" {% if paciente.sexo_paciente == 'M'%} selected {% endif %}>Masculino</option>
                                 <option value="F" {% if paciente.sexo_paciente == 'F'%} selected {% endif %}>Femenino</option>
                             </select>
+                            <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="instrucciones d-none">
+                            Debe seleccionar el sexo del paciente, si es masculino o femenino.
                         </div>
                     </div>
                 </div>
@@ -84,6 +116,14 @@
                                         <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                     </div>
                                     <input type="text" class="form-control" id="inputTelefono" placeholder="Ingrese su teléfono" name="telefono_paciente" value="{{paciente.telefono_paciente}}" title="El teléfono debe tener 8 dígitos numéricos sin guiones. Por ej.: 12345678">
+                                    <span class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                          <i class="fas fa-info-circle"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div class="instrucciones d-none">
+                                    El teléfono debe tener 8 dígitos numéricos sin guiones. Por ej.: 12345678
                                 </div>
                             </div>
                             <div class="form-group">
@@ -93,6 +133,14 @@
                                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                     </div>
                                     <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email_paciente" value="{{paciente.email_paciente}}" title="El correo debe contener el siguiente formato. Por ej.: paciente1@mail.com">
+                                    <span class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                          <i class="fas fa-info-circle"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div class="instrucciones d-none">
+                                    El correo debe contener el siguiente formato. Por ej.: paciente1@mail.com
                                 </div>
                             </div>
                         </div>
@@ -114,6 +162,14 @@
       
   </div>
 </div>
+<script>
+    // Función para mostrar u ocultar las instrucciones de un campo
+    function mostrarInstrucciones(boton) {
+      var instrucciones = boton.parentNode.parentNode.parentNode.querySelector(".instrucciones");
+      instrucciones.classList.toggle("d-none");
+    }
+</script>
+
 <script>
     // Función para validar un campo
     function validarCampo(inputId, regex) {

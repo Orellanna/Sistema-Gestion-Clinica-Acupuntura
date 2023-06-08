@@ -32,7 +32,7 @@
                             <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="primer_nombre" required>
                             <span class="input-group-append">
                               <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
-                                <i class="fas fa-question-circle"></i>
+                                <i class="fas fa-info-circle"></i>
                               </button>
                             </span>
                         </div>
@@ -49,7 +49,7 @@
                             <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="primer_apellido" required>
                             <span class="input-group-append">
                               <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
-                                <i class="fas fa-question-circle"></i>
+                                <i class="fas fa-info-circle"></i>
                               </button>
                             </span>
                           </div>
@@ -66,7 +66,7 @@
                             <input type="date" class="limpiarinput form-control" id="nacimiento_fecha" name="fechanac_paciente" required>
                             <span class="input-group-append">
                               <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
-                                <i class="fas fa-question-circle"></i>
+                                <i class="fas fa-info-circle"></i>
                               </button>
                             </span>
                         </div>
@@ -87,7 +87,7 @@
                             </select>
                             <span class="input-group-append">
                               <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
-                                <i class="fas fa-question-circle"></i>
+                                <i class="fas fa-info-circle"></i>
                               </button>
                             </span>
                         </div>
@@ -118,7 +118,7 @@
                                     <input type="text" class="form-control" id="inputTelefono" name="telefono_paciente" placeholder="Ingrese su teléfono">
                                     <span class="input-group-append">
                                       <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
-                                        <i class="fas fa-question-circle"></i>
+                                        <i class="fas fa-info-circle"></i>
                                       </button>
                                     </span>
                                 </div>
@@ -135,7 +135,7 @@
                                     <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email_paciente">
                                     <span class="input-group-append">
                                       <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
-                                        <i class="fas fa-question-circle"></i>
+                                        <i class="fas fa-info-circle"></i>
                                       </button>
                                     </span>
                                   </div>
@@ -155,9 +155,6 @@
                     </div>
                 </div>
             </form>
-            
-
-      
   </div>
 </div>
 
@@ -181,12 +178,10 @@
     } else if (!regex.test(valor)) {
       input.classList.remove("is-valid");
       input.classList.add("is-invalid");
-      document.getElementById(inputId + "Error").textContent = "Datos incorrectos"; // Mostrar mensaje de error
       return false; // Valor incorrecto, se muestra el estilo de error
     } else {
       input.classList.remove("is-invalid");
       input.classList.add("is-valid");
-      document.getElementById(inputId + "Error").textContent = ""; // Restablecer el mensaje de error
       return true; // Valor válido, se muestra el estilo de éxito
     }
   }
@@ -240,7 +235,6 @@
 
   // Agregar evento de validación al enviar el formulario
   document.getElementById("registroForm").addEventListener("submit", validarFormulario);
-
 </script>
 
 {% endblock %}

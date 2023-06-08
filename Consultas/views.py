@@ -51,6 +51,8 @@ def NuevaConsulta(request, paciente_id):
         # Generamos la URL correcta usando reverse
         url = reverse('DetallesConsulta', kwargs={'paciente_id': paciente_id, 'consulta_id': consulta.id_consulta})
         
+        messages.success(request, "La consulta se ha registrado satisfactoriamente")
+        
         # Redirigimos al usuario a la URL correcta
         return redirect(url)
     
@@ -96,6 +98,8 @@ def EditarConsulta(request, paciente_id, consulta_id):
         # Generamos la URL correcta usando reverse
         url = reverse('DetallesConsulta', kwargs={'paciente_id': paciente_id, 'consulta_id': consulta_id})
         
+        messages.success(request, "La consulta se ha actualizado satisfactoriamente")
+        
         # Redirigimos al usuario a la URL correcta
         return redirect(url)
     
@@ -109,6 +113,7 @@ def EliminarConsulta(request, paciente_id, consulta_id):
 
     if request.method == 'POST':
         consulta.delete()
+        messages.success(request, "La consulta se ha eliminado satisfactoriamente")
         # Redirigir al usuario a la página de lista de consultas o cualquier otra página que desees mostrar después de eliminar la consulta
         return redirect('ListarConsultas', paciente_id=paciente_id)
     

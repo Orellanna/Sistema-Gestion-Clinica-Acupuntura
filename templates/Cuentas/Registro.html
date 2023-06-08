@@ -35,22 +35,62 @@
                                     {% endfor %}
                                 </div>
                             {% endif %}
+
                             <label for="inputUser">Usuario*</label>
-                            <input type="text" class="form-control" id="inputUser" placeholder="Ingrese su usuario" name="username" required value="{{ usuario }}">
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                              </div>
+                              <input type="text" class="form-control" id="inputUser" placeholder="Ingrese su usuario" name="username" required value="{{ usuario }}">  
+                              <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                            </span>
+                            </div>   
+                            <div class="instrucciones d-none">
+                              Ingrese el usuario utilizando solo letras, sin números ni símbolos.
+                            </div>                                                    
                         </div>
 
                         <div class="form-group">
                             <label for="inputPassword">Contraseña*</label>
-                            <input class="form-control" type="password" name="password" placeholder="Ingrese una contraseña" id="inputPassword" required>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user-lock"></i></span>
+                            </div>
+                              <input class="form-control" type="password" name="password" placeholder="Ingrese una contraseña" id="inputPassword" required>
+                              <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-info-circle"></i>
+                              </button>
+                            </span>
+                            </div>
+                            <div class="instrucciones d-none">
+                              Ingrese el usuario utilizando solo letras, sin números ni símbolos.
+                            </div>  
                         </div>
 
                         <div class="form-group">
                           <label for="selectCargo">Cargo*</label>
-                          <select class="form-control" id="selectCargo" name="cargo" required>
-                              <option value="">Seleccione el cargo</option>
-                              <option value="administrador" {% if request.POST.cargo == 'administrador' %}selected{% endif %}>Administrador</option>
-                              <option value="acupunturista" {% if request.POST.cargo == 'acupunturista' %}selected{% endif %}>Acupunturista</option>
-                          </select>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-user-md"></i></span>
+                          </div>
+                            <select class="form-control" id="selectCargo" name="cargo" required>
+                                <option value="">Seleccione el cargo</option>
+                                <option value="administrador" {% if request.POST.cargo == 'administrador' %}selected{% endif %}>Administrador</option>
+                                <option value="acupunturista" {% if request.POST.cargo == 'acupunturista' %}selected{% endif %}>Acupunturista</option>
+                            </select>
+                          <span class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                              <i class="fas fa-info-circle"></i>
+                            </button>
+                          </span>
+                          </div>
+                          <div class="instrucciones d-none">
+                            Ingrese el usuario utilizando solo letras, sin números ni símbolos.
+                          </div>  
                       </div>
 
                         </div>
@@ -67,19 +107,57 @@
                         <div class="card-body">   
                             <div class="form-group">
                             <label for="inputNombre">Nombre</label>
-                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="firstname" value="{{ primerNombre}}">
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                              <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="firstname" value="{{ primerNombre}}">
+                              <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <div class="instrucciones d-none">
+                              Ingrese el usuario utilizando solo letras, sin números ni símbolos.
+                            </div> 
                         </div>
-
+                        
                         <div class="form-group">
                             <label for="inputApellidos">Apellido</label>
-                            <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="lastname" value="{{ primerApellido }}">
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                              <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="lastname" value="{{ primerApellido }}">
+                              <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                              </span>
+                            </div>
+                            <div class="instrucciones d-none">
+                              Ingrese el usuario utilizando solo letras, sin números ni símbolos.
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label for="inputTelefono">Correo</label>
+                            <div class="input-group">    
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            </div>                   
                             <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email" value="{{ correo }}">
-                        </div>
-
+                            <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-info-circle"></i>
+                              </button>
+                            </span>
+                            </div>
+                            <div class="instrucciones d-none">
+                              Ingrese el correo electronico del usuario.
+                            </div>
+                          </div>
                     </div>
    
                     </div>
@@ -103,6 +181,14 @@
         </div>
     </div>
 </div>
+
+<script>
+  // Función para mostrar u ocultar las instrucciones de un campo
+  function mostrarInstrucciones(boton) {
+    var instrucciones = boton.parentNode.parentNode.parentNode.querySelector(".instrucciones");
+    instrucciones.classList.toggle("d-none");
+  }
+</script>
 
 <script>
   // Función para validar un campo
@@ -131,7 +217,7 @@
   // Función para validar el usuario
   function validarUsuario() {
     var regex = /^[a-zA-Z0-9_]+$/;
-    var minLength = 1;
+    var minLength = 4;
     var maxLength = 20;
     return validarCampo("inputUser", regex, minLength, maxLength);
   }
