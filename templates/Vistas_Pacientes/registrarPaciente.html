@@ -188,13 +188,13 @@
 
   // Función para validar el nombre
   function validarNombre() {
-    var regex = /^[a-zA-Z]+$/;
+    var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
     return validarCampo("inputNombre", regex);
   }
 
   // Función para validar el apellido
   function validarApellido() {
-    var regex = /^[a-zA-Z]+$/;
+    var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
     return validarCampo("inputApellidos", regex);
   }
 
