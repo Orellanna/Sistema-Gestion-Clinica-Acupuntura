@@ -30,7 +30,7 @@
                     <label for="fechacita" class="col-sm-4 col-form-label"
                       >Fecha de Consulta:</label>
                     <div class="col-sm-5">
-                      <input type="date" class="" id="consultafecha" name="consulta_fecha" required readonly/>
+                      <input type="date" class="form-control" id="consultafecha" name="consulta_fecha" required readonly/>
                     </div>
                   </div>
                 </div>
@@ -39,20 +39,20 @@
                     <label for="horainicio" class="col-sm-4 col-form-label"
                       >Hora de inicio:</label>
                     <div class="col-sm-5">
-                      <input type="time" class="limpiarinput" id="hora_consulta" name="hora_consulta" required readonly/>
+                      <input type="time" class="form-control" id="hora_consulta" name="hora_consulta" required readonly/>
                     </div>
                   </div>
                 </div>
               </div>
+
               <div class="row">
                 <div class="col">
                   <div class="form-group">
-                    <label for="motivo" 
-                      >Motivo:</label>
+                    <label for="motivo">Motivo:</label>
                     <div class="input-group">
 
                       <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                        <span class="input-group-text"><i class="fas fa-stethoscope"></i></span>
                       </div>
 
                       <input class="form-control" id="motivo_consulta" name="motivo_consulta" required/>
@@ -64,7 +64,7 @@
                       </span>
                     </div>
                     <div class="instrucciones d-none">
-                      Ingrese el usuario utilizando solo letras, sin números ni símbolos.
+                      Ingrese el motivo de la consulta. No utilice simbolos ni caracteres especiales. 
                     </div>
                     <div class="col-sm-10">
                       
@@ -72,19 +72,25 @@
                   </div>
                 </div>
               </div>
+
+
               <div class="row">
                 <div class="col">
-                  <div class="form-group row">
-                    <label for="observacion" class="col-sm-2 col-form-label"
-                      >Observaciones:</label>
-                    <div class="col-sm-10">
-                      <textarea
-                        class="form-control" 
-                        rows="3"
-                        name="observacion_consulta"
-                        id="observacion_consulta" required>
-                        
-                      </textarea>
+                  <div class="form-group">
+                    <label for="observacion">Observaciones:</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-file"></i></span>
+                      </div>
+                      <textarea class="form-control" rows="3" name="observacion_consulta" id="observacion_consulta"></textarea>
+                      <span class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                          <i class="fas fa-info-circle"></i>
+                        </button>
+                      </span>
+                    </div>
+                    <div class="instrucciones d-none">
+                      Ingrese las observaciones. No utilice simbolos ni caracteres especiales.
                     </div>
                   </div>
                 </div>
@@ -146,11 +152,24 @@
   document.addEventListener("DOMContentLoaded", function() {
     // Obtener referencias a los elementos del formulario
     var motivoInput = document.getElementById("motivo_consulta");
+    var observacionInput = document.getElementById("observacion_consulta");
     var formulario = document.getElementById("formNuevaConsulta");
 
     // Agregar evento de validación al campo de motivo
     motivoInput.addEventListener("input", function() {
       if (validarMotivo(this.value)) {
+        this.classList.remove("is-invalid");
+        this.classList.add("is-valid");
+      } else {
+        this.classList.remove("is-valid");
+        this.classList.add("is-invalid");
+      }
+      
+    });
+
+    // Agregar evento de validación al campo de observacion
+    observacionInput.addEventListener("input", function() {
+      if (validarObservacion(this.value)) {
         this.classList.remove("is-invalid");
         this.classList.add("is-valid");
       } else {
@@ -166,13 +185,25 @@
         motivoInput.classList.add("is-invalid");
         event.preventDefault(); // Evitar el envío del formulario si hay errores
       }
+
+      if (!validarObservacion(observacionInput.value)) {
+        observacionInput.classList.add("is-invalid");
+        event.preventDefault(); // Evitar el envío del formulario si hay errores
+      }
     });
 
     // Función de validación para el campo de motivo
     function validarMotivo(valor) {
-      var motivoRegex = /^[a-zA-Z0-9\s]+$/; // Expresión regular para letras, números y espacios
+      var motivoRegex = /^[a-zA-Z0-9\sñáéíóúÁÉÍÓÚ\-]+$/; // Expresión regular para letras, números y espacios
       return motivoRegex.test(valor);
     }
+
+    // Función de validación para el campo de observacion
+    function validarObservacion(valor) {
+      var observacionRegex = /^[a-zA-Z0-9\sñáéíóúÁÉÍÓÚ\-]+$/; // Expresión regular para letras, números, espacios, ñ, tildes y guiones
+      return observacionRegex.test(valor);
+    }
+
   });
 </script>
 
