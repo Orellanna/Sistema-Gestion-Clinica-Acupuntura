@@ -275,7 +275,7 @@
 
     // Función de validación para el campo de observacion
     function validarObservacion(valor) {
-      var observacionRegex = /^[a-zA-Z0-9\sñáéíóúÁÉÍÓÚ\-]+$/; // Expresión regular para letras, números, espacios, ñ, tildes y guiones
+      var observacionRegex = /^[a-zA-Z0-9\sñáéíóúÁÉÍÓÚ\-.,]+$/; // Expresión regular para letras, números, espacios, ñ, tildes, guiones, puntos y comas
       return observacionRegex.test(valor);
     }
 
