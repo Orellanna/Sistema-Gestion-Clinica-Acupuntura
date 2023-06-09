@@ -74,6 +74,7 @@
                             Ingrese el apellido utilizando solo letras, sin números ni símbolos.
                           </div>
                     </div>
+
                     <div class="form-group">
                       <label for="inputApellidos">Segundo Apellido</label>
                       <div class="input-group">
@@ -91,13 +92,14 @@
                           Ingrese el apellido utilizando solo letras, sin números ni símbolos.
                         </div>
                   </div>
+
                     <div class="form-group">
                         <label for="fechanacimiento" class="sm-4 col-form-label">Fecha de Nacimiento:*</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                             </div>
-                            <input type="date" class="limpiarinput form-control" id="nacimiento_fecha" name="fechanac_paciente" required>
+                            <input type="date" class="form-control" id="nacimiento_fecha" name="fechanac_paciente" required>
                             <span class="input-group-append">
                               <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
                                 <i class="fas fa-info-circle"></i>
@@ -106,6 +108,7 @@
                         </div>
                         <div class="instrucciones d-none">
                           Ingrese la fecha Nacimiento correctamente.
+                          -Debe ingresar pacientes mayores de 18 años.
                         </div>
                     </div>
                     <div class="form-group">
@@ -247,6 +250,38 @@ function validarSegundoApellido() {
     return validarCampo("inputTelefono", regex);
   }
 
+  // Función para validar la fecha de nacimiento
+  function validarFecha() {
+    var input = document.getElementById("nacimiento_fecha");
+    var valor = input.value;
+  
+    if (valor === "") {
+      input.classList.remove("is-valid", "is-invalid");
+      return true; // No se ingresa ninguna fecha, no se muestra ninguna indicación de error
+    } else {
+      var fechaIngresada = new Date(valor);
+      var fechaActual = new Date();
+      var edadMinima = 10;
+      var edadMaxima = 110;
+  
+      var edad = fechaActual.getFullYear() - fechaIngresada.getFullYear();
+      if (
+        (edad < edadMinima || edad > edadMaxima) ||
+        (edad === edadMinima && fechaActual.getMonth() < fechaIngresada.getMonth()) ||
+        (edad === edadMinima && fechaActual.getMonth() === fechaIngresada.getMonth() && fechaActual.getDate() < fechaIngresada.getDate())
+      ) {
+        input.classList.remove("is-valid");
+        input.classList.add("is-invalid");
+        return false; // La fecha está fuera del rango permitido, se muestra el estilo de error
+      } else {
+        input.classList.remove("is-invalid");
+        input.classList.add("is-valid");
+        return true; // La fecha es válida, se muestra el estilo de éxito
+      }
+    }
+  }
+  
+
   // Función para validar el correo
   function validarCorreo() {
     var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -262,10 +297,11 @@ function validarSegundoApellido() {
     var apellidoValido = validarApellido();
     var SegundoapellidoValido = validarSegundoApellido();
     var telefonoValido = validarTelefono();
+    var fechavalido = validarFecha();
     var correoValido = validarCorreo();
 
     // Verificar si todos los campos son válidos
-    if (nombreValido && apellidoValido && telefonoValido && correoValido && SegundonombreValido && SegundoapellidoValido) {
+    if (nombreValido && apellidoValido && telefonoValido && correoValido && SegundonombreValido && SegundoapellidoValido && fechavalido) {
       document.getElementById("registroForm").submit(); // Enviar el formulario
     } else {
       // Mostrar un mensaje de error
@@ -278,6 +314,7 @@ function validarSegundoApellido() {
   document.getElementById("inputApellidos").addEventListener("input", validarApellido);
   document.getElementById("inputSegundoApellidos").addEventListener("input", validarSegundoApellido);
   document.getElementById("inputTelefono").addEventListener("input", validarTelefono);
+  document.getElementById("nacimiento_fecha").addEventListener("input", validarFecha);
   document.getElementById("inputCorreo").addEventListener("input", validarCorreo);
 
   // Agregar evento de validación al enviar el formulario

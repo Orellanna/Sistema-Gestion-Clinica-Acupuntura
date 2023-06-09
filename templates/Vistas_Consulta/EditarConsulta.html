@@ -51,7 +51,7 @@
                       </span>
                     </div>
                     <div class="instrucciones d-none">
-                      Ingrese la Fecha de la Consulta correctamente.
+                      Ingrese la Fecha de la Consulta correctamente; Debe ingresar una fecha actual o anterior a la fecha actual
                     </div>
                   </div>
                 </div>
@@ -280,11 +280,23 @@
     }
 
 
-    // Función de validación para el campo de fecha 
     function validarFecha(valor) {
       var fechaRegex = /^\d{4}-\d{2}-\d{2}$/; // Expresión regular para fecha
-      return fechaRegex.test(valor);
+      if (!fechaRegex.test(valor)) {
+        return false; // La fecha no tiene el formato correcto
+      }
+      
+      var fechaIngresada = new Date(valor);
+      var fechaActual = new Date();
+      fechaActual.setHours(0, 0, 0, 0); // Establecer las horas, minutos, segundos y milisegundos de la fecha actual a cero para comparar solo las fechas
+      
+      if (fechaIngresada >= fechaActual) {
+        return false; // La fecha es igual o posterior a la fecha actual
+      }
+      
+      return true; // La fecha es válida
     }
+    
 
     // Funcion para validar la hora
     function validarHora(valor) {
