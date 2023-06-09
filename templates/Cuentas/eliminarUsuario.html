@@ -10,7 +10,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-body text-center"> <!-- Agregada la clase "text-center" para centrar el contenido -->
-            <h3>Eliminar Paciente</h3>
+            <h3>Eliminar Usuario</h3>
             <p class="text-center">¿Estás seguro que deseas eliminar el Usuario <strong>{{usuario.username}}</strong>?</p>
             <form method="POST" action="{% url 'eliminarUsuario' usuario.username %}">
               {% csrf_token %}
