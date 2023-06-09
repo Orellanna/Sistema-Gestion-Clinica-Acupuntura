@@ -127,7 +127,9 @@
           <div class="logout-dialog-content">
             <h3>¿Estás seguro de que deseas cerrar sesión?</h3>
             <div class="logout-dialog-buttons">
-              <button id="logout-confirm" class="btn btn-danger">Confirmar</button>
+              <a href="{% url 'cerrar_sesion' %}" class="btn btn-danger">SI</a>
+              
+
               <button id="logout-cancel" class="btn btn-secondary">Cancelar</button>
             </div>
           </div>
@@ -220,7 +222,7 @@
       
         <!-- Main content -->
              
-        <section class="content">
+        <section class="content mb-5">
           {% if messages %}
                           <div class="messages">
                             {% for message in messages %}

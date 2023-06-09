@@ -13,6 +13,7 @@ class Paciente(models.Model):
     telefono_paciente = models.CharField(max_length=8, blank=True, null=True)
     email_paciente = models.CharField(max_length=50, blank=True, null=True)
     deshabilitado = models.BooleanField(default=False)
+    fecharegistro_paciente = models.DateTimeField()
     
     def save(self, *args, **kwargs):
         if not self.id_paciente:  
@@ -44,6 +45,9 @@ class Paciente(models.Model):
     class Meta:
         managed = False
         db_table = 'paciente'
+    
+    def obtener_fechanac_formateada(self):
+        return self.fechanac_paciente.strftime('%d-%B-%Y')
         
 class Consulta(models.Model):
     id_consulta = models.CharField(primary_key=True, max_length=15)
