@@ -246,15 +246,15 @@
             </div>
             
             <div class="container my-6">
-                <div class="row mt-4">
-                <div class="col-md-12 text-center">
-                  
-                    <a href="{% url 'verUsuario' usuario.username   %}" class="btn btn-danger"><i class="fas fa-times"></i>&nbsp; Cancelar</a>
-                    <button type="submit" class="btn btn-primary" > <i class="nav-icon fas fa-save"> </i>&nbsp; Guardar</button>
-
-                </div>
-                </div>
-            </div>
+              <div class="row mt-4">
+                  <div class="col-md-12 text-center">
+                      <div class="d-flex justify-content-center">
+                          <a href="{% url 'verUsuario' usuario.username %}" class="btn btn-info mr-2"><i class="fas fa-arrow-left"></i>&nbsp; Regresar</a>
+                          <button type="submit" class="btn btn-success"><i class="nav-icon fas fa-save"></i>&nbsp; Guardar</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
             </form>
             <!--End Form-->
 
