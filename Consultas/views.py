@@ -112,12 +112,15 @@ def EliminarConsulta(request, paciente_id, consulta_id):
     consulta = get_object_or_404(Consulta, id_consulta=consulta_id, id_paciente=paciente)
 
     if request.method == 'POST':
-        consulta.delete()
-        messages.success(request, "La consulta se ha eliminado satisfactoriamente")
-        # Redirigir al usuario a la página de lista de consultas o cualquier otra página que desees mostrar después de eliminar la consulta
-        return redirect('ListarConsultas', paciente_id=paciente_id)
+        #Deshabilitar la Consulta
+        consulta.deshabilitado = True
+        consulta.save()
     
-    return render(request, 'Vistas_Consulta/EliminarConsulta.html', {'paciente': paciente, 'consulta': consulta})
+        # Redirigir al usuario a la página de lista de consultas o cualquier otra página que desees mostrar después de eliminar la consulta
+        messages.success(request, "La consulta se ha eliminado satisfactoriamente")
+        return redirect('ListarConsultas', paciente_id=paciente_id)
+
+    return render(request, 'Vistas_Consulta/EliminarConsulta.html', {'paciente': paciente, 'consulta': consulta})   
 
 @login_required
 @csrf_exempt

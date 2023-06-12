@@ -48,13 +48,15 @@ class Paciente(models.Model):
     
     def obtener_fechanac_formateada(self):
         return self.fechanac_paciente.strftime('%d-%B-%Y')
-        
+    
+      
 class Consulta(models.Model):
     id_consulta = models.CharField(primary_key=True, max_length=15)
     id_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='id_paciente')
     motivo_consulta = models.CharField(max_length=500)
     observacion_consulta = models.CharField(max_length=1000, blank=True, null=True)
     consulta_fecha = models.DateField()
+    deshabilitado = models.BooleanField(default=False)
     hora_consulta = models.TimeField()
 
     def save(self, *args, **kwargs):
