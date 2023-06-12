@@ -66,12 +66,9 @@ def DetallesConsulta(request, paciente_id, consulta_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     consulta = get_object_or_404(Consulta, pk=consulta_id, id_paciente=paciente)
 
-    fecha_consulta_str = consulta.consulta_fecha.strftime('%d/%B/%Y')
-
     return render(request, 'Vistas_Consulta/DetallesConsulta.html', {
         'consulta': consulta,
         'paciente': paciente,
-        'fecha_consulta_str': fecha_consulta_str,
     })
 
 @login_required

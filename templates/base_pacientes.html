@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <link rel="shortcut icon" href="static/img/logo.png">
+  <link rel="shortcut icon" href="{% static 'img/logo.png' %}">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gestion Clinica Acupuntura</title>
@@ -254,7 +254,7 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col-3 text-center">
-                  <a href="{% url 'DatosPersonales' paciente.id_paciente %}" class="nav-link" id="perfil-link" onclick="highlightIcon('perfil-link')">
+                  <a href="{% url 'DatosPersonales' paciente.id_paciente %}" class="nav-link" id="perfil-link" >
                     <i class="fas fa-user fa-2x" style="color: #000000;"></i>
                     <p class="mt-2" style="color: #000000; font-weight: bold;">Perfil</p>
                     <div class="bar"></div>
@@ -457,33 +457,36 @@ logoutCancelButton.addEventListener('click', function() {
   logoutDialog.style.display = 'none';
 });
 
-function highlightIcon(id) {
-    const icons = document.getElementsByClassName('nav-link');
-    for (let i = 0; i < icons.length; i++) {
-      icons[i].classList.remove('active');
-    }
-
-    $('#'+ id ).addClass('active');
-
-    document.cookie = "activeIcon=" + id + '; path=/';
-  }
-
-$(document).ready(function() {
-  const activeIcon = getCookie('activeIcon');
-
-  if (activeIcon) {
-    $('#'+ activeIcon ).addClass('active');
-  }
-});	
-
-function getCookie(name) {
-  const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
-  return cookieValue ? cookieValue.pop() : '';
-} 
-  
-
  </script>
 
+ <script>
+  // Obtén la ruta actual de la página
+  var path = window.location.pathname;
+
+  // Activa la barra lateral según la ruta actual
+  if (path.includes('/datosPersonales')) {
+    activateSidebar('perfil-link');
+  } else if (path.includes('/HistorialConsultas')) {
+    activateSidebar('consultas-link');
+  } else if (path.includes('/historial')) {
+    activateSidebar('historial-link');
+  }
+
+  // Función para activar la barra lateral
+  function activateSidebar(linkId) {
+    // Desactiva la clase 'active' en todos los enlaces de la barra lateral
+    var links = document.querySelectorAll('#sidebar .nav-link');
+    links.forEach(function(link) {
+      link.classList.remove('active');
+    });
+
+    // Activa la clase 'active' en el enlace correspondiente
+    var activeLink = document.getElementById(linkId);
+    if (activeLink) {
+      activeLink.classList.add('active');
+    }
+  }
+</script>
 
 </body>
 </html>
