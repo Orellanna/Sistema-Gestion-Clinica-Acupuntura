@@ -15,7 +15,6 @@ def index(request):
     return render(request,'index.html')
 
 @login_required
-@csrf_exempt
 def ListarConsultas(request, paciente_id):
     paciente = get_object_or_404(Paciente, id_paciente =paciente_id)
     consultas = Consulta.objects.filter(id_paciente=paciente_id)
@@ -27,7 +26,6 @@ def ListarConsultas(request, paciente_id):
 from django.contrib import messages
 
 @login_required
-@csrf_exempt
 def NuevaConsulta(request, paciente_id):
     paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
     
@@ -61,7 +59,6 @@ def NuevaConsulta(request, paciente_id):
 
            
 @login_required
-@csrf_exempt
 def DetallesConsulta(request, paciente_id, consulta_id):
     paciente = get_object_or_404(Paciente, pk=paciente_id)
     consulta = get_object_or_404(Consulta, pk=consulta_id, id_paciente=paciente)
@@ -72,7 +69,6 @@ def DetallesConsulta(request, paciente_id, consulta_id):
     })
 
 @login_required
-@csrf_exempt
 def EditarConsulta(request, paciente_id, consulta_id):
     paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
     consulta = get_object_or_404(Consulta, id_consulta=consulta_id, id_paciente=paciente)
@@ -103,7 +99,6 @@ def EditarConsulta(request, paciente_id, consulta_id):
     return render(request, 'Vistas_Consulta/EditarConsulta.html', {'paciente': paciente, 'consulta': consulta})
 
 @login_required
-@csrf_exempt
 def EliminarConsulta(request, paciente_id, consulta_id):
     paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
     consulta = get_object_or_404(Consulta, id_consulta=consulta_id, id_paciente=paciente)
@@ -120,7 +115,6 @@ def EliminarConsulta(request, paciente_id, consulta_id):
     return render(request, 'Vistas_Consulta/EliminarConsulta.html', {'paciente': paciente, 'consulta': consulta})   
 
 @login_required
-@csrf_exempt
 def generar_reporte_pdf(request, paciente_id, consulta_id):
     # Obtiene los datos del paciente y la consulta
     paciente = get_object_or_404(Paciente, id_paciente=paciente_id)

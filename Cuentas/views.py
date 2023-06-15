@@ -19,7 +19,11 @@ def HomePage(request):
     contexto = {'usuario':request.user}
     return render(request,'index.html',contexto)
 
+def es_administrador(user):
+    return user.groups.filter(name='Administrador').exists()
+
 @login_required
+@user_passes_test(es_administrador)
 def Administracion(request):
     return render(request,'Administracion/administracion.html')
 
@@ -50,7 +54,6 @@ def cierre_sesion(request):
         
 
 @login_required
-@csrf_exempt
 def GestionUsuarios(request):
     usuarios = User.objects.all()
     return render(request,'Administracion/GestionUsuarios.html',{
@@ -61,7 +64,6 @@ def GestionUsuarios(request):
 from django.contrib import messages
 
 @login_required
-@csrf_exempt
 def NuevoUsuario(request):
     if request.method == 'POST':
         usuario = request.POST['username']
@@ -111,7 +113,6 @@ def VerUsuario(request, username):
     
 
 @login_required
-@csrf_exempt
 def EliminarUsuario(request, username):
     usuario = get_object_or_404(User, username=username)
     
@@ -123,7 +124,6 @@ def EliminarUsuario(request, username):
     return render(request, 'Cuentas/eliminarUsuario.html', {'usuario': usuario})
 
 @login_required
-@csrf_exempt
 def EditarUsuario(request, username):
     usuario = get_object_or_404(User, username=username)
     grupos_usuario = usuario.groups.values_list('name', flat=True)
