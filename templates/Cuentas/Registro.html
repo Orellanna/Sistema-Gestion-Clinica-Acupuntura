@@ -49,7 +49,7 @@
                             </span>
                             </div>   
                             <div class="instrucciones d-none">
-                              Ingrese el usuario utilizando solo letras, sin números ni símbolos.
+                              Ingrese el usuario de al menos 8 y máximo 20 caracteres, sin utilizar símbolos ni espacios.
                             </div>                                                    
                         </div>
 
@@ -67,7 +67,7 @@
                             </span>
                             </div>
                             <div class="instrucciones d-none">
-                              Ingrese el usuario utilizando solo letras, sin números ni símbolos.
+                              Debe Ingresar una contraseña de al menos 8 y máximo 20 caracteres sin caracteres especiales.
                             </div>  
                         </div>
 
@@ -119,7 +119,7 @@
                             </span>
                             </div>
                             <div class="instrucciones d-none">
-                              Ingrese el usuario utilizando solo letras, sin números ni símbolos.
+                              Ingrese el Nombre utilizando solo letras, sin números ni símbolos.
                             </div> 
                         </div>
                         
@@ -129,7 +129,7 @@
                               <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                              <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="lastname" value="{{ primerApellido }}">
+                              <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellido" name="lastname" value="{{ primerApellido }}">
                               <span class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
                                   <i class="fas fa-info-circle"></i>
@@ -137,7 +137,7 @@
                               </span>
                             </div>
                             <div class="instrucciones d-none">
-                              Ingrese el usuario utilizando solo letras, sin números ni símbolos.
+                              Ingrese el Apellido utilizando solo letras, sin números ni símbolos.
                             </div>
                         </div>
 
@@ -232,7 +232,7 @@
 
   // Función para validar el nombre
   function validarNombre() {
-    var regex = /^[a-zA-Z]+$/;
+    var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
     var minLength = 1;
     var maxLength = 20;
     return validarCampo("inputNombre", regex, minLength, maxLength);
@@ -240,7 +240,7 @@
 
   // Función para validar el apellido
   function validarApellido() {
-    var regex = /^[a-zA-Z]+$/;
+    var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
     var minLength = 1;
     var maxLength = 20;
     return validarCampo("inputApellidos", regex, minLength, maxLength);

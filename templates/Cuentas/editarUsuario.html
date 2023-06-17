@@ -75,7 +75,7 @@
                             </div>
 
                             <div class="instrucciones d-none">
-                              Ingrese el usuario utilizando solo letras, sin números ni símbolos.
+                              Ingrese el usuario de al menos 8 y máximo 20 caracteres, sin utilizar símbolos ni espacios.
                             </div> 
                             
                         </div>
@@ -102,7 +102,7 @@
                                 </div>
     
                                 <div class="instrucciones d-none">
-                                  Debe Ingresar una contraseña de al menos 8 caracteres.
+                                  Debe Ingresar una contraseña de al menos 8 y máximo 20 caracteres sin caracteres especiales.
                                 </div>                              
                             </div>
                     
@@ -235,7 +235,7 @@
                             </div>
                         
                             <div class="instrucciones d-none">
-                              Ingrese el correo electronico del usuario.
+                              Ingrese el correo electrónico del usuario.
                             </div> 
                             
                         </div>
@@ -249,7 +249,7 @@
               <div class="row mt-4">
                   <div class="col-md-12 text-center">
                       <div class="d-flex justify-content-center">
-                          <a href="{% url 'verUsuario' usuario.username %}" class="btn btn-info mr-2"><i class="fas fa-arrow-left"></i>&nbsp; Regresar</a>
+                          <a href="{% url 'verUsuario' usuario.username %}" class="btn btn-primary mr-5"><i class="fas fa-arrow-left"></i>&nbsp; Regresar</a>
                           <button type="submit" class="btn btn-success"><i class="nav-icon fas fa-save"></i>&nbsp; Guardar</button>
                       </div>
                   </div>
