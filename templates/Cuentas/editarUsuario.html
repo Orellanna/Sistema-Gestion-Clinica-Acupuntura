@@ -348,7 +348,7 @@
 
   // Función para validar el nombre
   function validarNombre() {
-    var regex = /^[a-zA-Z]+$/;
+    var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
     var minLength = 1;
     var maxLength = 20;
     return validarCampo("inputNombre", regex, minLength, maxLength);
@@ -356,7 +356,7 @@
 
   // Función para validar el apellido
   function validarApellido() {
-    var regex = /^[a-zA-Z]+$/;
+    var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
     var minLength = 1;
     var maxLength = 20;
     return validarCampo("inputApellidos", regex, minLength, maxLength);
