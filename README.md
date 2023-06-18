@@ -1,6 +1,7 @@
 
 ### Sistema para la Gestion de la clínica Terapia-Holistica Acupuntura.
 
+![ClinicaAcupuntura](static/img/logo.png)
 
 ## Cuenta con los siguientes modulos
 
