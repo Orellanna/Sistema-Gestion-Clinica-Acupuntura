@@ -83,10 +83,10 @@ WSGI_APPLICATION = 'AppClinicaAcupuntura.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'derhm006qe0bvq',
-        'USER': 'zbeufrcwbmzsxf',
-        'PASSWORD': 'bebfb4922a80d1df55e69e742d2c964a774c784c9ff735834b3fcb48f00b0ed9',
-        'HOST': 'ec2-34-197-91-131.compute-1.amazonaws.com',
+        'NAME': 'd992ot0slk0gi7',
+        'USER': 'aaysownjaarlae',
+        'PASSWORD': '9dbe669a823cb1bae424c2edf2bfe7570238ca859686ad05b678e99ac76c3df0',
+        'HOST': 'ec2-3-221-177-27.compute-1.amazonaws.com',
         'PORT': '5432',
     }
 }
