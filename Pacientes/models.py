@@ -47,7 +47,7 @@ class Paciente(models.Model):
         db_table = 'paciente'
     
     def obtener_fechanac_formateada(self):
-        return self.fechanac_paciente.strftime('%d-%B-%Y')
+        return self.fechanac_paciente.strftime('%d / %B / %Y')
     
       
 class Consulta(models.Model):
@@ -74,7 +74,7 @@ class Consulta(models.Model):
         return self.motivo_consulta + ' - ' + self.id_paciente.primer_nombre + ' ' + self.id_paciente.primer_apellido
     
     def obtener_consulta_fecha_formateada(self):
-        return self.consulta_fecha.strftime('%d-%B-%Y')
+        return self.consulta_fecha.strftime('%d / %B / %Y')
     class Meta:
         managed = False
         db_table = 'consulta'
