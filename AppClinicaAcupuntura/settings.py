@@ -148,3 +148,4 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 locale.setlocale(locale.LC_ALL, 'es_ES.UTF-8')
+

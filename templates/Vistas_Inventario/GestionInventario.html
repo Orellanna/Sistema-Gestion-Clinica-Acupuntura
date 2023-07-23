@@ -64,7 +64,7 @@
             <h2>Inventario</h2>
           </div>
           <div class="col">
-            <a href="{% url 'registrarPaciente' %}" class="btn btn-success"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Añadir Producto</a>
+            <a href="{% url 'RegistrarProducto' %}" class="btn btn-success"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Añadir Producto</a>
             <div class="row"> <div class="card"></div></div>
            
           </div>
@@ -89,8 +89,6 @@
                         <th>Codigo</th>
                         <th>Nombre</th>
                         <th>Cantidad</th>
-                        <th>Costo Unitario</th>
-                        <th>Fecha de Vencimiento</th>
                         <th>Acciones</th>
                       </tr>
                     </thead>
@@ -101,15 +99,14 @@
                             <td>{{producto.id_suministro}}</td>                  
                             <td>{{producto.nombre_suministro}}</td>                
                             <td>{{producto.cantidad}}</td>
-                            <td>{{producto.costo_unitario}}</td>
-                            <td>{{producto.fecha_vencimiento}}</td>
+                            
 
                             <td class="text-center">
                               <div class="d-inline-flex flex-row align-items-center">
                                 <a href="#" class="ver-productos mr-5" data-inventario-id="{{producto.id_suministro}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Producto">
                                   <i class="fas fa-eye fa-lg" style="color: #0a3461;"></i>
                                 </a>
-                                <a href="#" class="eliminar-producto mr-5" data-productos-nombres="{{producto.nombre_suministro}}"
+                                <a href="{% url 'EliminarProducto' id_suministro=producto.id_suministro %}" class="eliminar-producto mr-5" data-productos-nombres="{{producto.nombre_suministro}}"
                                   data-producto-id="{{producto.id_suministro}}" onclick="confirmarEliminacion(event)" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Producto">
                                   <i class="fas fa-ban fa-lg" style="color: #1e3152;"></i>
                                 </a>
@@ -139,65 +136,22 @@
     document.addEventListener("DOMContentLoaded", function() {
 
       // Obtener todos los elementos con la clase "ver-consulta"
-      const verPacientes = document.querySelectorAll(".ver-pacientes");
+      const verProductos = document.querySelectorAll(".ver-productos");
   
       // Agregar un evento de clic a cada enlace
-      verPacientes.forEach(function(enlace) {
+      verProductos.forEach(function(enlace) {
         enlace.addEventListener("click", function(event) {
         event.preventDefault();
           
           // Obtener el ID de la consulta del atributo data-consulta-id
-          const pacienteId = enlace.getAttribute("data-pacientes-id");
+          const productoId = enlace.getAttribute("data-inventario-id");
        
           // Redirigir a la página de detalles de la consulta con el ID
-          window.location.href = "/"+ "datosPersonales/" + pacienteId + "/";
+          window.location.href = "/"+ "Inventario" + "/" + "DetallesProducto/" + productoId + "/";
         });
       });
     });
 
   </script>
-
-  <script>
-  function confirmarEliminacion(event) {
-    event.preventDefault();
-
-    const enlace = event.currentTarget;
-    const pacienteId = enlace.getAttribute("data-paciente-id");
-    const pacienteNombres = enlace.getAttribute("data-paciente-nombres");
-
-    const ventanaEmergente = document.createElement("div");
-    ventanaEmergente.classList.add("ventana-emergente");
-
-    const titulo = document.createElement("h3");
-    titulo.textContent = "Confirmar deshabilitación";
-
-    const mensaje = document.createElement("p");
-    mensaje.textContent = "¿Estás seguro que quieres deshabilitar al paciente " + pacienteNombres + "?";
-
-    const botonAceptar = document.createElement("button");
-    botonAceptar.textContent = "Aceptar";
-    botonAceptar.addEventListener("click", function() {
-      window.location.href = `/eliminarPaciente/${pacienteId}/`;
-    });
-
-    const botonCancelar = document.createElement("button");
-    botonCancelar.textContent = "Cancelar";
-    botonCancelar.addEventListener("click", function() {
-      ventanaEmergente.remove();
-      document.body.removeChild(fondoDifuminado);
-    });
-
-    ventanaEmergente.appendChild(titulo);
-    ventanaEmergente.appendChild(mensaje);
-    ventanaEmergente.appendChild(botonAceptar);
-    ventanaEmergente.appendChild(botonCancelar);
-
-    const fondoDifuminado = document.createElement("div");
-    fondoDifuminado.classList.add("fondo-difuminado");
-    fondoDifuminado.appendChild(ventanaEmergente);
-
-    document.body.appendChild(fondoDifuminado);
-  }
-</script>
 
 {% endblock %}
