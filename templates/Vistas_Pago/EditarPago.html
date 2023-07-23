@@ -1,0 +1,309 @@
+{% extends 'base_pacientes.html' %} {% block content %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Editar Consulta</h1>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<form
+  action="{% url 'EditarConsulta' paciente_id=paciente.id_paciente consulta_id=consulta.id_consulta %}" method="POST" id="formEditarConsulta">
+  {% csrf_token %}
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <!-- Default box -->
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <p>ID: {{consulta.id_consulta}}</p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label for="fechacita" class="col-sm-4 col-form-label">Fecha de Consulta:</label>
+                    <div class="col-sm-6 input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                      </div>
+                      <input
+                        class="form-control"
+                        type="date"
+                        id="consulta_fecha"
+                        name="consulta_fecha"
+                        value="{{ consulta.consulta_fecha|date:'Y-m-d' }}"
+                      />
+                      <span class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                          <i class="fas fa-info-circle"></i>
+                        </button>
+                      </span>
+                    </div>
+                    <div class="instrucciones d-none">
+                      Ingrese la Fecha de la Consulta correctamente; Debe ingresar una fecha actual o anterior a la fecha actual
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="col">
+                  <div class="form-group">
+                    <label for="horainicio" class="col-sm-4 col-form-label">Hora de inicio:</label>
+                    <div class="col-sm-6 input-group">
+
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                      </div>
+                      <input
+                      class="form-control"
+                        type="time"
+                        id="hora_consulta"
+                        name="hora_consulta"
+                        value="{{ consulta.hora_consulta|time:'H:i'}}"
+                      />
+                      <span class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                          <i class="fas fa-info-circle"></i>
+                        </button>
+                      </span>
+                    </div>
+                    <div class="instrucciones d-none">
+                      Ingrese la hora de inicio de la consulta correctamente.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label for="motivo">Motivo:</label>
+                    <div class="input-group">
+                      <div class = "input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-stethoscope"></i></span>
+                      </div>
+                      <input
+                        class="form-control"
+                        id="motivo_consulta"
+                        name="motivo_consulta"
+                        value="{{ consulta.motivo_consulta }}"
+                      />
+                      <span class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                          <i class="fas fa-info-circle"></i>
+                        </button>
+                      </span>
+                    </div>
+                    <div class="instrucciones d-none">
+                      Ingrese el motivo de la consulta. No utilice simbolos ni caracteres especiales.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label for="observacion">Observaciones:</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-file"></i></span>
+                      </div>
+                      <textarea class="form-control" rows="3" name="observacion_consulta" id="observacion_consulta">{{ consulta.observacion_consulta }}</textarea>
+                      <span class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                          <i class="fas fa-info-circle"></i>
+                        </button>
+                      </span>
+                    </div>
+                    <div class="instrucciones d-none">
+                      Ingrese las observaciones. No utilice simbolos ni caracteres especiales.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+
+
+              
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer"></div>
+            <!-- /.card-footer-->
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2 d-flex justify-content-between">
+        <div class="col-sm-6">
+          <a
+            href="{% url 'ListarConsultas' paciente_id=paciente.id_paciente %}"
+            class="btn btn-primary float-left"
+            ><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a
+          >
+        </div>
+
+        <div class="col-sm-6">
+          <button
+            type="submit"
+            name="submit"
+            class="btn btn-success float-right">
+            <i class="fa fa-save"></i>&nbsp; Actualizar Consulta
+          </button>
+        </div>
+
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+</form>
+<script>
+  // Eliminar espacios en blanco al cargar la página
+  window.addEventListener('DOMContentLoaded', function() {
+    var textarea = document.getElementById('observacion_consulta');
+    textarea.value = textarea.value.trim();
+  });
+
+</script>
+<script>
+  // Función para mostrar u ocultar las instrucciones de un campo
+  function mostrarInstrucciones(boton) {
+    var instrucciones = boton.parentNode.parentNode.parentNode.querySelector(".instrucciones");
+    instrucciones.classList.toggle("d-none");
+  }
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Obtener referencias a los elementos del formulario
+    var motivoInput = document.getElementById("motivo_consulta");
+    var observacionInput = document.getElementById("observacion_consulta");
+    var fechaInput = document.getElementById("consulta_fecha");
+    var horaInput = document.getElementById("hora_consulta");
+    var formulario = document.getElementById("formEditarConsulta");
+
+    // Agregar evento de validación al campo de motivo
+    motivoInput.addEventListener("input", function() {
+      if (validarMotivo(this.value)) {
+        this.classList.remove("is-invalid");
+        this.classList.add("is-valid");
+      } else {
+        this.classList.remove("is-valid");
+        this.classList.add("is-invalid");
+      }
+    });
+
+    // Agregar evento de validación al campo de observacion
+    observacionInput.addEventListener("input", function() {
+      if (validarObservacion(this.value)) {
+        this.classList.remove("is-invalid");
+        this.classList.add("is-valid");
+      } else {
+        this.classList.remove("is-valid");
+        this.classList.add("is-invalid");
+      }
+    });
+
+    // Agregar evento de validación al campo de fecha
+    fechaInput.addEventListener("input", function() {
+      if (validarFecha(this.value)) {
+        this.classList.remove("is-invalid");
+        this.classList.add("is-valid");
+      } else {
+        this.classList.remove("is-valid");
+        this.classList.add("is-invalid");
+      }
+    });
+
+    // Agregar evento de validación al campo de hora
+    horaInput.addEventListener("input", function() {
+      if (validarHora(this.value)) {
+        this.classList.remove("is-invalid");
+        this.classList.add("is-valid");
+      } else {
+        this.classList.remove("is-valid");
+        this.classList.add("is-invalid");
+      }
+    });
+
+    // Agregar evento de envío del formulario
+    formulario.addEventListener("submit", function(event) {
+      // Validar el campo de motivo antes de enviar el formulario
+      if (!validarMotivo(motivoInput.value)) {
+        motivoInput.classList.add("is-invalid");
+        event.preventDefault(); // Evitar el envío del formulario si hay errores
+      }
+
+      if (!validarObservacion(observacionInput.value)) {
+        observacionInput.classList.add("is-invalid");
+        event.preventDefault(); // Evitar el envío del formulario si hay errores
+      }
+
+      if (!validarFecha(fechaInput.value)) {
+        fechaInput.classList.add("is-invalid");
+        event.preventDefault(); // Evitar el envío del formulario si hay errores
+      }
+    });
+
+    if (!validarHora(horaInput.value)) {
+      horaInput.classList.add("is-invalid");
+      event.preventDefault(); // Evitar el envío del formulario si hay errores
+    }
+
+   // Función de validación para el campo de motivo
+    function validarMotivo(valor) {
+      var motivoRegex = /^[a-zA-Z0-9\sñáéíóúÁÉÍÓÚ\-]+$/; // Expresión regular para letras, números, espacios, ñ, tildes y guiones
+      return motivoRegex.test(valor);
+    }
+
+    // Función de validación para el campo de observacion
+    function validarObservacion(valor) {
+      var observacionRegex = /^[a-zA-Z0-9\sñáéíóúÁÉÍÓÚ\-.,]+$/; // Expresión regular para letras, números, espacios, ñ, tildes, guiones, puntos y comas
+      return observacionRegex.test(valor);
+    }
+
+
+    function validarFecha(valor) {
+      var fechaRegex = /^\d{4}-\d{2}-\d{2}$/; // Expresión regular para fecha
+      if (!fechaRegex.test(valor)) {
+        return false; // La fecha no tiene el formato correcto
+      }
+      
+      var fechaIngresada = new Date(valor);
+      var fechaActual = new Date();
+      fechaActual.setHours(0, 0, 0, 0); // Establecer las horas, minutos, segundos y milisegundos de la fecha actual a cero para comparar solo las fechas
+      
+      if (fechaIngresada >= fechaActual) {
+        return false; // La fecha es igual o posterior a la fecha actual
+      }
+      
+      return true; // La fecha es válida
+    }
+    
+
+    // Funcion para validar la hora
+    function validarHora(valor) {
+      var horaRegex = /^\d{2}:\d{2}$/; // Expresión regular para hora
+      return horaRegex.test(valor);
+    }
+  });
+</script>
+
+{% endblock %}

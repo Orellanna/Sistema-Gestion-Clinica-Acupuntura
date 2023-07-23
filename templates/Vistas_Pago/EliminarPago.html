@@ -1,0 +1,31 @@
+{% extends 'base_pacientes.html' %}
+
+{% block content %}
+
+<!-- Content Wrapper. Contains page content -->
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body text-center"> <!-- Agregada la clase "text-center" para centrar el contenido -->
+            <h3>Eliminar Consulta</h3>
+            <p class="text-center">¿Estás seguro de que deseas eliminar la consulta <strong>{{consulta.id_consulta}}</strong> - <strong>{{consulta.motivo_consulta}}</strong>?</p>
+            <form method="POST" action="{% url 'EliminarConsulta' paciente_id=paciente.id_paciente consulta_id=consulta.id_consulta %}">
+              {% csrf_token %}
+              <div class="d-flex justify-content-center"> <!-- Agregada la clase "d-flex justify-content-center" para centrar los botones -->
+                <input type="submit" value="Eliminar" class="btn btn-danger mx-4">
+                <a href="{% url 'ListarConsultas' paciente_id=paciente.id_paciente %}" class="btn btn-secondary">Cancelar</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- /.content-wrapper -->
+
+{% endblock %}
