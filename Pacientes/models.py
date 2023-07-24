@@ -1,5 +1,6 @@
 from datetime import date
 from django.db import models
+import base64
 
 # Create your models here.
 class Paciente(models.Model):
@@ -109,7 +110,14 @@ class Inventario(models.Model):
     cantidad = models.IntegerField()
     costo_unitario = models.TextField()  # This field type is a guess.
     fecha_vencimiento = models.DateField()
-
+    imagenprod = models.FileField(upload_to='product_images/', blank=True, null=True)
+    
+    def get_imagenprod_base64(self):
+        if self.imagenprod:
+            # Convertir los datos binarios a base64
+            return base64.b64encode(self.imagenprod).decode('utf-8')
+        return None
+    
     class Meta:
         managed = False
         db_table = 'inventario'
