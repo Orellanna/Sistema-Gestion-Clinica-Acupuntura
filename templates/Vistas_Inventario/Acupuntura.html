@@ -1,0 +1,87 @@
+<!-- templates/Vistas_Inventario/Acupuntura.html -->
+{% load static %}
+<!-- terapias/templates/terapias/acupuntura.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Acupuntura</title>
+    <!-- Agrega los enlaces a Bootstrap y tus archivos CSS aquí -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
+</head>
+<body>
+    <h1>Terapias de Acupuntura</h1>
+    
+    <img src="" id="canvas" style="width: 500px; height: auto;">
+
+    <h2>Terapias existentes:</h2>
+    <ul>
+        {% for terapia in terapias %}
+            <li><a href="#">{{ terapia.id_terapia }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <!-- Agrega un botón "Finalizar" para guardar los puntos -->
+    <form id="marcar-puntos-form">
+        <button type="submit">Finalizar</button>
+    </form>
+
+    <script>
+        // JavaScript para manejar la interacción con la imagen utilizando Fabric.js
+        var puntosAcupunturales = [];
+        var canvas;
+
+        // Función para inicializar el canvas de Fabric.js con la imagen del cuerpo humano
+        function inicializarCanvas() {
+            canvas = new fabric.Canvas('canvas', {
+                selection: false,
+                hoverCursor: 'pointer',
+                defaultCursor: 'pointer'
+            });
+
+            var imagen = new Image();
+            imagen.onload = function () {
+                var fabricImagen = new fabric.Image(imagen);
+                canvas.add(fabricImagen);
+                canvas.setWidth(imagen.width);
+                canvas.setHeight(imagen.height);
+                canvas.renderAll();
+            };
+
+            imagen.src = "{% static 'img/logo.png' %}"; // Ruta de la imagen interactiva del cuerpo humano (cambiada por la URL real de la imagen)
+        }
+
+        // Agregar un evento clic a la imagen para marcar puntos
+        canvas.on('mouse:down', function (event) {
+            var x = event.e.offsetX;
+            var y = event.e.offsetY;
+            puntosAcupunturales.push({ "x": x, "y": y });
+            marcarPunto(x, y); // función para mostrar visualmente el punto marcado en la imagen
+        });
+
+        // Función para mostrar visualmente un punto en la imagen
+        function marcarPunto(x, y) {
+            var punto = new fabric.Circle({
+                left: x - 5,
+                top: y - 5,
+                radius: 5,
+                fill: 'red',
+                selectable: false,
+                evented: false
+            });
+            canvas.add(punto);
+            canvas.renderAll();
+        }
+
+        // Enviar los puntos al servidor cuando se envía el formulario
+        document.getElementById("marcar-puntos-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+            // Enviar los puntos al servidor mediante una solicitud HTTP (por ejemplo, una solicitud POST)
+            // Asegúrate de enviar los puntos junto con el identificador de la terapia actual para guardarlos correctamente en la base de datos.
+        });
+
+        // Llamar a la función para inicializar el canvas una vez que se haya cargado la página
+        window.onload = inicializarCanvas;
+    </script>
+</body>
+</html>

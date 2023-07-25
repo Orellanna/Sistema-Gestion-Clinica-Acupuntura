@@ -105,18 +105,27 @@ class Terapia(models.Model):
         db_table = 'terapia'
 
 class Inventario(models.Model):
-    id_suministro = models.AutoField(primary_key=True)
+    id_suministro = models.CharField(primary_key=True, max_length=10)
     nombre_suministro = models.CharField(max_length=100)
     cantidad = models.IntegerField()
     costo_unitario = models.TextField()  # This field type is a guess.
     fecha_vencimiento = models.DateField()
-    imagenprod = models.FileField(upload_to='product_images/', blank=True, null=True)
+    imagenprod = models.BinaryField(blank=True, null=True)
     
     def get_imagenprod_base64(self):
         if self.imagenprod:
             # Convertir los datos binarios a base64
             return base64.b64encode(self.imagenprod).decode('utf-8')
         return None
+
+    def save(self, *args, **kwargs):
+        if not self.id_suministro:  # Verificar si es un nuevo registro
+            last_suministro = Inventario.objects.order_by('-id_suministro').first()
+            last_id = last_suministro.id_suministro[1:] if last_suministro else "00000"
+            new_id = f"{self.nombre_suministro[0].upper()}{str(int(last_id) + 1).zfill(5)}"
+            self.id_suministro = new_id
+        super(Inventario, self).save(*args, **kwargs)
+
     
     class Meta:
         managed = False
