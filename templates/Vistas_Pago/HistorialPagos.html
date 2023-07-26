@@ -36,16 +36,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for consulta in consultas %}
-                      {% if not consulta.deshabilitado %}
+                    {% for pago in pagos %}
                     <tr>
-                      <td>{{consulta.id_consulta}}</td>
-                      <td>{{consulta.motivo_consulta}}</td>
-                      <td>{{consulta.obtener_consulta_fecha_formateada}}</td>
+                      <td>{{pago.id_pago}}</td>
+                      <td>{{pago.id_consulta}}</td>
+                      <td>{{pago.monto_pago}}</td>
                       <td class="text-center">
 
                         <div class="d-inline-flex flex-row align-items-center">
-                          <a href="#" class="ver-consulta mr-5" data-consulta-id="{{consulta.id_consulta}}" data-paciente-id="{{paciente.id_paciente}}">   
+                          <a href="#" class="ver-pago mr-5" data-pago-id="{{pago.id_pago}}" data-consulta-id="{{consulta.id_consulta}}">   
                             <i class="fas fa-eye fa-lg" style="color: #0a3461;"></i>
                           </a>
 
@@ -55,7 +54,6 @@
                         </div>
                       </td>
                     </tr>
-                      {% endif %}
                     {% endfor %}
                     </tbody> 
                   </table>
@@ -68,8 +66,8 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      // Obtener todos los elementos con la clase "ver-consulta"
-      const verConsultas = document.querySelectorAll(".ver-consulta");
+      // Obtener todos los elementos con la clase "ver-pago"
+      const verPagos = document.querySelectorAll(".ver-pago");
   
       // Agregar un evento de clic a cada enlace
       verConsultas.forEach(function(enlace) {

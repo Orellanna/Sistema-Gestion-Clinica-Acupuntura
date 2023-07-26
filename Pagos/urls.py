@@ -9,5 +9,5 @@ from Pagos.views import NuevoPago
 
 urlpatterns = [
     path('NuevoPago/', views.NuevoPago, name='NuevoPago'),
-
+    path('<str:id_consulta>/HistorialPagos/', views.ListarPagos, name='ListarPagos'),
     ]
