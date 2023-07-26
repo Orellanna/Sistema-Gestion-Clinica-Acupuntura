@@ -20,7 +20,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form action="{% url 'EditarProducto' producto.id_suministro %}" method="POST" id="registroForm">
+              <form action="{% url 'EditarProducto' producto.id_suministro %}" method="POST" id="registroForm" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="card-body">
                     <div class="form-group">
@@ -94,22 +94,32 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="inputImagen">Imagen del Producto</label>
-                        <div class="input-group">
-                          <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputImagen" name="imagen">
-                            <label class="custom-file-label" for="inputImagen">Seleccione una imagen...</label>
-                          </div>
-                          <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
-                              <i class="fas fa-info-circle"></i>
-                            </button>
-                          </div>
+                      <label for="inputImagen">Imagen del Producto</label>
+                      <div class="input-group">
+                        <div class="custom-file">
+                          <!-- Utiliza un atributo data para guardar el nombre de la imagen actual -->
+                          <input type="file" class="custom-file-input" id="inputImagen" name="imagen" data-current-name="{{ producto.imagenprod.name }}">
+                          <label class="custom-file-label" for="inputImagen" id="imagenLabel">Seleccione una imagen...</label>
                         </div>
-                        <div class="instrucciones d-none">
-                          Seleccione una imagen que represente el insumo (opcional).
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                            <i class="fas fa-info-circle"></i>
+                          </button>
                         </div>
                       </div>
+                      <div class="instrucciones d-none">
+                        Seleccione una imagen que represente el insumo (opcional).
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      
+                      {% if producto.imagenprod %}
+                        <img id="imagenPrevisualizacion" src="{{ producto.imagenprod.url }}" alt="" style="max-width: 200px; max-height: 200px;">
+                      {% else %}
+                        <p></p>
+                      {% endif %}
+                    </div>
                     
                 </div>
                 <!-- /.card-body -->
@@ -253,6 +263,33 @@ function validarSegundoApellido() {
 
   // Agregar evento de validación al enviar el formulario
   document.getElementById("registroForm").addEventListener("submit", validarFormulario);
+</script>
+
+<script>
+ 
+  // Actualizar la previsualización de la imagen seleccionada al cambiar el archivo
+  document.getElementById("inputImagen").addEventListener("change", function() {
+    const imagenInput = document.getElementById("inputImagen");
+    const imagenLabel = document.getElementById("imagenLabel");
+    const imagenPrevisualizacion = document.getElementById("imagenPrevisualizacion");
+
+    if (imagenInput.files.length > 0) {
+      // Si se selecciona una nueva imagen, mostrar la previsualización
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        imagenPrevisualizacion.style.display = "block";
+        imagenPrevisualizacion.src = event.target.result;
+      };
+      reader.readAsDataURL(imagenInput.files[0]);
+      imagenLabel.textContent = imagenInput.files[0].name;
+    } else {
+      // Si no se selecciona una nueva imagen, ocultar la previsualización
+      imagenPrevisualizacion.style.display = "none";
+      // Mostrar el nombre de la imagen actual
+      // Utilizamos un atributo data para guardar el nombre de la imagen actual
+      imagenLabel.textContent = imagenInput.getAttribute("data-current-name");
+    }
+  });
 </script>
 
 {% endblock %}
