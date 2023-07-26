@@ -89,8 +89,8 @@
 
             <div class="row mt-4">
               <div class="col-md-12 text-center">
-                {% if producto.imagenprod %}
-                <img src="https://podoservice.es/3975-large_default/aguja-acupuntura-acimut-en-plata-sin-guia-cabeza-redonda-100-uds.jpg" alt="Imagen del Insumo" class="img-fluid rounded" width="200">
+                {% if imagen_data_uri %}
+                <img src="{{imagen_data_uri}}" alt="Imagen del Insumo" class="img-fluid rounded" width="200">
                 {% else %}
                 <p>No hay imagen disponible</p>
                 {% endif %}

@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Pacientes',
     'Consultas',
-    'Cuentas',  
+    'Cuentas', 
+    'Inventario', 
 ]
 
 MIDDLEWARE = [
@@ -148,4 +149,7 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 locale.setlocale(locale.LC_ALL, 'es_ES.UTF-8')
+
+MEDIA_URL= '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static','img')
 
