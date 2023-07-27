@@ -29,7 +29,15 @@ class Paciente(models.Model):
     class Meta:
         managed = False
         db_table = 'paciente'
+<<<<<<< Updated upstream
         
+=======
+    
+    def obtener_fechanac_formateada(self):
+        return self.fechanac_paciente.strftime('%d-%m-%Y')
+    
+      
+>>>>>>> Stashed changes
 class Consulta(models.Model):
     id_consulta = models.CharField(primary_key=True, max_length=10)
     id_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='id_paciente')

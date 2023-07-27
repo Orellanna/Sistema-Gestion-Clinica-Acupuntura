@@ -1,0 +1,428 @@
+{% extends 'index_master.html' %}
+
+{% block content %}
+
+<style>
+    ul.messages {
+        list-style-type: none;
+        padding: 0;
+      }
+      
+      .message {
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 4px;
+      }
+      
+      .success {
+        background-color: #dff0d8;
+        color: #d6d300;
+      }
+      
+      .error {
+        background-color: #f2dede;
+        color: #a94442;
+      }
+      
+      .warning {
+        background-color: #fcf8e3;
+        color: #8a6d3b;
+      }
+</style>
+<div class="container my-4">
+
+    
+    <div class="container-fluid">
+        <form>
+        <div class="row mb-3">
+            <h2>Editar Usuario</h2>
+        </form>
+        </div>
+        <div id="mensajeError" style="display: none; color: red;"></div>
+        <div></div>
+    </div>
+    
+<div class="row">
+    <div class="col-md-6">
+        
+        <div class="card card-secondary">
+            <div class="card-header">
+                <h3 class="card-title">Información de Registro</h3>
+            </div>
+            <!-- /.card-header -->
+
+            <!-- form start -->
+            <form action="{% url 'editarUsuario' usuario.username %}" method="POST" id="editarForm">
+            {% csrf_token %}
+                    
+                        <div class="card-body">
+                        <div class="form-group">
+                            <label for="inputUser">Usuario*</label>
+                            <div class="input-group">
+
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                              </div>
+
+                              <input type="text" class="form-control" id="inputUser" placeholder="Ingrese su usuario" name="username" value="{{ usuario.username }}">
+
+                              <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                              </span>
+
+                            </div>
+
+                            <div class="instrucciones d-none">
+                              Ingrese el usuario de al menos 8 y máximo 20 caracteres, sin utilizar símbolos ni espacios.
+                            </div> 
+                            
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" id="cambiarContrasenaCheckbox" name="cambiar_contrasena">
+                            <label for="cambiarContrasenaCheckbox">Cambiar contraseña</label>
+                        </div>
+                    
+                        <div id="divContrasena" style="display: none;">
+                            <div class="form-group">
+                                <label for="inputContrasena">Contraseña</label>
+                                <div class="input-group">
+
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                                  </div>
+                                  <input type="password" class="form-control" id="inputContrasena" name="password" title="Las contraseñas deben coincidir" disabled>
+                                  <span class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                      <i class="fas fa-info-circle"></i>
+                                    </button>
+                                  </span>
+    
+                                </div>
+    
+                                <div class="instrucciones d-none">
+                                  Debe Ingresar una contraseña de al menos 8 y máximo 20 caracteres sin caracteres especiales.
+                                </div>                              
+                            </div>
+                    
+                            <div class="form-group">
+                                <label for="inputConfirmarContrasena">Confirmar Contraseña</label>
+                                <div class="input-group">
+
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                                  </div>
+                                  <input type="password" class="form-control" id="inputConfirmarContrasena" name="password" title="Las contraseñas deben coincidir" disabled>
+                                  <span class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                      <i class="fas fa-info-circle"></i>
+                                    </button>
+                                  </span>
+    
+                                </div>
+                                <div class="instrucciones d-none">
+                                  Las contraseñas deben coincidir.
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="selectCargo">Cargo*</label>
+
+                            <div class="input-group">
+                            
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user-md"></i></span>
+                              </div>
+
+                              <select class="form-control" id="selectCargo" name="cargo" required>
+                                <option value="">Seleccione el cargo</option>
+                                <option value="administrador" {% if 'Administrador' in grupos_usuario %}selected{% endif %}>Administrador</option>
+                                <option value="acupunturista" {% if 'Acupunturista' in grupos_usuario %}selected{% endif %}>Acupunturista</option>
+                              </select>
+
+                              <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                              </span>
+
+                            </div>
+
+                            <div class="instrucciones d-none">
+                              seleccione el cargo de el usuario.
+                            </div>
+
+                        </div>
+
+                        </div>
+                        <!-- /.card-body -->
+                   
+                </div>
+                <!-- /.card -->
+            </div>
+            <div class="col-md-6">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">Información Adicional</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    
+                        <div class="card-body">   
+                            <div class="form-group">
+                            <label for="inputNombre">Nombre</label>
+                            <div class = "input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                              </div>
+
+                              <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="firstname" value="{{ usuario.first_name }}">
+
+                              <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                              </span>
+
+                            </div>
+                        
+                            <div class="instrucciones d-none">
+                              Ingrese el Nombre utilizando solo letras, sin números ni símbolos.
+                            </div> 
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputApellidos">Apellido</label>
+                            
+                            <div class = "input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                              </div>
+
+                              <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="lastname" value="{{ usuario.last_name }}">
+
+                              <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                              </span>
+
+                            </div>
+                        
+                            <div class="instrucciones d-none">
+                              Ingrese el apellido utilizando solo letras, sin números ni símbolos.
+                            </div> 
+                        </div>
+                        <div class="form-group">
+                            <label for="inputCorreo">Correo</label>
+                            <div class = "input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                              </div>
+
+                              <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email" value="{{ usuario.email }}">
+
+                              <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                              </span>
+
+                            </div>
+                        
+                            <div class="instrucciones d-none">
+                              Ingrese el correo electrónico del usuario.
+                            </div> 
+                            
+                        </div>
+    
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="container my-6">
+              <div class="row mt-4">
+                  <div class="col-md-12 text-center">
+                      <div class="d-flex justify-content-center">
+                          <a href="{% url 'verUsuario' usuario.username %}" class="btn btn-primary mr-5"><i class="fas fa-arrow-left"></i>&nbsp; Regresar</a>
+                          <button type="submit" class="btn btn-success"><i class="nav-icon fas fa-save"></i>&nbsp; Guardar</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+            </form>
+            <!--End Form-->
+
+        </div>
+    </div>
+
+</div>
+</div>
+<script>
+  // Función para mostrar u ocultar las instrucciones de un campo
+  function mostrarInstrucciones(boton) {
+    var instrucciones = boton.parentNode.parentNode.parentNode.querySelector(".instrucciones");
+    instrucciones.classList.toggle("d-none");
+  }
+</script>
+
+<script>
+  // Función para validar un campo
+  function validarCampo(inputId, regex, minLength, maxLength) {
+    var input = document.getElementById(inputId);
+    var valor = input.value.trim();
+
+    if (valor === "") {
+      input.classList.remove("is-valid", "is-invalid");
+      return true; // No se ingresa ningún valor, no se muestra ninguna indicación de error
+    } else if (valor.length < minLength || valor.length > maxLength) {
+      input.classList.remove("is-valid");
+      input.classList.add("is-invalid");
+      return false; // Valor incorrecto, se muestra el estilo de error
+    } else if (!regex.test(valor)) {
+      input.classList.remove("is-valid");
+      input.classList.add("is-invalid");
+      return false; // Valor incorrecto, se muestra el estilo de error
+    } else {
+      input.classList.remove("is-invalid");
+      input.classList.add("is-valid");
+      return true; // Valor válido, se muestra el estilo de éxito
+    }
+  }
+
+  // Función para validar el usuario
+  function validarUsuario() {
+    var regex = /^[a-zA-Z0-9_]+$/;
+    var minLength = 1;
+    var maxLength = 20;
+    return validarCampo("inputUser", regex, minLength, maxLength);
+  }
+
+  // Función para validar la contraseña
+  function validarContraseña() {
+    var regex = /^\d+$|^[a-zA-Z][a-zA-Z0-9_]{7,19}$/;
+    var minLength = 8;
+    var maxLength = 20;
+    return validarCampo("inputContrasena", regex, minLength, maxLength);
+  }
+
+  // Función para validar la confirmación de contraseña
+  function validarConfirmarContraseña() {
+    var inputContraseña = document.getElementById("inputContrasena");
+    var inputConfirmarContraseña = document.getElementById("inputConfirmarContrasena");
+    var contraseña = inputContraseña.value.trim();
+    var confirmarContraseña = inputConfirmarContraseña.value.trim();
+
+    if (confirmarContraseña === "") {
+      inputConfirmarContraseña.classList.remove("is-valid", "is-invalid");
+      return true; // No se ingresa ninguna confirmación de contraseña, no se muestra ninguna indicación de error
+    } else if (contraseña !== confirmarContraseña) {
+      inputConfirmarContraseña.classList.remove("is-valid");
+      inputConfirmarContraseña.classList.add("is-invalid");
+      return false; // Las contraseñas no coinciden, se muestra el estilo de error
+    } else {
+      inputConfirmarContraseña.classList.remove("is-invalid");
+      inputConfirmarContraseña.classList.add("is-valid");
+      return true; // Las contraseñas coinciden, se muestra el estilo de éxito
+    }
+  }
+
+   // Función para mostrar un mensaje de error
+   function mostrarMensajeError(mensaje) {
+    var mensajeError = document.getElementById("mensajeError");
+    mensajeError.textContent = mensaje;
+    mensajeError.style.display = "block";
+  }
+
+  // Función para ocultar el mensaje de error
+  function ocultarMensajeError() {
+    var mensajeError = document.getElementById("mensajeError");
+    mensajeError.textContent = "";
+    mensajeError.style.display = "none";
+  }
+
+  // Función para validar el nombre
+  function validarNombre() {
+    var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
+    var minLength = 1;
+    var maxLength = 20;
+    return validarCampo("inputNombre", regex, minLength, maxLength);
+  }
+
+  // Función para validar el apellido
+  function validarApellido() {
+    var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
+    var minLength = 1;
+    var maxLength = 20;
+    return validarCampo("inputApellidos", regex, minLength, maxLength);
+  }
+
+  // Función para validar el correo
+  function validarCorreo() {
+    var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return validarCampo("inputCorreo", regex, 0, 100);
+  }
+
+  // Función para validar el formulario completo
+  function validarFormulario(event) {
+    event.preventDefault(); // Evitar el envío del formulario por defecto
+
+    var usuarioValido = validarUsuario();
+    var contraseñaValida = validarContraseña();
+    var confirmarContraseñaValida = validarConfirmarContraseña();
+    var nombreValido = validarNombre();
+    var apellidoValido = validarApellido();
+    var correoValido = validarCorreo();
+
+    // Verificar si todos los campos son válidos
+    if (usuarioValido && contraseñaValida && confirmarContraseñaValida && nombreValido && apellidoValido && correoValido) {
+      ocultarMensajeError(); // Ocultar el mensaje de error si los campos son válidos
+      document.getElementById("editarForm").submit(); // Enviar el formulario
+    } else {
+      mostrarMensajeError("Por favor, verifica que todos los campos sean correctos."); // Mostrar un mensaje de error
+    }
+  }
+
+  // Función para manejar el cambio de la opción "Cambiar contraseña"
+  function cambiarContrasenaCheckboxOnChange() {
+    var checkbox = document.getElementById("cambiarContrasenaCheckbox");
+    var divContrasena = document.getElementById("divContrasena");
+    var inputContrasena = document.getElementById("inputContrasena");
+    var inputConfirmarContraseña = document.getElementById("inputConfirmarContrasena");
+
+    if (checkbox.checked) {
+      divContrasena.style.display = "block";
+      inputContrasena.disabled = false;
+      inputConfirmarContraseña.disabled = false;
+    } else {
+      divContrasena.style.display = "none";
+      inputContrasena.disabled = true;
+      inputConfirmarContraseña.disabled = true;
+      inputContrasena.value = "";
+      inputConfirmarContraseña.value = "";
+      inputContrasena.classList.remove("is-valid", "is-invalid");
+      inputConfirmarContraseña.classList.remove("is-valid", "is-invalid");
+    }
+  }
+
+  // Agregar eventos de validación en tiempo real a los campos
+  document.getElementById("inputUser").addEventListener("input", validarUsuario);
+  document.getElementById("inputContrasena").addEventListener("input", validarContraseña);
+  document.getElementById("inputConfirmarContrasena").addEventListener("input", validarConfirmarContraseña);
+  document.getElementById("inputNombre").addEventListener("input", validarNombre);
+  document.getElementById("inputApellidos").addEventListener("input", validarApellido);
+  document.getElementById("inputCorreo").addEventListener("input", validarCorreo);
+
+  // Agregar evento de envío del formulario
+  document.getElementById("editarForm").addEventListener("submit", validarFormulario);
+
+  // Agregar evento de cambio para el checkbox "Cambiar contraseña"
+  document.getElementById("cambiarContrasenaCheckbox").addEventListener("change", cambiarContrasenaCheckboxOnChange);
+</script>
+
+{% endblock %}

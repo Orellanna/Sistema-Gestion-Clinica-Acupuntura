@@ -86,4 +86,135 @@
   </div>
 </div>
 
+<<<<<<< Updated upstream
 {% endblock %}
+=======
+<script>
+  // Función para mostrar u ocultar las instrucciones de un campo
+  function mostrarInstrucciones(boton) {
+    var instrucciones = boton.parentNode.parentNode.parentNode.querySelector(".instrucciones");
+    instrucciones.classList.toggle("d-none");
+  }
+</script>
+
+<script>
+  // Función para validar un campo
+  function validarCampo(inputId, regex) {
+    var input = document.getElementById(inputId);
+    var valor = input.value.trim();
+
+    if (valor === "") {
+      input.classList.remove("is-valid", "is-invalid");
+      return true; // No se ingresa ningún valor, no se muestra ninguna indicación de error
+    } else if (!regex.test(valor)) {
+      input.classList.remove("is-valid");
+      input.classList.add("is-invalid");
+      return false; // Valor incorrecto, se muestra el estilo de error
+    } else {
+      input.classList.remove("is-invalid");
+      input.classList.add("is-valid");
+      return true; // Valor válido, se muestra el estilo de éxito
+    }
+  }
+
+  // Función para validar el nombre
+  function validarNombre() {
+    var regex = /^[a-zA-Z\u00C0-\u017F]{7}$/;
+    return validarCampo("inputNombre", regex);
+  }
+
+ // Función para validar el segundo nombre
+ function validarSegundoNombre() {
+  var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
+  return validarCampo("inputSegundoNombre", regex);
+}
+  // Función para validar el apellido
+  function validarApellido() {
+    var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
+    return validarCampo("inputApellidos", regex);
+  }
+// Función para validar el segundo apellido
+function validarSegundoApellido() {
+  var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
+  return validarCampo("inputSegundoApellidos", regex);
+}
+  // Función para validar el teléfono
+  function validarTelefono() {
+    var regex = /^\d{8}$/;
+    return validarCampo("inputTelefono", regex);
+  }
+
+  // Función para validar la fecha de nacimiento
+  function validarFecha() {
+    var input = document.getElementById("nacimiento_fecha");
+    var valor = input.value;
+  
+    if (valor === "") {
+      input.classList.remove("is-valid", "is-invalid");
+      return true; // No se ingresa ninguna fecha, no se muestra ninguna indicación de error
+    } else {
+      var fechaIngresada = new Date(valor);
+      var fechaActual = new Date();
+      var edadMinima = 10;
+      var edadMaxima = 110;
+  
+      var edad = fechaActual.getFullYear() - fechaIngresada.getFullYear();
+      if (
+        (edad < edadMinima || edad > edadMaxima) ||
+        (edad === edadMinima && fechaActual.getMonth() < fechaIngresada.getMonth()) ||
+        (edad === edadMinima && fechaActual.getMonth() === fechaIngresada.getMonth() && fechaActual.getDate() < fechaIngresada.getDate())
+      ) {
+        input.classList.remove("is-valid");
+        input.classList.add("is-invalid");
+        return false; // La fecha está fuera del rango permitido, se muestra el estilo de error
+      } else {
+        input.classList.remove("is-invalid");
+        input.classList.add("is-valid");
+        return true; // La fecha es válida, se muestra el estilo de éxito
+      }
+    }
+  }
+  
+
+  // Función para validar el correo
+  function validarCorreo() {
+    var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return validarCampo("inputCorreo", regex);
+  }
+
+  // Función para validar el formulario completo
+  function validarFormulario(event) {
+    event.preventDefault(); // Evitar el envío del formulario por defecto
+
+    var nombreValido = validarNombre();
+    var SegundonombreValido = validarSegundoNombre();
+    var apellidoValido = validarApellido();
+    var SegundoapellidoValido = validarSegundoApellido();
+    var telefonoValido = validarTelefono();
+    var fechavalido = validarFecha();
+    var correoValido = validarCorreo();
+
+    // Verificar si todos los campos son válidos
+    if (nombreValido && apellidoValido && telefonoValido && correoValido && SegundonombreValido && SegundoapellidoValido && fechavalido) {
+      document.getElementById("registroForm").submit(); // Enviar el formulario
+    } else {
+      // Mostrar un mensaje de error
+    }
+  }
+
+  // Agregar eventos de validación en tiempo real a los campos
+  document.getElementById("inputNombre").addEventListener("input", validarNombre);
+  document.getElementById("inputSegundoNombre").addEventListener("input", validarSegundoNombre);
+  document.getElementById("inputApellidos").addEventListener("input", validarApellido);
+  document.getElementById("inputSegundoApellidos").addEventListener("input", validarSegundoApellido);
+  document.getElementById("inputTelefono").addEventListener("input", validarTelefono);
+  document.getElementById("nacimiento_fecha").addEventListener("input", validarFecha);
+  document.getElementById("inputCorreo").addEventListener("input", validarCorreo);
+
+  // Agregar evento de validación al enviar el formulario
+  document.getElementById("registroForm").addEventListener("submit", validarFormulario);
+</script>
+
+{% endblock %}
+
+>>>>>>> Stashed changes

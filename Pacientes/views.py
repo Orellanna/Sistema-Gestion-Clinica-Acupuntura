@@ -117,9 +117,42 @@ def Registrar(request, id_paciente, primer_nombre, segundo_nombre, primer_apelli
         # Generamos la URL correcta usando reverse
         url = reverse('GestionPacientes', kwargs={'paciente_id': id_paciente})
         
+<<<<<<< Updated upstream
         # Redirigimos al usuario a la URL correcta
         return redirect(url)
             
      
     return render(request,'Vistas_Pacientes/RegistrarPaciente.html')
     
+=======
+        paciente.primer_nombre = primer_nombre
+        paciente.segundo_nombre = segundo_nombre
+        paciente.primer_apellido = primer_apellido
+        paciente.segundo_apellido = segundo_apellido
+        paciente.fechanac_paciente = fechanac_paciente
+        paciente.sexo_paciente = sexo_paciente
+        paciente.telefono_paciente = telefono_paciente
+        paciente.email_paciente = email_paciente
+    
+        paciente.save()
+        messages.warning(request, "El Paciente se ha editado satisfactoriamente")
+        return redirect('DatosPersonales', id_paciente=id_paciente)
+    
+    return render(request,'Vistas_Pacientes/EditarPaciente.html', {
+        'paciente': paciente,
+    })
+    
+
+@login_required
+def EliminarPaciente(request, id_paciente):
+    
+    paciente = get_object_or_404(Paciente, id_paciente=id_paciente)
+    
+    # Deshabilitar al paciente
+    paciente.deshabilitado = True
+    paciente.save()
+
+    # Redirigir a la página de gestión de pacientes
+    messages.success(request, "El Paciente se ha desactivado satisfactoriamente")
+    return redirect('GestionPacientes')
+>>>>>>> Stashed changes
