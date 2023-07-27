@@ -24,7 +24,13 @@
                 <div class="external-event bg-success">Almuerzo</div>
                 <div class="external-event bg-warning">Salida</div>
                 <div class="external-event bg-info">Reunion</div>
-                <div class="external-event bg-primary">Cita</div>
+                <div class="external-event bg-success" onclick="abrirVentana()">Crear Cita</div>
+
+<script>
+function abrirVentana() {
+    window.open("http://127.0.0.1:8000/GestionCitas/", "_blank");
+}
+</script>
                 <div class="checkbox">
                   <label for="drop-remove">
                     <input type="checkbox" id="drop-remove">
@@ -39,6 +45,7 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Crear Evento</h3>
+              
             </div>
             <div class="card-body">
               <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
