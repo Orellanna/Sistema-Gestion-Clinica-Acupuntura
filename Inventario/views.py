@@ -96,16 +96,16 @@ def EditarProducto(request, id_suministro):
             # Si se proporcionó una nueva imagen, reemplazar la anterior
             producto.imagenprod = imagen.read()
         
-        # Guardar el nombre de la imagen actual en el atributo data del campo de entrada de imagen
-        if producto.imagenprod:
-            imagen_input = 'inputImagen'
-            imagen_input_field = request.FILES.get('imagen')
+        # # Guardar el nombre de la imagen actual en el atributo data del campo de entrada de imagen
+        # if producto.imagenprod:
+        #     imagen_input = 'inputImagen'
+        #     imagen_input_field = request.FILES.get('imagen')
             
-            if imagen_input_field:
-                imagen_current_name = imagen_input_field.name
-                producto.imagenprod.name = imagen_current_name
-                input_imagen_html = '<input type="file" class="custom-file-input" id="inputImagen" name="imagen" data-current-name="{}">'
-                imagen_input = input_imagen_html.format(imagen_current_name)
+        #     if imagen_input_field:
+        #         imagen_current_name = imagen_input_field.name
+        #         producto.imagenprod.name = imagen_current_name
+        #         input_imagen_html = '<input type="file" class="custom-file-input" id="inputImagen" name="imagen" data-current-name="{}">'
+        #         imagen_input = input_imagen_html.format(imagen_current_name)
                 
         producto.save()
         messages.success(request, "El Producto se ha editado satisfactoriamente")
