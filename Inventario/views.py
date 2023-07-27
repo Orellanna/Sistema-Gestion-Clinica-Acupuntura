@@ -27,6 +27,7 @@ def RegistrarProducto(request):
         cantidad = request.POST['cantidad']
         costo_unitario = request.POST['costo_unitario']
         fecha_vencimiento = request.POST['fecha_vencimiento']
+        decripcion = request.POST['descripcion_suministro']
         imagen = request.FILES.get('imagen')
         
         nuevo_producto = Inventario()
@@ -34,6 +35,7 @@ def RegistrarProducto(request):
         nuevo_producto.cantidad = cantidad
         nuevo_producto.costo_unitario = costo_unitario
         nuevo_producto.fecha_vencimiento = fecha_vencimiento
+        nuevo_producto.descripcion = decripcion
         
         if imagen:
             nuevo_producto.imagenprod = imagen.read()
@@ -86,31 +88,25 @@ def EditarProducto(request, id_suministro):
         costo_unitario = request.POST['costo_unitario']
         fecha_vencimiento = request.POST['fecha_vencimiento']
         imagen = request.FILES.get('imagen')
+        descripcion = request.POST['descripcion_suministro']
         
         producto.nombre_suministro = nombre_suministro
         producto.cantidad = cantidad
         producto.costo_unitario = costo_unitario
         producto.fecha_vencimiento = fecha_vencimiento
+        producto.descripcion = descripcion
         
         if imagen:
             # Si se proporcionó una nueva imagen, reemplazar la anterior
             producto.imagenprod = imagen.read()
-        
-        # # Guardar el nombre de la imagen actual en el atributo data del campo de entrada de imagen
-        # if producto.imagenprod:
-        #     imagen_input = 'inputImagen'
-        #     imagen_input_field = request.FILES.get('imagen')
-            
-        #     if imagen_input_field:
-        #         imagen_current_name = imagen_input_field.name
-        #         producto.imagenprod.name = imagen_current_name
-        #         input_imagen_html = '<input type="file" class="custom-file-input" id="inputImagen" name="imagen" data-current-name="{}">'
-        #         imagen_input = input_imagen_html.format(imagen_current_name)
                 
         producto.save()
         messages.success(request, "El Producto se ha editado satisfactoriamente")
         return redirect('DetallesProducto', id_suministro=id_suministro)
     
+    imagen_base64 = producto.get_imagenprod_base64()
+        
     return render(request,'Vistas_Inventario/EditarProducto.html', {
         'producto': producto,
+        'imagen_base64': imagen_base64,
     })
