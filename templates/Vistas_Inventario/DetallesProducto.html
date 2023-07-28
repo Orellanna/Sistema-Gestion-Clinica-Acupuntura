@@ -42,27 +42,45 @@
               <h4 class="text-primary">Detalles del Producto</h4>
               <hr>
             </div>
+            
+            <!-- Primera Fila: ID de producto, Nombre de Producto -->
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <div class="text-center">
                   <h6 class="text-secondary">ID del Producto:</h6>
                   <p class="font-weight-bold">{{producto.id_suministro}}</p>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <div class="text-center">
                   <h6 class="text-secondary">Nombre:</h6>
                   <p>{{producto.nombre_suministro}}</p>
                 </div>
               </div>
+            </div>
+  
+            <!-- Segunda Fila: Descripcion del producto -->
+            <div class="row mt-2">
+              <div class="col-md-12">
+                <div class="text-center">
+                  <h6 class="text-secondary">Descripción del Producto:</h6>
+                  <div class="list-group">
+                    <a class="list-group-item list-group-item-action flex-column align-items-start">
+                      <p class="mb-1">{{producto.descripcion}}</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Tercera Fila: Cantidad, Precio unitario, Fecha de vencimiento -->
+            <div class="row mt-4">
               <div class="col-md-4">
                 <div class="text-center">
                   <h6 class="text-secondary">Cantidad:</h6>
                   <p>{{producto.cantidad}}</p>
                 </div>
               </div>
-            </div>
-            <div class="row mt-4">
               <div class="col-md-4">
                 <div class="text-center">
                   <h6 class="text-secondary">Costo Unitario:</h6>
@@ -72,33 +90,25 @@
               <div class="col-md-4">
                 <div class="text-center">
                   <h6 class="text-secondary">Fecha de Vencimiento:</h6>
-                  <div class="list-group">
-                    <a class="list-group-item list-group-item-action flex-column align-items-start">
-                      <p class="mb-1">{{producto.fecha_vencimiento}}</p>
-                    </a>
+                    <p class="mb-1">{{producto.fecha_vencimiento}}</p>           
                   </div>
                 </div>
               </div>
-              {% comment %} <div class="col-md-4">
-                <div class="text-center">
-                  <h6 class="text-secondary">Proveedor:</h6>
-                  <p>{{producto.proveedor}}</p>
-                </div>
-              </div> {% endcomment %}
             </div>
-
-            <div class="row mt-4">
+  
+            <!-- Imagen del Producto -->
+            <div class="row mt-1">
               <div class="col-md-12 text-center">
                 {% if imagen_data_uri %}
-                <img src="{{imagen_data_uri}}" alt="Imagen del Insumo" class="img-fluid rounded" width="200">
+                <img src="{{imagen_data_uri}}" alt="Imagen del Insumo" class="img-fluid rounded" width="170">
                 {% else %}
                 <p>No hay imagen disponible</p>
                 {% endif %}
               </div>
             </div>
-
-
-            <div class="row mt-4">
+  
+            <!-- Botones de navegación -->
+            <div class="row mt-4 mb-3">
               <div class="col-md-12 text-center">
                 <a href="{% url 'GestionInventario' %}" class="btn btn-primary mx-2">
                   <i class="fas fa-arrow-left"></i>&nbsp; Volver atrás
@@ -109,11 +119,13 @@
                 </a>
               </div>
             </div>
+
           </div>
         </div>
       </div>
     </div>
   </div>
+  
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.9/dist/umd/popper.min.js"></script>

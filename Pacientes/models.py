@@ -111,6 +111,7 @@ class Inventario(models.Model):
     costo_unitario = models.TextField()  # This field type is a guess.
     fecha_vencimiento = models.DateField()
     imagenprod = models.BinaryField(blank=True, null=True)
+    descripcion = models.CharField(max_length=255, blank=True, null=True)
     
     def get_imagenprod_base64(self):
         if self.imagenprod:
