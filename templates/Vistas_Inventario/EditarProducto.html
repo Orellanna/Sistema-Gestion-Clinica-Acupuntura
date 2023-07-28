@@ -40,6 +40,25 @@
                           Ingrese el nombre utilizando solo letras, sin números ni símbolos.
                         </div>
                     </div>
+
+                    <div class="form-group">
+                      <label for="inputDescripcion">Descripcion*</label>
+                      <div class="input-group">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-user"></i></span>
+                          </div>
+                          <textarea class="form-control" id="inputDescripcion" placeholder="Ingrese la descripcion" name="descripcion_suministro" required>{{producto.descripcion}}</textarea>
+                          <span class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                              <i class="fas fa-info-circle"></i>
+                            </button>
+                          </span>
+                      </div>
+                      <div class="instrucciones d-none">
+                        Ingrese la Descripcion del producto.
+                      </div>
+                  </div>
+
                     <div class="form-group">
                       <label for="inputCantidad">Cantidad</label>
                       <div class="input-group">
@@ -112,12 +131,12 @@
                       </div>
                     </div>
 
-                    <div class="form-group">
-                      
-                      {% if producto.imagenprod %}
-                        <img id="imagenPrevisualizacion" src="{{ producto.imagenprod.url }}" alt="" style="max-width: 200px; max-height: 200px;">
+                    <!-- Mostrar la imagen actual si existe -->
+                    <div class="form-group d-flex justify-content-center align-items-center">
+                      {% if imagen_base64 %}
+                          <img id="imagenPrevisualizacion" src="data:image/png;base64,{{ imagen_base64 }}" alt="" style="max-width: 200px; max-height: 200px;">
                       {% else %}
-                        <p></p>
+                          <p>No hay imagen asignada.</p>
                       {% endif %}
                     </div>
                     
@@ -173,28 +192,19 @@
     return validarCampo("inputNombre", regex);
   }
 
- // Función para validar el segundo nombre
- function validarSegundoNombre() {
-  var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
-  return validarCampo("inputSegundoNombre", regex);
-}
-  // Función para validar el apellido
-  function validarApellido() {
-    var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
-    return validarCampo("inputApellidos", regex);
-  }
-// Función para validar el segundo apellido
-function validarSegundoApellido() {
-  var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
-  return validarCampo("inputSegundoApellidos", regex);
-}
-  // Función para validar el teléfono
-  function validarTelefono() {
-    var regex = /^\d{8}$/;
-    return validarCampo("inputTelefono", regex);
+  // Función para validar la Cantidad
+  function validarCantidad() {
+    var regex = /^\d/;
+    return validarCampo("inputCantidad", regex);
   }
 
-  // Función para validar la fecha de nacimiento
+  // Función para validar el Costo Unitario
+  function validarCostoUnitario() {
+    var regex = /^\d/;
+    return validarCampo("inputCostoUnitario", regex);
+  }
+
+  // Función para validar la fecha de vencimiento
   function validarFecha() {
     var input = document.getElementById("nacimiento_fecha");
     var valor = input.value;
@@ -226,26 +236,17 @@ function validarSegundoApellido() {
   }
   
 
-  // Función para validar el correo
-  function validarCorreo() {
-    var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    return validarCampo("inputCorreo", regex);
-  }
-
   // Función para validar el formulario completo
   function validarFormulario(event) {
     event.preventDefault(); // Evitar el envío del formulario por defecto
 
     var nombreValido = validarNombre();
-    var SegundonombreValido = validarSegundoNombre();
-    var apellidoValido = validarApellido();
-    var SegundoapellidoValido = validarSegundoApellido();
-    var telefonoValido = validarTelefono();
+    var cantidadValido = validarCantidad();
+    var costoValido = validarCostoUnitario();
     var fechavalido = validarFecha();
-    var correoValido = validarCorreo();
 
     // Verificar si todos los campos son válidos
-    if (nombreValido && apellidoValido && telefonoValido && correoValido && SegundonombreValido && SegundoapellidoValido && fechavalido) {
+    if (nombreValido && cantidadValido && costoValido && fechavalido) {
       document.getElementById("registroForm").submit(); // Enviar el formulario
     } else {
       // Mostrar un mensaje de error
@@ -254,12 +255,10 @@ function validarSegundoApellido() {
 
   // Agregar eventos de validación en tiempo real a los campos
   document.getElementById("inputNombre").addEventListener("input", validarNombre);
-  document.getElementById("inputSegundoNombre").addEventListener("input", validarSegundoNombre);
-  document.getElementById("inputApellidos").addEventListener("input", validarApellido);
-  document.getElementById("inputSegundoApellidos").addEventListener("input", validarSegundoApellido);
-  document.getElementById("inputTelefono").addEventListener("input", validarTelefono);
+  document.getElementById("inputCantidad").addEventListener("input", validarCantidad);
+  document.getElementById("inputCostoUnitario").addEventListener("input", validarCostoUnitario);
   document.getElementById("nacimiento_fecha").addEventListener("input", validarFecha);
-  document.getElementById("inputCorreo").addEventListener("input", validarCorreo);
+ 
 
   // Agregar evento de validación al enviar el formulario
   document.getElementById("registroForm").addEventListener("submit", validarFormulario);
