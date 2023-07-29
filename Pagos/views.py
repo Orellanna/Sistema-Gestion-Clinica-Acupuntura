@@ -19,3 +19,12 @@ def ListarPagos(request, paciente_id):
     pagos = Pago.objects.filter(id_consulta__id_paciente=paciente.id_paciente)
     
     return render(request, 'Vistas_Pago/HistorialPagos.html', {'paciente': paciente, 'pagos': pagos})
+
+@login_required
+def DetallesPago(request, paciente_id, pago_id):
+    paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
+    pago = get_object_or_404(Pago, pk=pago_id)
+
+    return render(request, 'Vistas_Pago/DetallesPago.html', {
+        'paciente': paciente, 'pago': pago
+    })

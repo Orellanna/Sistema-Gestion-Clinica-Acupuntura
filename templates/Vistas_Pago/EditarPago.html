@@ -5,7 +5,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>Editar Consulta</h1>
+        <h1>Editar pago</h1>
       </div>
     </div>
   </div>
@@ -14,148 +14,62 @@
 
 <!-- Main content -->
 <form
-  action="{% url 'EditarConsulta' paciente_id=paciente.id_paciente consulta_id=consulta.id_consulta %}" method="POST" id="formEditarConsulta">
+  action="{% url 'EditarPagos' paciente_id=paciente.id_paciente consulta_id=pago.id_pago %}" method="POST" id="formEditarPagos">
   {% csrf_token %}
   <section class="content">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-12">
-          <!-- Default box -->
-          <div class="card">
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <p>ID: {{consulta.id_consulta}}</p>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col">
-                  <div class="form-group">
-                    <label for="fechacita" class="col-sm-4 col-form-label">Fecha de Consulta:</label>
-                    <div class="col-sm-6 input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                      </div>
-                      <input
-                        class="form-control"
-                        type="date"
-                        id="consulta_fecha"
-                        name="consulta_fecha"
-                        value="{{ consulta.consulta_fecha|date:'Y-m-d' }}"
-                      />
-                      <span class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
-                          <i class="fas fa-info-circle"></i>
-                        </button>
-                      </span>
-                    </div>
-                    <div class="instrucciones d-none">
-                      Ingrese la Fecha de la Consulta correctamente; Debe ingresar una fecha actual o anterior a la fecha actual
-                    </div>
-                  </div>
-                </div>
-
-
-                <div class="col">
-                  <div class="form-group">
-                    <label for="horainicio" class="col-sm-4 col-form-label">Hora de inicio:</label>
-                    <div class="col-sm-6 input-group">
-
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-clock"></i></span>
-                      </div>
-                      <input
-                      class="form-control"
-                        type="time"
-                        id="hora_consulta"
-                        name="hora_consulta"
-                        value="{{ consulta.hora_consulta|time:'H:i'}}"
-                      />
-                      <span class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
-                          <i class="fas fa-info-circle"></i>
-                        </button>
-                      </span>
-                    </div>
-                    <div class="instrucciones d-none">
-                      Ingrese la hora de inicio de la consulta correctamente.
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col">
-                  <div class="form-group">
-                    <label for="motivo">Motivo:</label>
-                    <div class="input-group">
-                      <div class = "input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-stethoscope"></i></span>
-                      </div>
-                      <input
-                        class="form-control"
-                        id="motivo_consulta"
-                        name="motivo_consulta"
-                        value="{{ consulta.motivo_consulta }}"
-                      />
-                      <span class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
-                          <i class="fas fa-info-circle"></i>
-                        </button>
-                      </span>
-                    </div>
-                    <div class="instrucciones d-none">
-                      Ingrese el motivo de la consulta. No utilice simbolos ni caracteres especiales.
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-              <div class="row">
-                <div class="col">
-                  <div class="form-group">
-                    <label for="observacion">Observaciones:</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-file"></i></span>
-                      </div>
-                      <textarea class="form-control" rows="3" name="observacion_consulta" id="observacion_consulta">{{ consulta.observacion_consulta }}</textarea>
-                      <span class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
-                          <i class="fas fa-info-circle"></i>
-                        </button>
-                      </span>
-                    </div>
-                    <div class="instrucciones d-none">
-                      Ingrese las observaciones. No utilice simbolos ni caracteres especiales.
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-
-
-              
+        <div class="col-md-4 offset-md-4">
+          <!-- Payment Entry Form -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Editar Pago</h3>
             </div>
-            <!-- /.card-body -->
-            <div class="card-footer"></div>
-            <!-- /.card-footer-->
+            <!-- /.card-header -->
+            <form>
+              <div class="card-body">
+                <!-- Combo box for selecting the consultation -->
+                <div class="form-group">
+                  <label for="consultationSelect">Seleccione la consulta:</label>
+                  <select class="form-control" id="consultationSelect">
+                    <option value="consulta1">Consulta 1</option>
+                    <option value="consulta2">Consulta 2</option>
+                    <!-- Add more options as needed -->
+                  </select>
+                </div>
+
+                <!-- Textbox for entering the payment amount -->
+                <div class="form-group">
+                  <label for="paymentAmount">Cantidad en USD:</label>
+                  <input type="text" class="form-control" id="paymentAmount" placeholder="Ingrese la cantidad en USD">
+                </div>
+              </div>
+              <!-- /.card-body -->
+
+              <div class="card-footer">
+                <!-- Back button -->
+                <button type="button" class="btn btn-primary">Regresar</button>
+                <!-- Save and redirect button -->
+                <button type="submit" class="btn btn-success float-right">Guardar y Continuar</button>
+              </div>
+              <!-- /.card-footer -->
+            </form>
           </div>
           <!-- /.card -->
         </div>
+        <!-- /.col-md-4 -->
       </div>
+      <!-- /.row -->
     </div>
+    <!-- /.container-fluid -->
   </section>
-
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2 d-flex justify-content-between">
         <div class="col-sm-6">
           <a
-            href="{% url 'ListarConsultas' paciente_id=paciente.id_paciente %}"
+            href="{% url 'ListarPagoss' paciente_id=paciente.id_paciente %}"
             class="btn btn-primary float-left"
             ><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a
           >
@@ -166,7 +80,7 @@
             type="submit"
             name="submit"
             class="btn btn-success float-right">
-            <i class="fa fa-save"></i>&nbsp; Actualizar Consulta
+            <i class="fa fa-save"></i>&nbsp; Actualizar pago
           </button>
         </div>
 
@@ -178,7 +92,7 @@
 <script>
   // Eliminar espacios en blanco al cargar la página
   window.addEventListener('DOMContentLoaded', function() {
-    var textarea = document.getElementById('observacion_consulta');
+    var textarea = document.getElementById('observacion_pago');
     textarea.value = textarea.value.trim();
   });
 
@@ -193,11 +107,11 @@
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     // Obtener referencias a los elementos del formulario
-    var motivoInput = document.getElementById("motivo_consulta");
-    var observacionInput = document.getElementById("observacion_consulta");
+    var motivoInput = document.getElementById("motivo_pago");
+    var observacionInput = document.getElementById("observacion_pago");
     var fechaInput = document.getElementById("consulta_fecha");
-    var horaInput = document.getElementById("hora_consulta");
-    var formulario = document.getElementById("formEditarConsulta");
+    var horaInput = document.getElementById("hora_pago");
+    var formulario = document.getElementById("formEditarPagos");
 
     // Agregar evento de validación al campo de motivo
     motivoInput.addEventListener("input", function() {
