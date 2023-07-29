@@ -275,7 +275,7 @@
                   </a>
                 </div>
                 <div class="col-3 text-center">
-                  {% comment %} <a href="#" class="nav-link" id="pagos-link" onclick="highlightIcon('pagos-link')"> {% endcomment %}
+                 <a href="{% url 'ListarPagos' paciente_id=paciente.id_paciente %}" class="nav-link" id="pagos-link" onclick="highlightIcon('pagos-link')"> 
                     <i class="fas fa-hand-holding-usd fa-2x" style="color: #00BB2D;"></i>
                     <p class="mt-2" style="color: #00BB2D; font-weight: bold;">Pagos</p>
                     <div class="bar"></div>
@@ -470,6 +470,8 @@ logoutCancelButton.addEventListener('click', function() {
     activateSidebar('consultas-link');
   } else if (path.includes('/historial')) {
     activateSidebar('historial-link');
+  } else if (path.includes('/HistorialPagos/')) {
+    activateSidebar('pagos-link');
   }
 
   // Función para activar la barra lateral
