@@ -7,7 +7,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>Nueva Consulta</h1>
+        <h1>Nueva Terapia</h1>
       </div>
     </div>
   </div>
@@ -15,7 +15,7 @@
 </section>
 
 <!-- Main content -->
-<form action="{% url 'NuevaConsulta' paciente_id=paciente.id_paciente %}" method="POST" id="formNuevaConsulta">
+<form action="{% url 'NuevaTerapia' paciente_id=paciente.id_paciente %}" method="POST" id="formNuevaTerapia">
   {% csrf_token %}
   <section class="content">
     <div class="container-fluid">

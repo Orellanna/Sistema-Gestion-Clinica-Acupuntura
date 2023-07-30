@@ -193,3 +193,51 @@ def EditarTerapia(request, paciente_id, consulta_id):
         return redirect(url)
     
     return render(request, 'Vistas_Consulta/EditarConsulta.html', {'paciente': paciente, 'consulta': consulta})
+
+
+@login_required
+def EliminarTerapia(request, paciente_id, consulta_id, terapia_id):
+    paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
+    consulta = get_object_or_404(Consulta, id_consulta=consulta_id, id_paciente=paciente)
+    terapia  = get_object_or_404(Terapia, id_terapia=terapia_id, id_consulta=consulta_id)
+
+    if request.method == 'POST':
+        #Deshabilitar la Terapia
+        terapia.deshabilitado = True
+        terapia.save()
+    
+        # Redirigir al usuario a la página de lista de terapia o cualquier otra página que desees mostrar después de eliminar la terapia
+        messages.success(request, "La terapia se ha eliminado satisfactoriamente")
+        return redirect('ListarTerapias', paciente_id=paciente_id)
+
+    return render(request, 'Vistas_Consulta/EliminarTerapia.html', {'paciente': paciente, 'consulta': consulta})   
+
+
+@login_required
+def NuevaTerapia(request, paciente_id, consulta_id):
+    paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
+    consulta = get_object_or_404(Consulta, pk=consulta_id, id_paciente=paciente)
+    
+    if request.method == 'POST':
+        
+        # Obtenemos los datos del formulario
+        
+        observacion_terapia = request.POST['observacion_terapia']
+        
+        
+        # Creamos la nueva terapia para el paciente
+        consulta = Terapia.objects.create(
+            id_terapia=Terapia,
+            observacion_consulta=observacion_terapia,
+            
+        )
+        
+        # Generamos la URL correcta usando reverse
+        url = reverse('DetallesTerapia', kwargs={'paciente_id': paciente_id, 'consulta_id': Terapia.terapia_id})
+        
+        messages.success(request, "La Terapia se ha registrado satisfactoriamente")
+        
+        # Redirigimos al usuario a la URL correcta
+        return redirect(url)
+    
+    return render(request, 'Vistas_Consulta/NuevaTerapia.html', {'paciente': paciente})
