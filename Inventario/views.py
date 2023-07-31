@@ -29,6 +29,7 @@ def RegistrarProducto(request):
         fecha_vencimiento = request.POST['fecha_vencimiento']
         decripcion = request.POST['descripcion_suministro']
         imagen = request.FILES.get('imagen')
+        categoria = request.POST['categoria']
         
         nuevo_producto = Inventario()
         nuevo_producto.nombre_suministro = nombre_suministro
@@ -36,6 +37,7 @@ def RegistrarProducto(request):
         nuevo_producto.costo_unitario = costo_unitario
         nuevo_producto.fecha_vencimiento = fecha_vencimiento
         nuevo_producto.descripcion = decripcion
+        nuevo_producto.categoria = categoria
         
         if imagen:
             nuevo_producto.imagenprod = imagen.read()
@@ -89,12 +91,14 @@ def EditarProducto(request, id_suministro):
         fecha_vencimiento = request.POST['fecha_vencimiento']
         imagen = request.FILES.get('imagen')
         descripcion = request.POST['descripcion_suministro']
+        categoria = request.POST['categoria']
         
         producto.nombre_suministro = nombre_suministro
         producto.cantidad = cantidad
         producto.costo_unitario = costo_unitario
         producto.fecha_vencimiento = fecha_vencimiento
         producto.descripcion = descripcion
+        producto.categoria = categoria
         
         if imagen:
             # Si se proporcionó una nueva imagen, reemplazar la anterior
