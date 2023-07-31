@@ -112,6 +112,7 @@ class Inventario(models.Model):
     fecha_vencimiento = models.DateField()
     imagenprod = models.BinaryField(blank=True, null=True)
     descripcion = models.CharField(max_length=255, blank=True, null=True)
+    categoria = models.CharField(max_length=100)
     
     def get_imagenprod_base64(self):
         if self.imagenprod:
