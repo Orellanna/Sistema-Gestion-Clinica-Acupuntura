@@ -97,7 +97,11 @@
               <div class="col-md-4">
                 <div class="text-center">
                   <h6 class="text-secondary">Fecha de Vencimiento:</h6>
-                    <p class="mb-1">{{producto.fecha_vencimiento}}</p>           
+                    {% if producto.fecha_vencimiento == None %}
+                    <p class="mb-1">No tiene</p>
+                    {% else %} 
+                    <p class="mb-1">{{producto.fecha_vencimiento}}</p> 
+                    {% endif %}          
                   </div>
                 </div>
               </div>
