@@ -1,11 +1,10 @@
-from django.shortcuts import render
+from datetime import date, datetime
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404,redirect
-from Pacientes.models import Consulta, Paciente
-from django.views.decorators.csrf import csrf_exempt, GestionPacientes
-from django.urls import reverse
-
+from .models import Paciente
+from django.db.models import Q
+from django.contrib import messages
 
 @login_required
 def index(request):
@@ -13,118 +12,83 @@ def index(request):
 
 @login_required
 def GestionPacientes(request):
+    pacientes = Paciente.objects.all()
+    fecha_actual = datetime.today()
 
-    pacientes = Paciente.objects.all().values()
+    for paciente in pacientes:
+        edad= fecha_actual.year - paciente.fechanac_paciente.year
+        if fecha_actual.month < paciente.fechanac_paciente.month and fecha_actual.day < paciente.fechanac_paciente.day:
+            edad -=1
+        elif fecha_actual.month == paciente.fechanac_paciente.month and fecha_actual.day < paciente.fechanac_paciente.day:
+            edad -=1
+        paciente.edad = edad    
+            
 
-    return render(request,'Vistas_Pacientes/GestionPacientes.html')
+    return render(request, 'Vistas_Pacientes/GestionPacientes.html', {
+        'pacientes': pacientes,
+    })
 
 @login_required
-def DetallesConsulta(request):
-    return render(request,'Vistas_Pacientes/DetallesConsulta.html')
-
-@login_required
-def EditarPaciente(request, id_paciente, primer_nombre, segundo_nombre, primer_apellido , segundo_apellido, edad_paciente, sexo_paciente, telefono_paciente, email_paciente):
-
+def DatosPersonales(request, id_paciente):
+    paciente = get_object_or_404(Paciente, id_paciente=id_paciente)
+    fechanac_paciente = paciente.fechanac_paciente
+    edad = CalcularEdad(fechanac_paciente)
+    return render(request,'Vistas_Pacientes/DatosPersonales.html', {
+        'paciente': paciente,
+        'edad' : edad,
+    }) 
     
-    Paciente = get_object_or_404(Paciente, primer_nombre=primer_nombre)
-    Paciente = get_object_or_404(Paciente, segundo_nombre=segundo_nombre)
-    Paciente = get_object_or_404(Paciente, primer_apellido=primer_apellido)
-    Paciente = get_object_or_404(Paciente, segundo_apellido=segundo_apellido)
-    Paciente = get_object_or_404(Paciente, edad_paciente=edad_paciente)
-    Paciente = get_object_or_404(Paciente, sexo_paciente=sexo_paciente)
-    Paciente = get_object_or_404(Paciente, telefono_paciente=telefono_paciente)
-    Paciente = get_object_or_404(Paciente, email_paciente=email_paciente)
+def CalcularEdad(fechanac_paciente):
+    hoy = date.today()
+    edad = hoy.year - fechanac_paciente.year
+    if hoy.month < fechanac_paciente.month or (hoy.month == fechanac_paciente.month and hoy.day < fechanac_paciente.day):
+        edad -=1
+    return edad
 
+@login_required
+def Registrar(request):
     
     if request.method == 'POST':
-
-        primer_nombre     = request.POST['InputPrimerNombre']
-        segundo_nombre    = request.POST['InputSegundoNombre']
-        primer_apellido   = request.POST['InputPrimerApellido']
-        segundo_apellido  = request.POST['InputSegundoApellido']
-        edad_paciente     = request.POST['InputEdad'] 
-        sexo_paciente     = request.POST['SelectSexo']
-        telefono_paciente = request.POST['InputTelefono']
-        email_paciente    = request.POST['InputCorreo']
- 
-        # modificacion de los campos del paciente
-        Paciente = Paciente.objects.get(
-            
-            primer_nombre     = primer_nombre,
-            segundo_nombre    = segundo_nombre,
-            primer_apellido   = primer_apellido,
-            segundo_apellido  = segundo_apellido,
-            edad_paciente     = edad_paciente,
-            sexo_paciente     = sexo_paciente,
-            telefono_paciente = telefono_paciente,
-            email_paciente    = email_paciente,
-        )
-        # Generamos la URL correcta usando reverse
-        url = reverse('GestionPacientes', kwargs={'paciente_id': id_paciente})
+        primer_nombre = request.POST['primer_nombre']
+        segundo_nombre = request.POST['segundo_nombre']
+        primer_apellido = request.POST['primer_apellido']
+        segundo_apellido = request.POST['segundo_apellido']
+        sexo_paciente = request.POST['sexo_paciente']
+        telefono_paciente = request.POST['telefono_paciente']
+        email_paciente = request.POST['email_paciente']
         
-        # Redirigimos al usuario a la URL correcta
-        return redirect(url)
-
-
-
-
-    return render(request,'Vistas_Pacientes/EditarPaciente.html')
-
-
-def DatosPersonales(request):
-
-
-
-    return render(request,'Vistas_Pacientes/DatosPersonales.html')
+        nuevo_paciente = Paciente()
+        nuevo_paciente.primer_nombre = primer_nombre
+        nuevo_paciente.segundo_nombre = segundo_nombre
+        nuevo_paciente.primer_apellido = primer_apellido
+        nuevo_paciente.segundo_apellido = segundo_apellido
+        nuevo_paciente.sexo_paciente = sexo_paciente
+        nuevo_paciente.telefono_paciente = telefono_paciente
+        nuevo_paciente.email_paciente = email_paciente
+        nuevo_paciente.fecharegistro_paciente = datetime.now()
+        nuevo_paciente.save()
+        
+        messages.success(request, "El Paciente se ha registrado satisfactoriamente")
+        return redirect('DatosPersonales', id_paciente=nuevo_paciente.id_paciente)
+         
+    return render(request,'Vistas_Pacientes/registrarPaciente.html')
+    
 
 @login_required
-def Registrar(request, id_paciente, primer_nombre, segundo_nombre, primer_apellido , segundo_apellido, edad_paciente, sexo_paciente, telefono_paciente, email_paciente):
-
-    Paciente = get_object_or_404(Paciente, id_paciente=id_paciente)
-    Paciente = get_object_or_404(Paciente, primer_nombre=primer_nombre)
-    Paciente = get_object_or_404(Paciente, segundo_nombre=segundo_nombre)
-    Paciente = get_object_or_404(Paciente, primer_apellido=primer_apellido)
-    Paciente = get_object_or_404(Paciente, segundo_apellido=segundo_apellido)
-    Paciente = get_object_or_404(Paciente, edad_paciente=edad_paciente)
-    Paciente = get_object_or_404(Paciente, sexo_paciente=sexo_paciente)
-    Paciente = get_object_or_404(Paciente, telefono_paciente=telefono_paciente)
-    Paciente = get_object_or_404(Paciente, email_paciente=email_paciente)
-
+def EditarPaciente(request, id_paciente):
+    
+    paciente = get_object_or_404(Paciente, id_paciente=id_paciente)
     
     if request.method == 'POST':
-
-        primer_nombre     = request.POST['InputPrimerNombre']
-        segundo_nombre    = request.POST['InputSegundoNombre']
-        primer_apellido   = request.POST['InputPrimerApellido']
-        segundo_apellido  = request.POST['InputSegundoApellido']
-        edad_paciente     = request.POST['InputEdad'] 
-        sexo_paciente     = request.POST['SelectSexo']
-        telefono_paciente = request.POST['InputTelefono']
-        email_paciente    = request.POST['InputCorreo']
- 
-        # Creamos la nueva consulta para el paciente
-        Paciente = Paciente.objects.create(
-            id_paciente       = id_paciente,
-            primer_nombre     = primer_nombre,
-            segundo_nombre    = segundo_nombre,
-            primer_apellido   = primer_apellido,
-            segundo_apellido  = segundo_apellido,
-            edad_paciente     = edad_paciente,
-            sexo_paciente     = sexo_paciente,
-            telefono_paciente = telefono_paciente,
-            email_paciente    = email_paciente,
-        )
-        # Generamos la URL correcta usando reverse
-        url = reverse('GestionPacientes', kwargs={'paciente_id': id_paciente})
+        primer_nombre = request.POST['primer_nombre']
+        segundo_nombre = request.POST['segundo_nombre']
+        primer_apellido = request.POST['primer_apellido']
+        segundo_apellido = request.POST['segundo_apellido']
+        fechanac_paciente = request.POST['fechanac_paciente']
+        sexo_paciente = request.POST['sexo_paciente']
+        telefono_paciente = request.POST['telefono_paciente']
+        email_paciente = request.POST['email_paciente']
         
-<<<<<<< Updated upstream
-        # Redirigimos al usuario a la URL correcta
-        return redirect(url)
-            
-     
-    return render(request,'Vistas_Pacientes/RegistrarPaciente.html')
-    
-=======
         paciente.primer_nombre = primer_nombre
         paciente.segundo_nombre = segundo_nombre
         paciente.primer_apellido = primer_apellido
@@ -135,7 +99,7 @@ def Registrar(request, id_paciente, primer_nombre, segundo_nombre, primer_apelli
         paciente.email_paciente = email_paciente
     
         paciente.save()
-        messages.warning(request, "El Paciente se ha editado satisfactoriamente")
+        messages.success(request, "El Paciente se ha editado satisfactoriamente")
         return redirect('DatosPersonales', id_paciente=id_paciente)
     
     return render(request,'Vistas_Pacientes/EditarPaciente.html', {
@@ -155,4 +119,3 @@ def EliminarPaciente(request, id_paciente):
     # Redirigir a la página de gestión de pacientes
     messages.success(request, "El Paciente se ha desactivado satisfactoriamente")
     return redirect('GestionPacientes')
->>>>>>> Stashed changes

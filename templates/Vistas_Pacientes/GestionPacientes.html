@@ -1,26 +1,76 @@
 {% extends 'index_master.html' %}
 
 {% block content %} 
+
+{% if messages %}
+<div class="messages">
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+      {{ message }}
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
 <!-- Content Wrapper. Contains page content -->
 
     <!-- Content Header (Page header) -->
     
+    <style>
+      /* Estilos para la ventana emergente */
+      .ventana-emergente {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+      }
+    
+      .ventana-emergente h3 {
+        margin-top: 0;
+      }
+    
+      .ventana-emergente p {
+        margin-bottom: 20px;
+      }
+    
+      .ventana-emergente button {
+        margin: 0 10px;
+      }
+    
+      /* Estilos para el fondo difuminado */
+      .fondo-difuminado {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(1px);
+        z-index: 9999;
+      }
+    </style>
+
+
       <div class="container-fluid">
         <form>
         <div class="row">
             <div class="col-md-1"></div>
           <div class="col-8">
-            <h2>Gestion de Pacientes</h2>
+            <h2>Gesti&oacuten de Pacientes</h2>
           </div>
           <div class="col">
-            <a href=" {% url 'registrar Paciente' %}" class="btn btn-success"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Crear Paciente</a>
+            <a href="{% url 'registrarPaciente' %}" class="btn btn-success"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Crear Paciente</a>
             <div class="row"> <div class="card"></div></div>
-            <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
-              </form>
+           
           </div>
-        </div>
-    </form>
+      </div>
+
+        </form>
       </div><!-- /.container-fluid -->
       <div class="row"> <div class="card"></div></div>
 
@@ -33,45 +83,13 @@
                 
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="example2" class="table table-bordered table-hover">
+                  <table id="example1" class="table table-bordered table-hover">
                     <thead>
-<<<<<<< Updated upstream
-                    <tr>
-                      <th>Codigo</th>
-                      <th>Nombres</th>
-                      <th>Apellidos</th>
-                      <th>Genero</th>
-                      <th>Edad</th>
-                      <th>Acciones</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                      {% for paciente in Pacientes %}
-                    <tr>
-                      <td>{{paciente.paciente_id}}</td>
-                      <td>{{paciente.Nombres}}</td>
-                      <td>{{paciente.Apellidos}}</td>
-                      <td>{{paciente.Genero}}</td>
-                      <td>{{paciente.Edad}}</td>
-
-                      <td class="text-center">
-                        <div class="d-inline-flex flex-row align-items-center">
-                          <a href="#" class="ver-pacientes mr-5" data-paciente-id="{{paciente.paciente_id}}">
-                            <i class="nav-icon fas fa-eye"></i>
-                          </a>
-                          <a href="{% url 'EditarPaciente' paciente_id=paciente.paciente_id %}">
-                            <i class="nav-icon fas fa-trash"></i>
-                          </a>
-                        </div>
-                      </td>
-                    </tr> 
-=======
                       <tr>
                         <th>Codigo</th>
                         <th>Paciente</th>
                         <th>Genero</th>
                         <th>Edad</th>
-                        
                         <th>Acciones</th>
                       </tr>
                     </thead>
@@ -88,7 +106,7 @@
                             </a>
                             <td>{{paciente.sexo_paciente}}</td>
                             <td>{{paciente.edad}}</td>
-                            
+
                             <td class="text-center">
                               <div class="d-inline-flex flex-row align-items-center">
                                 <a href="#" class="ver-pacientes mr-5" data-pacientes-id="{{paciente.id_paciente}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Paciente">
@@ -104,13 +122,85 @@
                           </tr>
                       {% endif %}
                     {% endfor %}
->>>>>>> Stashed changes
                     </tbody>
-                    {% endfor %}
                   </table>
                 </div>
                 <!-- /.card-body -->
               </div>
               <!-- /.card -->
   <!-- /.content-wrapper -->
+
+
+  <script>
+    $(function () {
+      $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+  <script>
+    
+    document.addEventListener("DOMContentLoaded", function() {
+
+      // Obtener todos los elementos con la clase "ver-consulta"
+      const verPacientes = document.querySelectorAll(".ver-pacientes");
+  
+      // Agregar un evento de clic a cada enlace
+      verPacientes.forEach(function(enlace) {
+        enlace.addEventListener("click", function(event) {
+        event.preventDefault();
+          
+          // Obtener el ID de la consulta del atributo data-consulta-id
+          const pacienteId = enlace.getAttribute("data-pacientes-id");
+       
+          // Redirigir a la página de detalles de la consulta con el ID
+          window.location.href = "/"+ "datosPersonales/" + pacienteId + "/";
+        });
+      });
+    });
+
+  </script>
+
+  <script>
+  function confirmarEliminacion(event) {
+    event.preventDefault();
+
+    const enlace = event.currentTarget;
+    const pacienteId = enlace.getAttribute("data-paciente-id");
+    const pacienteNombres = enlace.getAttribute("data-paciente-nombres");
+
+    const ventanaEmergente = document.createElement("div");
+    ventanaEmergente.classList.add("ventana-emergente");
+
+    const titulo = document.createElement("h3");
+    titulo.textContent = "Confirmar deshabilitación";
+
+    const mensaje = document.createElement("p");
+    mensaje.textContent = "¿Estás seguro que quieres deshabilitar al paciente " + pacienteNombres + "?";
+
+    const botonAceptar = document.createElement("button");
+    botonAceptar.textContent = "Aceptar";
+    botonAceptar.addEventListener("click", function() {
+      window.location.href = `/eliminarPaciente/${pacienteId}/`;
+    });
+
+    const botonCancelar = document.createElement("button");
+    botonCancelar.textContent = "Cancelar";
+    botonCancelar.addEventListener("click", function() {
+      ventanaEmergente.remove();
+      document.body.removeChild(fondoDifuminado);
+    });
+
+    ventanaEmergente.appendChild(titulo);
+    ventanaEmergente.appendChild(mensaje);
+    ventanaEmergente.appendChild(botonAceptar);
+    ventanaEmergente.appendChild(botonCancelar);
+
+    const fondoDifuminado = document.createElement("div");
+    fondoDifuminado.classList.add("fondo-difuminado");
+    fondoDifuminado.appendChild(ventanaEmergente);
+
+    document.body.appendChild(fondoDifuminado);
+  }
+</script>
+
 {% endblock %}

@@ -16,4 +16,17 @@ urlpatterns = [
     
     path('<str:paciente_id>/HistorialConsultas/EliminarConsulta/<str:consulta_id>/', views.EliminarConsulta, name='EliminarConsulta'),
     
+    path('<str:paciente_id>/HistorialConsultas/DetallesConsulta/<str:consulta_id>/generar_reporte_pdf/', views.generar_reporte_pdf, name='GenerarReportePDF'),
+    
+    path('construccion/', views.EnConstruccion, name='construccion'),
+
+    path('<str:paciente_id>/HistorialTerapias/NuevaTerapia/', views.NuevaTerapia, name='NuevaTerapia'),
+    
+    path('<str:paciente_id>/HistorialTerapias/ListarTerapias/', views.ListarTerapias, name='ListarTerapias'),
+
+    path('<str:paciente_id>/HistorialTerapias/DetallesTerapia/', views.DetallesTerapia, name='DetallesTerapia'),
+    
+    path('<str:paciente_id>/HistorialTerapias/EditarTerapia/<str:terapia_id>/', views.EditarTerapia, name='EditarTerapia'),
+
+    path('<str:paciente_id>/HistorialTerapias/EliminarTerapia/<str:terapia_id>/', views.EliminarTerapia, name='EliminarTerapia')
 ]

@@ -1,0 +1,1 @@
+web: gunicorn AppClinicaAcupuntura.wsgi --log-file - 

@@ -1,4 +1,6 @@
+from datetime import date
 from django.db import models
+import base64
 
 # Create your models here.
 class Paciente(models.Model):
@@ -11,46 +13,57 @@ class Paciente(models.Model):
     sexo_paciente = models.CharField(max_length=1)
     telefono_paciente = models.CharField(max_length=8, blank=True, null=True)
     email_paciente = models.CharField(max_length=50, blank=True, null=True)
-
-
+    deshabilitado = models.BooleanField(default=False)
+    fecharegistro_paciente = models.DateTimeField()
+    
     def save(self, *args, **kwargs):
-                if not self.id_paciente:  
-                    nombre_paciente = self.id_paciente.primer_nombre
-                    apellido_paciente = self.id_paciente.primer_apellido
-                    id_paciente = (nombre_paciente[0] + apellido_paciente[0]).upper()
-                            # Obtener el número de consultas previas para ese paciente
-                    pacientes_previos = Paciente.objects.filter(id_paciente=self.id_paciente).count()
-                    numero_paciente = pacientes_previos + 1
-                            # Crear el ID del paciente en el formato requerido
-                    self.id_paciente = f'{id_paciente}C{numero_paciente:02}'
-                super().save(*args, **kwargs)
+        if not self.id_paciente:  
+            fecha_actual = date.today().strftime('%d%m%y')
+            correlativo = self.obtener_correllativo(fecha_actual)
+            self.id_paciente = self.generar_id_paciente(fecha_actual, correlativo)
+            self.id_paciente = self.id_paciente.upper()
+        super().save(*args, **kwargs)
+        
+    def obtener_correllativo(self,fecha_actual):
+        pacientes_fecha_actual = Paciente.objects.filter(id_paciente__contains=fecha_actual)
+        correlativo_actual = pacientes_fecha_actual.count() + 1
+        
+        correlativo_str = str(correlativo_actual).zfill(2)
+        
+        return correlativo_str
+    
+    def generar_id_paciente(self, fecha_actual, correlativo):
+        
+        primera_letra_nombre = self.primer_nombre[0]
+        primera_letra_apellido = self.primer_apellido[0]
+        
+        id_paciente = f'{primera_letra_nombre}{primera_letra_apellido}{fecha_actual}{correlativo}'
+
+        return id_paciente
+        
     def __str__(self):
         return self.primer_nombre + ' ' + self.primer_apellido
     class Meta:
         managed = False
         db_table = 'paciente'
-<<<<<<< Updated upstream
-        
-=======
     
     def obtener_fechanac_formateada(self):
-        return self.fechanac_paciente.strftime('%d-%m-%Y')
+        return self.fechanac_paciente.strftime('%d / %B / %Y')
     
       
->>>>>>> Stashed changes
 class Consulta(models.Model):
-    id_consulta = models.CharField(primary_key=True, max_length=10)
+    id_consulta = models.CharField(primary_key=True, max_length=15)
     id_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='id_paciente')
     motivo_consulta = models.CharField(max_length=500)
     observacion_consulta = models.CharField(max_length=1000, blank=True, null=True)
     consulta_fecha = models.DateField()
+    deshabilitado = models.BooleanField(default=False)
     hora_consulta = models.TimeField()
 
     def save(self, *args, **kwargs):
         if not self.id_consulta:  
-            nombre_paciente = self.id_paciente.primer_nombre
-            apellido_paciente = self.id_paciente.primer_apellido
-            id_paciente = (nombre_paciente[0] + apellido_paciente[0]).upper()
+            id_paciente = self.id_paciente.id_paciente
+            id_paciente = id_paciente.upper()
             # Obtener el número de consultas previas para ese paciente
             consultas_previas = Consulta.objects.filter(id_paciente=self.id_paciente).count()
             numero_consulta = consultas_previas + 1
@@ -60,6 +73,9 @@ class Consulta(models.Model):
         
     def __str__(self):
         return self.motivo_consulta + ' - ' + self.id_paciente.primer_nombre + ' ' + self.id_paciente.primer_apellido
+    
+    def obtener_consulta_fecha_formateada(self):
+        return self.consulta_fecha.strftime('%d / %B / %Y')
     class Meta:
         managed = False
         db_table = 'consulta'
@@ -89,11 +105,32 @@ class Terapia(models.Model):
         db_table = 'terapia'
 
 class Inventario(models.Model):
-    id_suministro = models.AutoField(primary_key=True)
+    id_suministro = models.CharField(primary_key=True, max_length=10)
     nombre_suministro = models.CharField(max_length=100)
     cantidad = models.IntegerField()
     costo_unitario = models.TextField()  # This field type is a guess.
-    fecha_vencimiento = models.DateField()
+    fecha_vencimiento = models.DateField( blank=True, null=True)
+    imagenprod = models.BinaryField(blank=True, null=True)
+    descripcion = models.CharField(max_length=255, blank=True, null=True)
+    categoria = models.CharField(max_length=100)
+    
+    last_sequence = {}
+    
+    def get_imagenprod_base64(self):
+        if self.imagenprod:
+            # Convertir los datos binarios a base64
+            return base64.b64encode(self.imagenprod).decode('utf-8')
+        return None
+
+    def save(self, *args, **kwargs):
+        if not self.id_suministro:  # Verificar si es un nuevo registro
+            prefix = self.nombre_suministro[0].upper()
+            if prefix not in self.last_sequence:
+                self.last_sequence[prefix] = 0
+            self.last_sequence[prefix] += 1
+            new_id = f"{prefix}{str(self.last_sequence[prefix]).zfill(5)}"
+            self.id_suministro = new_id
+        super(Inventario, self).save(*args, **kwargs)
 
     class Meta:
         managed = False
@@ -109,5 +146,6 @@ class Pago(models.Model):
     class Meta:
         managed = False
         db_table = 'pago'
+        
 
 

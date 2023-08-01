@@ -1,0 +1,149 @@
+{% extends 'index_master.html' %} 
+
+{% block content %}
+  
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalles del Producto</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    /* Personalizar estilos adicionales aquí */
+    body {
+      background-color: #f8f9fa;
+    }
+    .card {
+      border: 1px solid rgba(0, 0, 0, 0.125);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .text-primary {
+      color: #007bff !important;
+    }
+    .text-secondary {
+      color: #6c757d !important;
+    }
+    .btn {
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <div class="text-center">
+              <h4 class="text-primary">Detalles del Producto</h4>
+              <hr>
+            </div>
+            
+            <!-- Primera Fila: ID de producto, Nombre de Producto -->
+            <div class="row">
+              <div class="col-md-4">
+                <div class="text-center">
+                  <h6 class="text-secondary">ID del Producto:</h6>
+                  <p class="font-weight-bold">{{producto.id_suministro}}</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center">
+                  <h6 class="text-secondary">Nombre:</h6>
+                  <p>{{producto.nombre_suministro}}</p>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="text-center">
+                  <h6 class="text-secondary">Categoria: </h6>
+                  <p>{{producto.categoria}}</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Segunda Fila: Descripcion del producto -->
+            <div class="row mt-2">
+              <div class="col-md-12">
+                <div class="text-center">
+                  <h6 class="text-secondary">Descripción del Producto:</h6>
+                  <div class="list-group">
+                    <a class="list-group-item list-group-item-action flex-column align-items-start">
+                      <p class="mb-1">{{producto.descripcion}}</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Tercera Fila: Cantidad, Precio unitario, Fecha de vencimiento -->
+            <div class="row mt-4">
+              <div class="col-md-4">
+                <div class="text-center">
+                  <h6 class="text-secondary">Cantidad:</h6>
+                  <p>{{producto.cantidad}}</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center">
+                  <h6 class="text-secondary">Costo Unitario:</h6>
+                  <p class="font-weight-bold">{{producto.costo_unitario}}</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center">
+                  <h6 class="text-secondary">Fecha de Vencimiento:</h6>
+                    {% if producto.fecha_vencimiento == None %}
+                    <p class="mb-1">No tiene</p>
+                    {% else %} 
+                    <p class="mb-1">{{producto.fecha_vencimiento}}</p> 
+                    {% endif %}          
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Imagen del Producto -->
+            <div class="row mt-1">
+              <div class="col-md-12 text-center">
+                {% if imagen_data_uri %}
+                <img src="{{imagen_data_uri}}" alt="Imagen del Insumo" class="img-fluid rounded" width="170">
+                {% else %}
+                <p>No hay imagen disponible</p>
+                {% endif %}
+              </div>
+            </div>
+  
+            <!-- Botones de navegación -->
+            <div class="row mt-4 mb-3">
+              <div class="col-md-12 text-center">
+                <a href="{% url 'GestionInventario' %}" class="btn btn-primary mx-2">
+                  <i class="fas fa-arrow-left"></i>&nbsp; Volver atrás
+                </a>
+                <a href="{% url 'EditarProducto' id_suministro=producto.id_suministro %}" 
+                  class="btn btn-success mx-2">
+                  <i class="fas fa-pen"></i>&nbsp;&nbsp;Editar Producto
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.9/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
+{% endblock %}

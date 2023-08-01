@@ -1,0 +1,71 @@
+{% extends 'index_master.html' %} 
+{% load static %}
+{% block content %}
+  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agregar Terapia</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <style>
+    /* Estilos para el contenedor de la imagen */
+    .image-container {
+      max-width: 850px;
+      margin: 0 auto;
+      position: relative;
+    }
+    /* Estilo para los puntos marcados */
+    .marked-point {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      border: 2px solid red;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none; /* Para evitar que los puntos bloqueen el clic en el canvas */
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h1>Agregar Terapia</h1>
+    <div class="image-container">
+      <img src="{% static 'img/humanbody.jpg' %}" alt="Cuerpo humano" id="bodyImage" class="img-fluid" width="900">
+      <div id="markedPoints"></div> <!-- Aquí se mostrarán los puntos marcados -->
+    </div>
+    <button id="finalizarBtn"  class="btn btn-primary mt-3 float-right">Finalizar y Guardar</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const imageContainer = document.querySelector(".image-container");
+      imageContainer.addEventListener("click", marcarPunto);
+    });
+    
+    function marcarPunto(event) {
+      // Obtener las coordenadas del clic dentro de la imagen
+      const bodyImage = document.getElementById("bodyImage");
+      const x = event.offsetX;
+      const y = event.offsetY;
+    
+      // Crear un punto marcado en la posición del clic
+      const markedPoint = document.createElement("div");
+      markedPoint.classList.add("marked-point");
+      markedPoint.style.left = `${x}px`;
+      markedPoint.style.top = `${y}px`;
+    
+      // Agregar el punto marcado al contenedor
+      const markedPointsContainer = document.getElementById("markedPoints");
+      markedPointsContainer.appendChild(markedPoint);
+    }
+        
+  </script>
+</body>
+</html>
+
+
+{% endblock %}

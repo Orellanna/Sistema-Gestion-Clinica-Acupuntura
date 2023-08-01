@@ -1,74 +1,290 @@
 {% extends 'index_master.html' %}
 
 {% block content %}
-<div class="ml-6">
-    <h1>Nuevo Paciente</h1>
-  </div>
-  <div class="container my-4">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Información Personal</h3>
-                </div>
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form role="form">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="inputNombre">Nombre</label>
-                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputApellidos">Apellidos</label>
-                            <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEdad">Edad</label>
-                            <input type="number" class="form-control" id="inputEdad" placeholder="Ingrese su edad">
-                        </div>
-                        <div class="form-group">
-                            <label for="selectSexo">Sexo</label>
-                            <select class="form-control" id="selectSexo">
-                                <option value="">Seleccione su sexo</option>
-                                <option value="M">Masculino</option>
-                                <option value="F">Femenino</option>
-                            </select>
-                        </div>
-                    </div>
-                    <!-- /.card-body -->
-                </form>
-            </div>
-            <!-- /.card -->
-        </div>
-        <div class="col-md-6">
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Información de Contacto</h3>
-                </div>
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form role="form">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="inputTelefono">Teléfono</label>
-                            <input type="text" class="form-control" id="inputTelefono" placeholder="Ingrese su teléfono">
-                        </div>
-                        <div class="form-group">
-                           <label for="inputTelefono">Correo</label>
-                            <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo">
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                      <button type="submit" class="btn btn-primary"> <i class="nav-icon fas fa-save"> </i>Guardar</button>
-                      <button type="reset" class="btn btn-secondary">Cancelar</button>
-                    </div>
-                </form>
-            </div>
+
+<div class="container my-4">
+    <div class="container-fluid">
+        <form>
+        <div class="row">
+            <h2>Editar Paciente</h2>
+        </form>
         </div>
     </div>
+    
+  <div class="row">
+      <div class="col-md-6">
+        
+          <div class="card card-secondary">
+              <div class="card-header">
+                  <h3 class="card-title">Información Personal</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form action="{% url 'editarPaciente' paciente.id_paciente %}" method="POST" id="registroForm">
+                {% csrf_token %}
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="inputNombre">Primer Nombre </label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="inputNombre" name="primer_nombre" value="{{paciente.primer_nombre}}" title="El nombre debe contener solo letras, no debe contener números ni símbolos" required>
+                            <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="instrucciones d-none">
+                            Ingrese el nombre utilizando solo letras, sin números ni símbolos.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputNombre">Segundo Nombre*</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="inputSegundoNombre" placeholder="Ingrese el segundo nombre" name="segundo_nombre" value="{% if paciente.segundo_nombre %}{{ paciente.segundo_nombre }}{% else %}{% endif %}">
+                            <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-info-circle"></i>
+                              </button>
+                            </span>
+                        </div>
+                        <div class="instrucciones d-none">
+                          Ingrese el nombre utilizando solo letras, sin números ni símbolos.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputApellidos">Apellidos</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="primer_apellido" value="{{paciente.primer_apellido}}" title="El apellido debe contener solo letras, no debe contener números ni símbolos"required>
+                            <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="instrucciones d-none">
+                            Ingrese el apellido utilizando solo letras, sin números ni símbolos.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputApellidos">Segundo Apellido*</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="inputSegundoApellidos" placeholder="Ingrese sus apellidos" name="segundo_apellido" value="{% if paciente.segundo_apellido %}{{ paciente.segundo_apellido}}{% else %}{% endif %}">
+                            <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-info-circle"></i>
+                              </button>
+                            </span>
+                          </div>
+                          <div class="instrucciones d-none">
+                            Ingrese el apellido utilizando solo letras, sin números ni símbolos.
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="fechanacimiento" class="sm-4 col-form-label">Fecha de Nacimiento:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="limpiarinput form-control" id="nacimiento_fecha" name="fechanac_paciente" value="{{paciente.fechanac_paciente|date:'Y-m-d'}}" required>
+                            <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="instrucciones d-none">
+                            Ingrese la fecha Nacimiento correctamente.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="selectSexo">Sexo</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-venus-mars"></i></span>
+                            </div>
+                            <select class="form-control" id="selectSexo" name="sexo_paciente" required>
+                                <option value="">Seleccione su sexo</option>
+                                <option value="M" {% if paciente.sexo_paciente == 'M'%} selected {% endif %}>Masculino</option>
+                                <option value="F" {% if paciente.sexo_paciente == 'F'%} selected {% endif %}>Femenino</option>
+                            </select>
+                            <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="instrucciones d-none">
+                            Debe seleccionar el sexo del paciente, si es masculino o femenino.
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                </div>
+                <div class="col-md-6">
+                    <div class="card card-secondary">
+                        <div class="card-header">
+                            <h3 class="card-title">Información de Contacto</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+            
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="inputTelefono">Teléfono</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" id="inputTelefono" placeholder="Ingrese su teléfono" name="telefono_paciente" value="{{paciente.telefono_paciente}}" title="El teléfono debe tener 8 dígitos numéricos sin guiones. Por ej.: 12345678">
+                                    <span class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                          <i class="fas fa-info-circle"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div class="instrucciones d-none">
+                                    El teléfono debe tener 8 dígitos numéricos sin guiones. Por ej.: 12345678
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputTelefono">Correo</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email_paciente" value="{{paciente.email_paciente}}" title="El correo debe contener el siguiente formato. Por ej.: paciente1@mail.com">
+                                    <span class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                          <i class="fas fa-info-circle"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div class="instrucciones d-none">
+                                    El correo debe contener el siguiente formato. Por ej.: paciente1@mail.com
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container my-6">
+                    <div class="row mt-4">
+                        <div class="col-md-12 text-center">
+                            <a href="{% url 'DatosPersonales' paciente.id_paciente %}" class="btn btn-primary"><i class="fas fa-arrow-left"></i>Regresar</a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="nav-icon fas fa-save"></i> Guardar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            
+            </form>
+            
+      
   </div>
+</div>
+<script>
+    // Función para mostrar u ocultar las instrucciones de un campo
+    function mostrarInstrucciones(boton) {
+      var instrucciones = boton.parentNode.parentNode.parentNode.querySelector(".instrucciones");
+      instrucciones.classList.toggle("d-none");
+    }
+</script>
+
+<script>
+    // Función para validar un campo
+    function validarCampo(inputId, regex) {
+      var input = document.getElementById(inputId);
+      var valor = input.value.trim();
   
+      if (valor === "") {
+        input.classList.remove("is-valid", "is-invalid");
+        return true; // No se ingresa ningún valor, no se muestra ninguna indicación de error
+      } else if (!regex.test(valor)) {
+        input.classList.remove("is-valid");
+        input.classList.add("is-invalid");
+        return false; // Valor incorrecto, se muestra el estilo de error
+      } else {
+        input.classList.remove("is-invalid");
+        input.classList.add("is-valid");
+        return true; // Valor válido, se muestra el estilo de éxito
+      }
+    }
   
+    // Función para validar el nombre
+    function validarNombre() {
+      var regex = /^[a-zA-Z]+$/;
+      return validarCampo("inputNombre", regex);
+    }
+     // Función para validar el segundo nombre
+    function validarSegundoNombre() {
+    var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
+    return validarCampo("inputSegundoNombre", regex);
+  }
+    // Función para validar el apellido
+    function validarApellido() {
+      var regex = /^[a-zA-Z]+$/;
+      return validarCampo("inputApellidos", regex);
+    }
+  // Función para validar el segundo apellido
+    function validarSegundoApellido() {
+    var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
+    return validarCampo("inputSegundoApellidos", regex);
+  }
+    // Función para validar el teléfono
+    function validarTelefono() {
+      var regex = /^\d{8}$/;
+      return validarCampo("inputTelefono", regex);
+    }
+  
+    // Función para validar el correo
+    function validarCorreo() {
+      var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      return validarCampo("inputCorreo", regex);
+    }
+  
+    // Función para validar el formulario completo
+    function validarFormulario(event) {
+      event.preventDefault(); // Evitar el envío del formulario por defecto
+  
+      var nombreValido = validarNombre();
+      var SegundonombreValido = validarSegundoNombre();
+      var apellidoValido = validarApellido();
+      var SegundoapellidoValido = validarSegundoApellido();
+      var telefonoValido = validarTelefono();
+      var correoValido = validarCorreo();
+  
+      // Verificar si todos los campos son válidos
+      if (nombreValido && apellidoValido && telefonoValido && correoValido && SegundonombreValido && SegundoapellidoValido) {
+        document.getElementById("registroForm").submit(); // Enviar el formulario
+      } else {
+        // Mostrar un mensaje de error
+      }
+    }
+  
+    // Agregar eventos de validación en tiempo real a los campos
+    document.getElementById("inputNombre").addEventListener("input", validarNombre);
+    document.getElementById("inputSegundoNombre").addEventListener("input", validarSegundoNombre);
+    document.getElementById("inputApellidos").addEventListener("input", validarApellido);
+    document.getElementById("inputSegundoApellidos").addEventListener("input", validarSegundoApellido);
+    document.getElementById("inputTelefono").addEventListener("input", validarTelefono);
+    document.getElementById("inputCorreo").addEventListener("input", validarCorreo);
+  
+    // Agregar evento de validación al enviar el formulario
+    document.getElementById("registroForm").addEventListener("submit", validarFormulario);
+  </script>
 
 {% endblock %}

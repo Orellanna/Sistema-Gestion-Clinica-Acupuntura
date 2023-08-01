@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <link rel="shortcut icon" href="{% static 'img/logo.png' %}">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gestion Clinica Acupuntura</title>
@@ -18,7 +19,12 @@
   <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{% static 'css/adminlte.min.css' %}">
+
+  <link href="{% static 'plugins/summernote/summernote-bs4.css' %}" rel="stylesheet">
+
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
+
 
 <style>
   /* Estilos para la ventana emergente de confirmación de logout */
@@ -81,37 +87,39 @@
   <!-- Site wrapper -->
   <div class="wrapper">
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: #eef5f9;">
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item">
+          <div class="image">
+            <img src="{% static 'img/logo.png' %}" width="50" height="50">&nbsp;&nbsp;&nbsp;
+            <strong>Sistema de Gestion de Clinica Terapia-Holistica de Acupuntura</strong>
+          </div>
         </li>
       </ul>
     </nav>
     <!-- /.navbar -->
   
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
-      <!-- Brand Logo -->
-      <a href="{%url 'index'%}" class="brand-link">
-        <img src="{% static 'img/logo.jpg' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">LOGO</span>
-      </a>
+    <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4" style="background-color: #eef5f9;">
+     
   
       <!-- Sidebar -->
       <div class="sidebar">
         
         <!-- Sidebar user (optional) -->
+        
         <div id="user-panel-content" class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="{% static 'img/user4-128x128.jpg' %}" class="img-circle elevation-2" alt="User Image">
+            <img src="{% static 'img/default-avatar.jpg' %}" class="img-circle elevation-2" alt="User Image">
           </div>
-          <div class="info">
-            <a href="#" class="d-block">{{ user.first_name }}</a>
-
-            <a href="" class="logout-link" style="opacity: 0; pointer-events: none;">Cerrar Sesion</a>
-          </div>
+            <div class="info">
+              <a href="#" class="d-block"  style="opacity: 1; pointer-events: none; color: black;">{{ user.first_name }}</a>
+              <a href="{% url 'login-page' %}" class="logout-link" style="opacity: 1; pointer-events: none; color: black;">Cerrar Sesion</a>
+            </div>                      
         </div>
         
         <!-- Ventana emergente de confirmación de logout -->
@@ -119,7 +127,9 @@
           <div class="logout-dialog-content">
             <h3>¿Estás seguro de que deseas cerrar sesión?</h3>
             <div class="logout-dialog-buttons">
-              <button id="logout-confirm" class="btn btn-danger">Confirmar</button>
+              <a href="{% url 'cerrar_sesion' %}" class="btn btn-danger">SI</a>
+              
+
               <button id="logout-cancel" class="btn btn-secondary">Cancelar</button>
             </div>
           </div>
@@ -130,62 +140,75 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
-              <li class="nav-item">
-                  <a href="{%url 'index'%}" class="nav-link">
-                    <i class="nav-icon fas fa-home "></i>
-                    <p>
-                    Inicio
-                    </p>
-                  </a>  
-              </li>
-              <li class="nav-item">
-                <a href="{%url 'GestionPacientes'%}" class="nav-link">
-                <i class="nav-icon fas fa-users "></i>
-                <p>
-                  Pacientes
+            <li class="nav-item">
+              <a href="{%url 'index'%}" class="nav-link">
+                <i class="nav-icon fas fa-home" style="color: #000000; font-size: 1.25em;"></i>
+                <p style="color: #000000; font-size: 1.25em;">
+                  Inicio
                 </p>
-              </a>  
+              </a>
             </li>
             <li class="nav-item">
-              <a href="" class="nav-link">
-                <i class="nav-icon fas fa-calendar-plus"></i>
-                <p>
+              <a href="{%url 'GestionPacientes'%}" class="nav-link">
+                <i class="nav-icon fas fa-users" style="color: #000000; font-size: 1.25em;"></i>
+                <p style="color: #000000; font-size: 1.25em;">
+                  Pacientes
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'construccion' %}" class="nav-link">
+                <i class="nav-icon fas fa-calendar-plus" style="color: #000000; font-size: 1.25em;"></i>
+                <p style="color: #000000; font-size: 1.25em;">
                   Citas
                 </p>
               </a>
             </li>
+            {% for group in request.user.groups.all %}
+            {% if group.name == 'Administrador' %}
+            <!-- El usuario pertenece al grupo "Administrador", mostrar la sección de "Inventario" -->
             <li class="nav-item">
-              <a href="" class="nav-link">
-                <i class="nav-icon fas fa-medkit"></i>
-                <p>
+              <a href="{% url 'GestionInventario' %}" class="nav-link">
+                <i class="nav-icon fas fa-medkit" style="color: #000000; font-size: 1.25em;"></i>
+                <p style="color: #000000; font-size: 1.25em;">
                   Inventario
                 </p>
               </a>
             </li>
+            {% endif %}
+            {% endfor %}
+        
             <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-pie"></i>
-                <p>
-                  Reportes Estadisticos
+              <a href="{% url 'construccion' %}" class="nav-link">
+                <i class="nav-icon fas fa-chart-pie" style="color: #000000; font-size: 1.25em;"></i>
+                <p style="color: #000000; font-size: 1.25em;">
+                  Reportes
                 </p>
               </a>
-            </li>          
+            </li>
           </ul>
         </nav>
+
         <!-- /.sidebar-menu -->
       </div>
       <!-- /.sidebar -->
-  
+      <div class="row mb-5" >
+        <div class="row mb-4">
+          <div class="row mb-2">
+        
+          </div>
+        </div>
+      </div>
       <div class="sidebar-custom">
         
-        <a href="" class="btn btn-secondary hide-on-collapse pos-left"> <i class="nav-icon fas fa-bars"></i> Administracion </a>
+        <a href="{% url 'administracion' %}" class="btn btn-secondary hide-on-collapse pos-left"> <i class="nav-icon fas fa-bars"></i> Administracion </a>
       </div>
       <!-- /.sidebar-custom -->
     </aside>
     
     
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="background-color: #ffffff;">
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <div class="container-fluid">
@@ -199,13 +222,23 @@
       
         <!-- Main content -->
              
-        <section class="content">
+        <section class="content mb-5">
+          {% if messages %}
+                          <div class="messages">
+                            {% for message in messages %}
+                              <div class="alert alert-{{ message.tags }}">
+                                {{ message }}
+                              </div>
+                            {% endfor %}
+                          </div>
+          {% endif %}
+
             <div class="container-fluid">
               <div class="container">
-                <div class="card bg-light rounded">
+                <div style="background-color: #eef5f9; border: 1px solid #dee2e6;">
                   <div class="card-body text-center">
                     <div class="row align-items-center">
-                      <div class="col-12">
+                      <div class="col-12">                       
                         <h2 class="mb-0" style="font-size: 24px;">{{ paciente.id_paciente }}</h2>
                         <h4 class="text-truncate" style="font-size: 18px;">{{ paciente.primer_nombre }} {{ paciente.primer_apellido }}</h4>
                         <hr class="my-2">
@@ -221,28 +254,28 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col-3 text-center">
-                  <a href="#" class="nav-link" id="perfil-link" onclick="highlightIcon('perfil-link')">
-                    <i class="fas fa-user fa-2x" style="color: #422722;"></i>
-                    <p class="mt-2" style="color: #422722; font-weight: bold;">Perfil</p>
+                  <a href="{% url 'DatosPersonales' paciente.id_paciente %}" class="nav-link" id="perfil-link" >
+                    <i class="fas fa-user fa-2x" style="color: #000000;"></i>
+                    <p class="mt-2" style="color: #000000; font-weight: bold;">Perfil</p>
                     <div class="bar"></div>
                   </a>
                 </div>
                 <div class="col-3 text-center">
-                  <a href="#" class="nav-link" id="consultas-link" onclick="highlightIcon('consultas-link')">
+                  <a href="{% url 'ListarConsultas' paciente_id=paciente.id_paciente %}" class="nav-link" id="consultas-link" onclick="highlightIcon('consultas-link')">
                     <i class="fas fa-stethoscope fa-2x" style="color: #36A2EB;"></i>
                     <p class="mt-2" style="color: #36A2EB; font-weight: bold;">Consultas</p>
                     <div class="bar"></div>
                   </a>
                 </div>
                 <div class="col-3 text-center">
-                  <a href="#" class="nav-link" id="terapia-link" onclick="highlightIcon('terapia-link')">
+                  {% comment %} <a href="#" class="nav-link" id="terapia-link" onclick="highlightIcon('terapia-link')"> {% endcomment %}
                     <i class="fas fa-heart fa-2x" style="color: #FF0000;"></i>
                     <p class="mt-2" style="color: #FF0000; font-weight: bold;">Terapia</p>
                     <div class="bar"></div>
                   </a>
                 </div>
                 <div class="col-3 text-center">
-                  <a href="#" class="nav-link" id="pagos-link" onclick="highlightIcon('pagos-link')">
+                  {% comment %} <a href="#" class="nav-link" id="pagos-link" onclick="highlightIcon('pagos-link')"> {% endcomment %}
                     <i class="fas fa-hand-holding-usd fa-2x" style="color: #00BB2D;"></i>
                     <p class="mt-2" style="color: #00BB2D; font-weight: bold;">Pagos</p>
                     <div class="bar"></div>
@@ -276,9 +309,7 @@
                 
                 </div>
                 <!-- /.card-body -->
-                <div class="card-footer">
-                
-                </div>
+
                 <!-- /.card-footer-->
               </div>
               <!-- /.card -->
@@ -328,23 +359,65 @@
 <!-- AdminLTE App -->
 <script src="{% static 'js/adminlte.min.js'%}"></script>
 
+<script src="{% static 'plugins/summernote/summernote/summernote-bs4.js ' %}"></script>
+
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+<!-- Deshabilitar la informacion de un paciente de las vistas -->
+
+<script>
+  function ocultarFila(boton) {
+    var fila = boton.parentNode.parentNode;
+    fila.style.display = 'none';
+  }
+</script>
 <!-- Page specific script -->
 <script>
   $(function () {
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
-      "lengthChange": false,
-      "searching": false,
+      "lengthChange": true,
+      "searching": true,
       "ordering": true,
       "info": true,
-      "autoWidth": false,
+      "autoWidth": true,
       "responsive": true,
+      "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+      "buttons": ["copy","excel", "pdf", "print"],
+      "dom": 'Bfrtip',
+
+      "language": {
+        "decimal": "",
+        "emptyTable": "No hay datos disponibles en la tabla",
+        "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+        "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+        "infoFiltered": "(filtrado de _MAX_ registros totales)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostrar _MENU_ registros",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords": "No se encontraron registros coincidentes",
+        "paginate": {
+          "first": "Primero",
+          "last": "Último",
+          "next": "Siguiente",
+          "previous": "Anterior"
+        },
+        "aria": {
+          "sortAscending": ": activar para ordenar la columna ascendente",
+          "sortDescending": ": activar para ordenar la columna descendente"
+        },
+        "buttons": {
+          "copy": "Copiar",
+          "excel": "Excel",
+          "pdf": "PDF",
+          "print": "Imprimir"
+        }
+      }
     });
-  });
+  });;
+
 // Obtén el elemento del panel de usuario y el enlace de logout
 var userPanelContent = document.getElementById('user-panel-content');
 var logoutLink = document.querySelector('.logout-link');
@@ -384,14 +457,36 @@ logoutCancelButton.addEventListener('click', function() {
   logoutDialog.style.display = 'none';
 });
 
-function highlightIcon(id) {
-    const icons = document.getElementsByClassName('nav-link');
-    for (let i = 0; i < icons.length; i++) {
-      icons[i].classList.remove('active');
-    }
-    document.getElementById(id).classList.add('active');
+ </script>
+
+ <script>
+  // Obtén la ruta actual de la página
+  var path = window.location.pathname;
+
+  // Activa la barra lateral según la ruta actual
+  if (path.includes('/datosPersonales')) {
+    activateSidebar('perfil-link');
+  } else if (path.includes('/HistorialConsultas')) {
+    activateSidebar('consultas-link');
+  } else if (path.includes('/historial')) {
+    activateSidebar('historial-link');
   }
 
- </script>
+  // Función para activar la barra lateral
+  function activateSidebar(linkId) {
+    // Desactiva la clase 'active' en todos los enlaces de la barra lateral
+    var links = document.querySelectorAll('#sidebar .nav-link');
+    links.forEach(function(link) {
+      link.classList.remove('active');
+    });
+
+    // Activa la clase 'active' en el enlace correspondiente
+    var activeLink = document.getElementById(linkId);
+    if (activeLink) {
+      activeLink.classList.add('active');
+    }
+  }
+</script>
+
 </body>
 </html>

@@ -1,0 +1,85 @@
+{% extends 'index_master.html' %}
+
+{% block content %}
+
+<div class="container my-4">
+    <div class="container-fluid">
+        <form>
+            <div class="row mb-3">
+                <h2>Detalles de Usuario</h2>
+            </div>
+        </form>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div clas="d-flex h-100">
+                <div class="card card-secondary flex-fill">
+                    <div class="card-header">
+                        <h3 class="card-title">Información de Registro</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="inputUser">Usuario:</label>
+                            <p class="form-control-static">{{ usuario.username }}</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword">Contraseña:</label>
+                            <p class="form-control-static">********</p>
+                            <small class="form-text text-muted">La contraseña está oculta por seguridad.</small>
+                        </div class="form-group">
+    
+                        <div class="form-group">
+                            <label for="selectCargo">Cargo:</label>
+                            <p class="form-control-static">{{ usuario.groups.first.name }}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>  
+            
+        </div>
+        
+        <div class="col-md-6">
+            <div class="d-flex h-100">
+                <div class="card card-secondary flex-fill">
+                    <div class="card-header">
+                        <h3 class="card-title">Información Adicional</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="inputNombre">Nombre:</label>
+                            <p class="form-control-static">{{ usuario.first_name }}</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputApellidos">Apellido:</label>
+                            <p class="form-control-static">{{ usuario.last_name }}</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputTelefono">Correo:</label>
+                            <p class="form-control-static">{{ usuario.email }}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="container my-6">
+        <div class="row mt-4">
+            <div class="col-md-12 text-center">       
+                    <a href="{% url 'gestionUsuarios' %}" class="btn btn-primary mr-5"><i class="fas fa-arrow-left"></i>&nbsp; Regresar</a>
+                    <a href="{% url 'editarUsuario' usuario.username %}">
+                    <button type="submit" class="btn btn-info"> <i class="nav-icon fas fa-pen"> </i>&nbsp; Editar</button>
+                
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}

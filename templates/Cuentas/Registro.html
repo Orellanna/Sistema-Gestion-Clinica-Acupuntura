@@ -5,85 +5,282 @@
 <div class="container my-4">
     <div class="container-fluid">
         <form>
-        <div class="row">
+        <div class="row mb-3">
             <h2>Registrar Usuario</h2>
         </form>
         </div>
     </div>
     
-  <div class="row">
-      <div class="col-md-6">
+    <div class="row">
+        <div class="col-md-6">
         
-          <div class="card card-secondary">
-              <div class="card-header">
-                  <h3 class="card-title">Información de Registro</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form role="form">
-                  <div class="card-body ">
-                    <div class="form-group">
-                        <label for="inputUser">Usuario*</label>
-                        <input type="text" class="form-control" id="inputUser" placeholder="Ingrese su usuario">
+            <div class="card card-secondary">
+
+                <div class="card-header">
+                    <h3 class="card-title">Información de Registro</h3>
+                </div>
+                <!-- /.card-header -->
+
+                <!-- form start -->
+                <form action="{% url 'registroUsuario' %}" method="POST" id="registroForm">
+                {% csrf_token %}
+                    
+                    <div class="card-body ">
+                        
+                        <div class="form-group">
+                            {% if messages %}
+                                <div class="alert alert-danger" role="alert">
+                                    {% for message in messages %}
+                                        {{ message }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <label for="inputUser">Usuario*</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                              </div>
+                              <input type="text" class="form-control" id="inputUser" placeholder="Ingrese su usuario" name="username" required value="{{ usuario }}">  
+                              <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                            </span>
+                            </div>   
+                            <div class="instrucciones d-none">
+                              Ingrese el usuario de al menos 6 y máximo 20 caracteres, sin utilizar símbolos ni espacios.
+                            </div>                                                    
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputPassword">Contraseña*</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user-lock"></i></span>
+                            </div>
+                              <input class="form-control" type="password" name="password" placeholder="Ingrese una contraseña" id="inputPassword" required>
+                              <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-info-circle"></i>
+                              </button>
+                            </span>
+                            </div>
+                            <div class="instrucciones d-none">
+                              Debe Ingresar una contraseña de al menos 8 y máximo 20 caracteres sin caracteres especiales.
+                            </div>  
+                        </div>
+
+                        <div class="form-group">
+                          <label for="selectCargo">Cargo*</label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-user-md"></i></span>
+                          </div>
+                            <select class="form-control" id="selectCargo" name="cargo" required>
+                                <option value="">Seleccione el cargo</option>
+                                <option value="administrador" {% if request.POST.cargo == 'administrador' %}selected{% endif %}>Administrador</option>
+                                <option value="acupunturista" {% if request.POST.cargo == 'acupunturista' %}selected{% endif %}>Acupunturista</option>
+                            </select>
+                          <span class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                              <i class="fas fa-info-circle"></i>
+                            </button>
+                          </span>
+                          </div>
+                          <div class="instrucciones d-none">
+                            Seleccione al tipo de usuario que utilizara el sistema de la lista desplegable.
+                          </div>  
+                      </div>
+
+                        </div>
+                        </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title">Información Adicional</h3>
+                        </div>
+
+                        <div class="card-body">   
+                            <div class="form-group">
+                            <label for="inputNombre">Nombre</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                              <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="firstname" value="{{ primerNombre}}">
+                              <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <div class="instrucciones d-none">
+                              Ingrese el Nombre utilizando solo letras, sin números ni símbolos.
+                            </div> 
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="inputApellidos">Apellido</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                              <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellido" name="lastname" value="{{ primerApellido }}">
+                              <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                              </span>
+                            </div>
+                            <div class="instrucciones d-none">
+                              Ingrese el Apellido utilizando solo letras, sin números ni símbolos.
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputTelefono">Correo</label>
+                            <div class="input-group">    
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            </div>                   
+                            <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email" value="{{ correo }}">
+                            <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-info-circle"></i>
+                              </button>
+                            </span>
+                            </div>
+                            <div class="instrucciones d-none">
+                              Ingrese el correo electronico del usuario.
+                            </div>
+                          </div>
                     </div>
-                    <div class="form-group">
-                        <label for="inputPassword">Contraseña*</label>
-                        <input class="form-control" type="password" name="passwordUser" placeholder="Ingrese una contraseña">
+   
                     </div>
-                    <div class="form-group">
-                        <label for="selectCargo">Cargo*</label>
-                        <select class="form-control" id="selectCargo">
-                            <option value="">Seleccione el cargo</option>
-                            <option value="M">Acupunturista</option>
-                            <option value="F">Asistente</option>
-                        </select>
                     </div>
 
-                  </div>
-                  <!-- /.card-body -->
-              </form>
-          </div>
-          <!-- /.card -->
-      </div>
-      <div class="col-md-6">
-          <div class="card card-secondary">
-              <div class="card-header">
-                  <h3 class="card-title">Información Adicional</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form role="form">
-                  <div class="card-body">   
-                      <div class="form-group">
-                        <label for="inputNombre">Nombre</label>
-                        <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre">
+                    <div class="container my-6">
+                        <div class="row mt-4">
+                        <div class="col-md-12 text-center">
+                            <a href="{% url 'gestionUsuarios' %}" class="btn btn-primary"><i class="fas fa-arrow-left"></i>&nbsp; Regresar</a>
+                            <button type="submit" class="btn btn-success" > <i class="nav-icon fas fa-save"> </i>&nbsp; Guardar</button>
+                        </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="inputApellidos">Apellidos</label>
-                        <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputTelefono">Correo</label>
-                         <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo">
-                     </div>
+
+                </form>
 
                 </div>
-              </form>
-          </div>
-      </div>
-      <div class="container my-6">
-        <div class="row mt-4">
-          <div class="col-md-12 text-center">
-                <button type="submit" class="btn btn-primary"> <i class="nav-icon fas fa-save"> </i>Guardar</button>
-                <button type="reset" class="btn btn-secondary">Cancelar</button>
-          </div>
 
+                </div>
+            </div>
         </div>
-      </div>
-      
-      
-      
-  </div>
+    </div>
 </div>
 
+<script>
+  // Función para mostrar u ocultar las instrucciones de un campo
+  function mostrarInstrucciones(boton) {
+    var instrucciones = boton.parentNode.parentNode.parentNode.querySelector(".instrucciones");
+    instrucciones.classList.toggle("d-none");
+  }
+</script>
+
+<script>
+  // Función para validar un campo
+  function validarCampo(inputId, regex, minLength, maxLength) {
+    var input = document.getElementById(inputId);
+    var valor = input.value.trim();
+
+    if (valor === "") {
+      input.classList.remove("is-valid", "is-invalid");
+      return true; // No se ingresa ningún valor, no se muestra ninguna indicación de error
+    } else if (valor.length < minLength || valor.length > maxLength) {
+      input.classList.remove("is-valid");
+      input.classList.add("is-invalid");
+      return false; // Valor incorrecto, se muestra el estilo de error
+    } else if (!regex.test(valor)) {
+      input.classList.remove("is-valid");
+      input.classList.add("is-invalid");
+      return false; // Valor incorrecto, se muestra el estilo de error
+    } else {
+      input.classList.remove("is-invalid");
+      input.classList.add("is-valid");
+      return true; // Valor válido, se muestra el estilo de éxito
+    }
+  }
+
+  // Función para validar el usuario
+  function validarUsuario() {
+    var regex = /^[a-zA-Z0-9_]+$/;
+    var minLength = 4;
+    var maxLength = 20;
+    return validarCampo("inputUser", regex, minLength, maxLength);
+  }
+
+  // Función para validar la contraseña
+  function validarContraseña() {
+    var regex = /^[a-zA-Z0-9]{8,20}$/;
+    var minLength = 8;
+    var maxLength = 20;
+    return validarCampo("inputPassword", regex, minLength, maxLength);
+  }
+
+  // Función para validar el nombre
+  function validarNombre() {
+    var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
+    var minLength = 1;
+    var maxLength = 20;
+    return validarCampo("inputNombre", regex, minLength, maxLength);
+  }
+
+  // Función para validar el apellido
+  function validarApellido() {
+    var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
+    var minLength = 1;
+    var maxLength = 20;
+    return validarCampo("inputApellidos", regex, minLength, maxLength);
+  }
+
+  // Función para validar el correo
+  function validarCorreo() {
+    var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return validarCampo("inputCorreo", regex, 0, 100);
+  }
+
+  // Función para validar el formulario completo
+  function validarFormulario(event) {
+    event.preventDefault(); // Evitar el envío del formulario por defecto
+
+    var usuarioValido = validarUsuario();
+    var contraseñaValida = validarContraseña();
+    var nombreValido = validarNombre();
+    var apellidoValido = validarApellido();
+    var correoValido = validarCorreo();
+
+    // Verificar si todos los campos son válidos
+    if (usuarioValido && contraseñaValida && nombreValido && apellidoValido && correoValido) {
+      document.getElementById("registroForm").submit(); // Enviar el formulario
+    } else {
+      // Mostrar un mensaje de error
+    }
+  }
+
+  // Agregar eventos de validación en tiempo real a los campos
+  document.getElementById("inputUser").addEventListener("input", validarUsuario);
+  document.getElementById("inputPassword").addEventListener("input", validarContraseña);
+  document.getElementById("inputNombre").addEventListener("input", validarNombre);
+  document.getElementById("inputApellidos").addEventListener("input", validarApellido);
+  document.getElementById("inputCorreo").addEventListener("input", validarCorreo);
+
+  // Agregar evento de envío del formulario
+  document.getElementById("registroForm").addEventListener("submit", validarFormulario);
+</script>
+
+
+  
 {% endblock %}

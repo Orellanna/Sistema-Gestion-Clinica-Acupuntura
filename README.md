@@ -1,12 +1,16 @@
 
 ### Sistema para la Gestion de la clínica Terapia-Holistica Acupuntura.
 
+<p align="center">
+  <img src="static/img/logo.jpg" alt="ClinicaAcupuntura" width="200" height="200">
+</p>
 
 ## Cuenta con los siguientes modulos
 
 
 1. ### Gestion de Pacientes
     > 📌 Permite agregar, modificar, eliminar y consultar la informacion de los Pacientes.
+
     > 📌 Permite ver la lista de pacientes registrados.
 
 2. ### Gestion de Consultas
@@ -24,7 +28,6 @@
 
     > 📌 Permite ver el historial de inspecciones ingresadas por consulta.
 
-
 5. ### Gestion de Pagos
 
     > 📌 Permite crear un pago para una consulta en especifico
@@ -32,7 +35,12 @@
     > 📌 Permite ver el historial de pagos realizados.
 
 6. ### Gestion de Inventario
-    > 📌 Permite crear, editar, consultar o eliminar los distintos suministros en Inventanrio
+    > 📌 Permite crear, editar, consultar o eliminar los distintos suministros en Inventario
+
+6. ### Modulo de Administracion
+
+    ## Gestion de Usuarios
+    > 📌 Permite al Admininistrador crear, editar, consultar o eliminar los distintos Usuarios que tienen acceso al sistema.
 
 
 ## Tecnologias Utilizadas
