@@ -18,7 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'fontawesomefree',
     'Pacientes',
     'Consultas',
-    'Cuentas',  
+    'Cuentas', 
+    'Inventario', 
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'AppClinicaAcupuntura.urls'
@@ -83,10 +85,10 @@ WSGI_APPLICATION = 'AppClinicaAcupuntura.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'derhm006qe0bvq',
-        'USER': 'zbeufrcwbmzsxf',
-        'PASSWORD': 'bebfb4922a80d1df55e69e742d2c964a774c784c9ff735834b3fcb48f00b0ed9',
-        'HOST': 'ec2-34-197-91-131.compute-1.amazonaws.com',
+        'NAME': 'd992ot0slk0gi7',
+        'USER': 'aaysownjaarlae',
+        'PASSWORD': '9dbe669a823cb1bae424c2edf2bfe7570238ca859686ad05b678e99ac76c3df0',
+        'HOST': 'ec2-3-221-177-27.compute-1.amazonaws.com',
         'PORT': '5432',
     }
 }
@@ -114,9 +116,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/El_Salvador'
 
 USE_I18N = True
 
@@ -126,7 +128,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -134,3 +135,22 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/login/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = 'static/'
+STATIC_TMP= os.path.join(BASE_DIR, 'static')
+
+os.makedirs(STATIC_TMP, exist_ok=True)
+os.makedirs(STATIC_ROOT, exist_ok=True)
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+locale.setlocale(locale.LC_ALL, 'es_ES.UTF-8')
+
+MEDIA_URL= '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static','img')
+

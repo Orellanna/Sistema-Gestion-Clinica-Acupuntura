@@ -22,34 +22,75 @@
                   <h4 class="text-primary">Datos Personales</h4>
                   <hr>
                 </div>
-                <div class="row">
-                  <div class="col-4">
-                    <div class="text-center">
-                      <h6 class="font-weight-bold">Nombre:</h6>
-                      <p class="font-secondary">{{ paciente.primer_nombre }} {{ paciente.primer_apellido }}</p>
-                    </div>
+                <div class="col">
+                  <div class="text-center">
+                    <h6 class="font-weight-bold">Nombre Completo :</h6>
+                    {% if paciente.primer_nombre or paciente.segundo_nombre or paciente.primer_apellido or paciente.segundo_apellido %}
+                      <p class="font-secondary">
+                        {% if paciente.primer_nombre %}{{ paciente.primer_nombre }}{% else %} {% endif %}
+                        {% if paciente.segundo_nombre %}{{ paciente.segundo_nombre }}{% endif %}
+                        {% if paciente.primer_apellido %}{{ paciente.primer_apellido }}{% else %} {% endif %}
+                        {% if paciente.segundo_apellido %}{{ paciente.segundo_apellido }}{% endif %}
+                      </p>
+                    {% else %}
+                      <p class="font-secondary">No hay</p>
+                    {% endif %}
                   </div>
+                </div>
+
+                <div class="row mt-4">
+
                   <div class="col-4">
                     <div class="text-center">
                       <h6 class="font-weight-bold">Género:</h6>
-                      <p>{{ paciente.sexo_paciente }}</p>
+                      {% if paciente.sexo_paciente == 'M' %}
+                        <p class="font-secondary">Masculino</p>
+                      {% elif paciente.sexo_paciente == 'F' %}
+                        <p class="font-secondary">Femenino</p>
+                      {% else %}
+                        <p class="font-secondary">No definido</p>
+                      {% endif %}
                     </div>
                   </div>
+
                   <div class="col-4">
                     <div class="text-center">
                       <h6 class="font-weight-bold">Edad:</h6>
                       <p>{{ edad }}</p>
                     </div>
                   </div>
-                </div>
-                <div class="row mt-4">
-                  <div class="col">
+
+                  <div class="col-4">
                     <div class="text-center">
                       <h6 class="font-weight-bold">Teléfono:</h6>
-                      <p class="font-secondary">{{ paciente.telefono_paciente }}</p>
+                      {% if paciente.telefono_paciente %}
+                        <p class="font-secondary">{{ paciente.telefono_paciente }}</p>
+                      {% else %}
+                        <p class="font-secondary">No tiene</p>
+                      {% endif %}
                     </div>
                   </div>
-                </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="text-center">
+                      <h6 class="font-weight-bold">Correo electronico:</h6>
+                      {% if paciente.email_paciente %}
+                        <p class="font-secondary">{{ paciente.email_paciente }}</p>
+                      {% else %}
+                        <p class="font-secondary">No tiene</p>
+                      {% endif %}
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="text-center">
+                      <h6 class="font-weight-bold">Fecha de Nacimiento:</h6>
+                      <p class="font-secondary">{{ paciente.obtener_fechanac_formateada }}</p>
+                    </div>
+                  </div>
+
+                  
               </div>
             </div>
           </div>

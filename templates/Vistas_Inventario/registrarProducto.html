@@ -1,0 +1,299 @@
+{% extends 'index_master.html' %}
+
+{% block content %}
+
+<div class="container my-4">
+    <div class="container-fluid">
+        <form>
+        <div class="row">
+            <h2>Nuevo Producto</h2>
+        </form>
+        </div>
+    </div>
+    
+  <div class="row justify-content-center">
+      <div class="col-md-6">
+        
+          <div class="card card-secondary">
+              <div class="card-header">
+                  <h3 class="card-title">Información del Producto</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form enctype="multipart/form-data" action="{% url 'RegistrarProducto' %}" method="POST" id="registroForm">
+                {% csrf_token %}
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="inputNombre">Nombre*</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese el nombre" name="nombre_suministro" required>
+                            <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-info-circle"></i>
+                              </button>
+                            </span>
+                        </div>
+                        <div class="instrucciones d-none">
+                          Ingrese el nombre utilizando solo letras, sin números ni símbolos.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="inputNombre">Categoria*</label>
+                      <div class="input-group">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-user"></i></span>
+                          </div>
+                          <select class="form-control" id="inputNombre" name="categoria" required>
+                              <option value="" disabled selected>Seleccione la categoria</option>
+                              <option value="Higiene y Desinfección">Higiene y Desinfeccion</option>
+                              <option value="Herramientas de Diagnóstico">Herramientas de Diagnostico</option>
+                              <option value="Material de Oficina">Material de Oficina</option>
+                              <option value="Productos para terapias">Productos para terapias</option>
+                              <option value="Equipo de tratamiento">Equipo de tratamiento</option>
+                              <!-- Agrega más opciones aquí si es necesario -->
+                          </select>
+                          <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                              </button>
+                          </span>
+                      </div>
+                      <div class="instrucciones d-none">
+                          Seleccione la categoria del producto.
+                      </div>
+                  </div>
+
+                    <div class="form-group">
+                      <label for="inputDescripcion">Descripcion*</label>
+                      <div class="input-group">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-user"></i></span>
+                          </div>
+                          <textarea class="form-control" id="inputDescripcion" placeholder="Ingrese la descripcion" name="descripcion_suministro" required></textarea>
+                          <span class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                              <i class="fas fa-info-circle"></i>
+                            </button>
+                          </span>
+                      </div>
+                      <div class="instrucciones d-none">
+                        Ingrese la Descripcion del producto.
+                      </div>
+                  </div>
+
+                    <div class="form-group">
+                      <label for="inputCantidad">Cantidad</label>
+                      <div class="input-group">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-user"></i></span>
+                          </div>
+                          <input type="text" class="form-control" id="inputCantidad" placeholder="Ingrese la cantidad" name="cantidad">
+                          <span class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                              <i class="fas fa-info-circle"></i>
+                            </button>
+                          </span>
+                      </div>
+                      <div class="instrucciones d-none">
+                        Ingrese la cantidad utilizando solo numeros.
+                      </div>
+                  </div>
+                    <div class="form-group">
+                        <label for="inputCostoUnitario">Costo Unitario*</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="inputCostoUnitario" placeholder="Ingrese el costo unitario" name="costo_unitario" required>
+                            <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-info-circle"></i>
+                              </button>
+                            </span>
+                          </div>
+                          <div class="instrucciones d-none">
+                            Ingrese el costo unitario utilizando numeros.
+                          </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fechavencimiento" class="sm-4 col-form-label">Fecha de Vencimiento:*</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento">
+                            <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-info-circle"></i>
+                              </button>
+                            </span>
+                        </div>
+                        <div class="instrucciones d-none">
+                          Ingrese la fecha de Vencimiento.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="inputImagen">Imagen del Producto</label>
+                      <div class="input-group">
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" id="inputImagen" name="imagen" onchange="mostrarNombreImagen(this)">
+                          <label class="custom-file-label" for="inputImagen">Seleccione una imagen...</label>
+                        </div>
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                            <i class="fas fa-info-circle"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="instrucciones d-none">
+                        Seleccione una imagen que represente el insumo (opcional).
+                      </div>
+                    </div>
+                    
+                </div>
+                <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                </div>
+                
+                <div class="container my-6">
+                    <div class="row mt-4">
+                        <div class="col-md-12 text-center">
+                            <a href="{% url 'GestionPacientes' %}" class="btn btn-primary"><i class="fas fa-arrow-left"></i>Regresar</a>
+                            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+  </div>
+</div>
+
+<script>
+  // Función para mostrar u ocultar las instrucciones de un campo
+  function mostrarInstrucciones(boton) {
+    var instrucciones = boton.parentNode.parentNode.parentNode.querySelector(".instrucciones");
+    instrucciones.classList.toggle("d-none");
+  }
+</script>
+
+<script>
+  // Función para validar un campo
+  function validarCampo(inputId, regex) {
+    var input = document.getElementById(inputId);
+    var valor = input.value.trim();
+
+    if (valor === "") {
+      input.classList.remove("is-valid", "is-invalid");
+      return true; // No se ingresa ningún valor, no se muestra ninguna indicación de error
+    } else if (!regex.test(valor)) {
+      input.classList.remove("is-valid");
+      input.classList.add("is-invalid");
+      return false; // Valor incorrecto, se muestra el estilo de error
+    } else {
+      input.classList.remove("is-invalid");
+      input.classList.add("is-valid");
+      return true; // Valor válido, se muestra el estilo de éxito
+    }
+  }
+
+  // Función para validar el nombre
+  function validarNombre() {
+    var regex = /^[a-zA-Z\u00C0-\u017F\s]+$/;
+    return validarCampo("inputNombre", regex);
+  }
+
+  // Función para validar la Cantidad
+  function validarCantidad() {
+    var regex = /^\d/;
+    return validarCampo("inputCantidad", regex);
+  }
+
+  // Función para validar el Costo Unitario
+  function validarCostoUnitario() {
+    var regex = /^\d/;
+    return validarCampo("inputCostoUnitario", regex);
+  }
+
+  // Función para validar la fecha de vencimiento
+  function validarFecha() {
+    var input = document.getElementById("nacimiento_fecha");
+    var valor = input.value;
+  
+    if (valor === "") {
+      input.classList.remove("is-valid", "is-invalid");
+      return true; // No se ingresa ninguna fecha, no se muestra ninguna indicación de error
+    } else {
+      var fechaIngresada = new Date(valor);
+      var fechaActual = new Date();
+      var edadMinima = 10;
+      var edadMaxima = 110;
+  
+      var edad = fechaActual.getFullYear() - fechaIngresada.getFullYear();
+      if (
+        (edad < edadMinima || edad > edadMaxima) ||
+        (edad === edadMinima && fechaActual.getMonth() < fechaIngresada.getMonth()) ||
+        (edad === edadMinima && fechaActual.getMonth() === fechaIngresada.getMonth() && fechaActual.getDate() < fechaIngresada.getDate())
+      ) {
+        input.classList.remove("is-valid");
+        input.classList.add("is-invalid");
+        return false; // La fecha está fuera del rango permitido, se muestra el estilo de error
+      } else {
+        input.classList.remove("is-invalid");
+        input.classList.add("is-valid");
+        return true; // La fecha es válida, se muestra el estilo de éxito
+      }
+    }
+  }
+  
+
+  // Función para validar el formulario completo
+  function validarFormulario(event) {
+    event.preventDefault(); // Evitar el envío del formulario por defecto
+
+    var nombreValido = validarNombre();
+    var cantidadValido = validarCantidad();
+    var costoValido = validarCostoUnitario();
+    // var fechavalido = validarFecha();
+
+    // Verificar si todos los campos son válidos
+    if (nombreValido && cantidadValido && costoValido //&& fechavalido) {
+      document.getElementById("registroForm").submit(); // Enviar el formulario
+    } else {
+      // Mostrar un mensaje de error
+    }
+  }
+
+  // Agregar eventos de validación en tiempo real a los campos
+  document.getElementById("inputNombre").addEventListener("input", validarNombre);
+  document.getElementById("inputCantidad").addEventListener("input", validarCantidad);
+  document.getElementById("inputCostoUnitario").addEventListener("input", validarCostoUnitario);
+  //document.getElementById("nacimiento_fecha").addEventListener("input", validarFecha);
+ 
+
+  // Agregar evento de validación al enviar el formulario
+  document.getElementById("registroForm").addEventListener("submit", validarFormulario);
+</script>
+
+<script>
+  function mostrarNombreImagen(input) {
+    // Obtener el nombre del archivo seleccionado
+    const nombreArchivo = input.files[0].name;
+    
+    // Actualizar el texto del label con el nombre del archivo seleccionado
+    const label = input.nextElementSibling; // Elemento hermano siguiente al input
+    label.textContent = nombreArchivo;
+  }
+
+  function mostrarInstrucciones(button) {
+    const instrucciones = button.closest('.form-group').querySelector('.instrucciones');
+    instrucciones.classList.toggle('d-none');
+  }
+</script>
+
+{% endblock %}

@@ -1,0 +1,200 @@
+{% extends 'index_master.html' %}
+
+{% block content %} 
+
+{% if messages %}
+<div class="messages">
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+      {{ message }}
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="container-fluid">
+  <form>
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-8">
+        <h2>Inventario</h2>
+      </div>
+      <div class="col">
+        <a href="{% url 'RegistrarProducto' %}" class="btn btn-success"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Añadir Producto</a>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card bg-info text-white">
+        <div class="card-body text-center">
+          <h5 class="card-title">Productos</h5>
+          <h4 class="card-text">{{ total_productos }}</h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-info text-white">
+        <div class="card-body text-center">
+          <h5 class="card-title">Existencias</h5>
+          <h4 class="card-text">{{ total_stock }}</h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-info text-white">
+        <div class="card-body text-center">
+          <h5 class="card-title">Productos por categoría</h5>
+          <a class="btn bg-light" data-toggle="collapse" href="#collapseChart" role="button" aria-expanded="false" aria-controls="collapseChart">
+            Mostrar gráfico <i class="fas fa-chevron-down"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gráfico centrado y de tamaño adecuado -->
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="collapse" id="collapseChart">
+        <div class="card">
+          <div class="card-body">
+            <canvas id="bar-chart" width="400" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Tabla de productos -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <!-- /.card-header -->
+        <div class="card-body">
+          <table id="example1" class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for producto in productos %}
+                {% if not producto.deshabilitado %}
+                  <tr>
+                    <td>{{producto.id_suministro}}</td>                  
+                    <td>{{producto.nombre_suministro}}</td>                
+                    <td>{{producto.cantidad}}</td>
+                    <td class="text-center">
+                      <div class="d-inline-flex flex-row align-items-center">
+                        <a href="#" class="ver-productos mr-5" data-inventario-id="{{producto.id_suministro}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Producto">
+                          <i class="fas fa-eye fa-lg" style="color: #0a3461;"></i>
+                        </a>
+                        <a href="{% url 'EliminarProducto' id_suministro=producto.id_suministro %}" class="eliminar-producto mr-5" data-productos-nombres="{{producto.nombre_suministro}}"
+                          data-producto-id="{{producto.id_suministro}}" onclick="confirmarEliminacion(event)" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Producto">
+                          <i class="fas fa-ban fa-lg" style="color: #1e3152;"></i>
+                        </a>
+                      </div>    
+                    </td>
+                  </tr>
+                {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+</div>
+<script>
+  $(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+<script>
+  
+  document.addEventListener("DOMContentLoaded", function() {
+
+    // Obtener todos los elementos con la clase "ver-consulta"
+    const verProductos = document.querySelectorAll(".ver-productos");
+
+    // Agregar un evento de clic a cada enlace
+    verProductos.forEach(function(enlace) {
+      enlace.addEventListener("click", function(event) {
+      event.preventDefault();
+        
+        // Obtener el ID de la consulta del atributo data-consulta-id
+        const productoId = enlace.getAttribute("data-inventario-id");
+     
+        // Redirigir a la página de detalles de la consulta con el ID
+        window.location.href = "/"+ "Inventario" + "/" + "DetallesProducto/" + productoId + "/";
+      });
+    });
+  });
+
+</script>
+
+<script>
+  const ctx = document.getElementById('bar-chart');
+  
+  // Obtenemos los datos
+  const categorias = JSON.parse("{{ categorias | safe | escapejs }}");
+  const productosPorCategoria = JSON.parse("{{ productos_por_categoria | safe | escapejs }}");
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: categorias,
+      datasets: [{
+        label: "Productos por Categoría",
+        data: productosPorCategoria,
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(54, 162, 235, 0.2)",
+          "rgba(255, 206, 86, 0.2)",
+          "rgba(75, 192, 192, 0.2)",
+          "rgba(153, 102, 255, 0.2)",
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 206, 86, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(153, 102, 255, 1)",
+        ],
+        borderWidth: 1,
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+
+<script>
+  // Este código asegura que el gráfico se muestre cuando el collapse se abra
+  $(document).ready(function () {
+    $('#collapseChart').on('shown.bs.collapse', function () {
+      // Colocar aquí el código para generar y mostrar el gráfico (usando Chart.js u otra librería)
+    });
+  });
+</script>
+
+{% endblock %}
+

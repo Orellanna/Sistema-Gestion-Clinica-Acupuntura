@@ -1,6 +1,17 @@
 {% extends 'index_master.html' %}
 
 {% block content %} 
+
+{% if messages %}
+<div class="messages">
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+      {{ message }}
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
 <!-- Content Wrapper. Contains page content -->
 
     <!-- Content Header (Page header) -->
@@ -86,8 +97,13 @@
                       {% for paciente in pacientes %}
                         {% if not paciente.deshabilitado %}
                           <tr>
-                            <td>{{paciente.id_paciente}}</td>
-                            <td>{{paciente.primer_nombre}} {{paciente.primer_apellido}}</td>
+                            <td>{{paciente.id_paciente}}</td>                  
+                              <td>
+                                <a href="#" class="ver-pacientes mr-5 text-dark" data-pacientes-id="{{paciente.id_paciente}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Paciente">
+                                  {{paciente.primer_nombre}} {{paciente.primer_apellido}}
+                                </a>
+                              </td>
+                            </a>
                             <td>{{paciente.sexo_paciente}}</td>
                             <td>{{paciente.edad}}</td>
 
@@ -156,10 +172,10 @@
     ventanaEmergente.classList.add("ventana-emergente");
 
     const titulo = document.createElement("h3");
-    titulo.textContent = "Confirmar eliminación";
+    titulo.textContent = "Confirmar deshabilitación";
 
     const mensaje = document.createElement("p");
-    mensaje.textContent = "¿Estás seguro de eliminar al paciente? " + pacienteNombres + "";
+    mensaje.textContent = "¿Estás seguro que quieres deshabilitar al paciente " + pacienteNombres + "?";
 
     const botonAceptar = document.createElement("button");
     botonAceptar.textContent = "Aceptar";

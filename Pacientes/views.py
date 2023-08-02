@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import Paciente
 from django.db.models import Q
+from django.contrib import messages
 
 @login_required
 def index(request):
@@ -49,22 +50,26 @@ def Registrar(request):
     
     if request.method == 'POST':
         primer_nombre = request.POST['primer_nombre']
+        segundo_nombre = request.POST['segundo_nombre']
         primer_apellido = request.POST['primer_apellido']
-        fechanac_paciente = request.POST['fechanac_paciente']
+        segundo_apellido = request.POST['segundo_apellido']
         sexo_paciente = request.POST['sexo_paciente']
         telefono_paciente = request.POST['telefono_paciente']
         email_paciente = request.POST['email_paciente']
         
         nuevo_paciente = Paciente()
         nuevo_paciente.primer_nombre = primer_nombre
+        nuevo_paciente.segundo_nombre = segundo_nombre
         nuevo_paciente.primer_apellido = primer_apellido
-        nuevo_paciente.fechanac_paciente = fechanac_paciente
+        nuevo_paciente.segundo_apellido = segundo_apellido
         nuevo_paciente.sexo_paciente = sexo_paciente
         nuevo_paciente.telefono_paciente = telefono_paciente
         nuevo_paciente.email_paciente = email_paciente
+        nuevo_paciente.fecharegistro_paciente = datetime.now()
         nuevo_paciente.save()
         
-        return redirect('GestionPacientes')
+        messages.success(request, "El Paciente se ha registrado satisfactoriamente")
+        return redirect('DatosPersonales', id_paciente=nuevo_paciente.id_paciente)
          
     return render(request,'Vistas_Pacientes/registrarPaciente.html')
     
@@ -76,21 +81,25 @@ def EditarPaciente(request, id_paciente):
     
     if request.method == 'POST':
         primer_nombre = request.POST['primer_nombre']
+        segundo_nombre = request.POST['segundo_nombre']
         primer_apellido = request.POST['primer_apellido']
+        segundo_apellido = request.POST['segundo_apellido']
         fechanac_paciente = request.POST['fechanac_paciente']
         sexo_paciente = request.POST['sexo_paciente']
         telefono_paciente = request.POST['telefono_paciente']
         email_paciente = request.POST['email_paciente']
         
         paciente.primer_nombre = primer_nombre
+        paciente.segundo_nombre = segundo_nombre
         paciente.primer_apellido = primer_apellido
+        paciente.segundo_apellido = segundo_apellido
         paciente.fechanac_paciente = fechanac_paciente
         paciente.sexo_paciente = sexo_paciente
         paciente.telefono_paciente = telefono_paciente
         paciente.email_paciente = email_paciente
     
         paciente.save()
-        
+        messages.success(request, "El Paciente se ha editado satisfactoriamente")
         return redirect('DatosPersonales', id_paciente=id_paciente)
     
     return render(request,'Vistas_Pacientes/EditarPaciente.html', {
@@ -108,4 +117,5 @@ def EliminarPaciente(request, id_paciente):
     paciente.save()
 
     # Redirigir a la página de gestión de pacientes
+    messages.success(request, "El Paciente se ha desactivado satisfactoriamente")
     return redirect('GestionPacientes')

@@ -20,39 +20,122 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form action ="{% url 'registrarPaciente' %}" method="POST">
+              <form action="{% url 'registrarPaciente' %}" method="POST" id="registroForm">
                 {% csrf_token %}
-                            <div class="card-body ">
-                                <div class="form-group">
-                                    <label for="inputNombre">Nombre</label>
-                                    <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="primer_nombre">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputApellidos">Apellidos</label>
-                                    <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="primer_apellido">
-                                </div>
-                                <div class="form-group">
-                                    <label for="fechanacimiento" class="sm-4 col-form-label">Fecha de Nacimiento:</label>
-                                        <input
-                                        type="date"
-                                        class="limpiarinput"
-                                        id="nacimiento_fecha"
-                                        name="fechanac_paciente"/>
-                            
-                                </div>
-                                <div class="form-group">
-                                    <label for="selectSexo">Sexo</label>
-                                    <select class="form-control" id="selectSexo" name="sexo_paciente">
-                                        <option value="">Seleccione su sexo</option>
-                                        <option value="M">Masculino</option>
-                                        <option value="F">Femenino</option>
-                                    </select>
-                                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="inputNombre">Primer Nombre*</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <!-- /.card-body -->
-                    
+                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese el primer nombre" name="primer_nombre" required>
+                            <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-info-circle"></i>
+                              </button>
+                            </span>
+                        </div>
+                        <div class="instrucciones d-none">
+                          Ingrese el nombre utilizando solo letras, sin números ni símbolos.
+                        </div>
                     </div>
-                    <!-- /.card -->
+                    <div class="form-group">
+                      <label for="inputNombre">Segundo Nombre </label>
+                      <div class="input-group">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-user"></i></span>
+                          </div>
+                          <input type="text" class="form-control" id="inputSegundoNombre" placeholder="Ingrese el segundo nombre" name="segundo_nombre">
+                          <span class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                              <i class="fas fa-info-circle"></i>
+                            </button>
+                          </span>
+                      </div>
+                      <div class="instrucciones d-none">
+                        Ingrese el nombre utilizando solo letras, sin números ni símbolos.
+                      </div>
+                  </div>
+                    <div class="form-group">
+                        <label for="inputApellidos">Primer Apellido*</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="primer_apellido" required>
+                            <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-info-circle"></i>
+                              </button>
+                            </span>
+                          </div>
+                          <div class="instrucciones d-none">
+                            Ingrese el apellido utilizando solo letras, sin números ni símbolos.
+                          </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="inputApellidos">Segundo Apellido</label>
+                      <div class="input-group">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-user"></i></span>
+                          </div>
+                          <input type="text" class="form-control" id="inputSegundoApellidos" placeholder="Ingrese sus apellidos" name="segundo_apellido">
+                          <span class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                              <i class="fas fa-info-circle"></i>
+                            </button>
+                          </span>
+                        </div>
+                        <div class="instrucciones d-none">
+                          Ingrese el apellido utilizando solo letras, sin números ni símbolos.
+                        </div>
+                  </div>
+
+                    <div class="form-group">
+                        <label for="fechanacimiento" class="sm-4 col-form-label">Fecha de Nacimiento:*</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="form-control" id="nacimiento_fecha" name="fechanac_paciente" required>
+                            <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-info-circle"></i>
+                              </button>
+                            </span>
+                        </div>
+                        <div class="instrucciones d-none">
+                          Ingrese la fecha Nacimiento correctamente.
+                          -Debe ingresar pacientes mayores de 18 años.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="selectSexo">Sexo*</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-venus-mars"></i></span>
+                            </div>
+                            <select class="form-control" id="selectSexo" name="sexo_paciente" required>
+                                <option value="">Seleccione su sexo</option>
+                                <option value="M">Masculino</option>
+                                <option value="F">Femenino</option>
+                            </select>
+                            <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-info-circle"></i>
+                              </button>
+                            </span>
+                        </div>
+                        <div class="instrucciones d-none">
+                          Debe seleccionar el sexo del paciente, si es masculino o femenino.
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
                 </div>
                 <div class="col-md-6">
                     <div class="card card-secondary">
@@ -61,31 +144,182 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="inputTelefono">Teléfono</label>
-                                    <input type="text" class="form-control" id="inputTelefono" placeholder="Ingrese su teléfono" name="telefono_paciente">
+            
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="inputTelefono">Teléfono</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" id="inputTelefono" name="telefono_paciente" placeholder="Ingrese su teléfono">
+                                    <span class="input-group-append">
+                                      <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                        <i class="fas fa-info-circle"></i>
+                                      </button>
+                                    </span>
                                 </div>
-                                <div class="form-group">
-                                    <label for="inputTelefono">Correo</label>
-                                    <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email_paciente">
+                                <div class="instrucciones d-none">
+                                  El teléfono debe tener 8 dígitos numéricos sin guiones. Por ej.: 12345678
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="inputCorreo">Correo</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email_paciente">
+                                    <span class="input-group-append">
+                                      <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                        <i class="fas fa-info-circle"></i>
+                                      </button>
+                                    </span>
+                                  </div>
+                                  <div class="instrucciones d-none">
+                                    El correo debe contener el siguiente formato. Por ej.: paciente1@mail.com
+                                  </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="container my-6">
                     <div class="row mt-4">
-                    <div class="col-md-12 text-center">
-                        <a href="{% url 'GestionPacientes' %}" class="btn btn-danger"><i class="fas fa-times"></i>&nbsp; Cancelar</a>
-                        <button type="submit" class="btn btn-primary" > <i class="nav-icon fas fa-save"> </i>&nbsp; Guardar</button>
-                    </div>
+                        <div class="col-md-12 text-center">
+                            <a href="{% url 'GestionPacientes' %}" class="btn btn-primary"><i class="fas fa-arrow-left"></i>Regresar</a>
+                            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Guardar</button>
+                        </div>
                     </div>
                 </div>
-      
             </form>
-      
   </div>
 </div>
 
+<script>
+  // Función para mostrar u ocultar las instrucciones de un campo
+  function mostrarInstrucciones(boton) {
+    var instrucciones = boton.parentNode.parentNode.parentNode.querySelector(".instrucciones");
+    instrucciones.classList.toggle("d-none");
+  }
+</script>
+
+<script>
+  // Función para validar un campo
+  function validarCampo(inputId, regex) {
+    var input = document.getElementById(inputId);
+    var valor = input.value.trim();
+
+    if (valor === "") {
+      input.classList.remove("is-valid", "is-invalid");
+      return true; // No se ingresa ningún valor, no se muestra ninguna indicación de error
+    } else if (!regex.test(valor)) {
+      input.classList.remove("is-valid");
+      input.classList.add("is-invalid");
+      return false; // Valor incorrecto, se muestra el estilo de error
+    } else {
+      input.classList.remove("is-invalid");
+      input.classList.add("is-valid");
+      return true; // Valor válido, se muestra el estilo de éxito
+    }
+  }
+
+  // Función para validar el nombre
+  function validarNombre() {
+    var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
+    return validarCampo("inputNombre", regex);
+  }
+
+ // Función para validar el segundo nombre
+ function validarSegundoNombre() {
+  var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
+  return validarCampo("inputSegundoNombre", regex);
+}
+  // Función para validar el apellido
+  function validarApellido() {
+    var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
+    return validarCampo("inputApellidos", regex);
+  }
+// Función para validar el segundo apellido
+function validarSegundoApellido() {
+  var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
+  return validarCampo("inputSegundoApellidos", regex);
+}
+  // Función para validar el teléfono
+  function validarTelefono() {
+    var regex = /^\d{8}$/;
+    return validarCampo("inputTelefono", regex);
+  }
+
+  // Función para validar la fecha de nacimiento
+  function validarFecha() {
+    var input = document.getElementById("nacimiento_fecha");
+    var valor = input.value;
+  
+    if (valor === "") {
+      input.classList.remove("is-valid", "is-invalid");
+      return true; // No se ingresa ninguna fecha, no se muestra ninguna indicación de error
+    } else {
+      var fechaIngresada = new Date(valor);
+      var fechaActual = new Date();
+      var edadMinima = 10;
+      var edadMaxima = 110;
+  
+      var edad = fechaActual.getFullYear() - fechaIngresada.getFullYear();
+      if (
+        (edad < edadMinima || edad > edadMaxima) ||
+        (edad === edadMinima && fechaActual.getMonth() < fechaIngresada.getMonth()) ||
+        (edad === edadMinima && fechaActual.getMonth() === fechaIngresada.getMonth() && fechaActual.getDate() < fechaIngresada.getDate())
+      ) {
+        input.classList.remove("is-valid");
+        input.classList.add("is-invalid");
+        return false; // La fecha está fuera del rango permitido, se muestra el estilo de error
+      } else {
+        input.classList.remove("is-invalid");
+        input.classList.add("is-valid");
+        return true; // La fecha es válida, se muestra el estilo de éxito
+      }
+    }
+  }
+  
+
+  // Función para validar el correo
+  function validarCorreo() {
+    var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return validarCampo("inputCorreo", regex);
+  }
+
+  // Función para validar el formulario completo
+  function validarFormulario(event) {
+    event.preventDefault(); // Evitar el envío del formulario por defecto
+
+    var nombreValido = validarNombre();
+    var SegundonombreValido = validarSegundoNombre();
+    var apellidoValido = validarApellido();
+    var SegundoapellidoValido = validarSegundoApellido();
+    var telefonoValido = validarTelefono();
+    var fechavalido = validarFecha();
+    var correoValido = validarCorreo();
+
+    // Verificar si todos los campos son válidos
+    if (nombreValido && apellidoValido && telefonoValido && correoValido && SegundonombreValido && SegundoapellidoValido && fechavalido) {
+      document.getElementById("registroForm").submit(); // Enviar el formulario
+    } else {
+      // Mostrar un mensaje de error
+    }
+  }
+
+  // Agregar eventos de validación en tiempo real a los campos
+  document.getElementById("inputNombre").addEventListener("input", validarNombre);
+  document.getElementById("inputSegundoNombre").addEventListener("input", validarSegundoNombre);
+  document.getElementById("inputApellidos").addEventListener("input", validarApellido);
+  document.getElementById("inputSegundoApellidos").addEventListener("input", validarSegundoApellido);
+  document.getElementById("inputTelefono").addEventListener("input", validarTelefono);
+  document.getElementById("nacimiento_fecha").addEventListener("input", validarFecha);
+  document.getElementById("inputCorreo").addEventListener("input", validarCorreo);
+
+  // Agregar evento de validación al enviar el formulario
+  document.getElementById("registroForm").addEventListener("submit", validarFormulario);
+</script>
+
 {% endblock %}
+

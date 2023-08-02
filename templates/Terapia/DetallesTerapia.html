@@ -1,0 +1,22 @@
+{% extends 'base_pacientes.html' %} 
+
+{% block content %}
+  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Terapia</title>
+</head>
+<body>
+    <h1>Imagen Marcada de la Terapia {{ terapia.id_terapia }}</h1>
+    <div class="image-container">
+      <img src="data:image/jpeg;base64,{{ imagen_marcada_base64|safe }}" alt="Imagen Marcada" class="img-fluid">
+
+    </div>
+</body>
+</html>
+
+
+{% endblock %}

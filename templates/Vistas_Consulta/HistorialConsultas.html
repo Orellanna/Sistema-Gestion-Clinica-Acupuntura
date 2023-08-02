@@ -11,7 +11,7 @@
             <h2>Historial de Consultas</h2>
           </div>
           <div class="col-sm-6">
-            <a href="{% url 'NuevaConsulta' paciente_id=paciente.id_paciente %}" class="btn btn-success ml-auto float-right"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Nueva Consulta</a>
+            <a href="{% url 'NuevaConsulta' paciente_id=paciente.id_paciente %}" class="btn btn-success ml-auto float-right nav-link" id="consulta-link" onclick="highlightIcon('consultas-link')"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Nueva Consulta</a>
           </div>
         </div>
       </div>
@@ -37,10 +37,11 @@
                     </thead>
                     <tbody>
                     {% for consulta in consultas %}
+                      {% if not consulta.deshabilitado %}
                     <tr>
                       <td>{{consulta.id_consulta}}</td>
                       <td>{{consulta.motivo_consulta}}</td>
-                      <td>{{consulta.consulta_fecha}}</td>
+                      <td>{{consulta.obtener_consulta_fecha_formateada}}</td>
                       <td class="text-center">
 
                         <div class="d-inline-flex flex-row align-items-center">
@@ -54,6 +55,7 @@
                         </div>
                       </td>
                     </tr>
+                      {% endif %}
                     {% endfor %}
                     </tbody> 
                   </table>
@@ -87,5 +89,5 @@
     });
 
   </script>
-  
+ 
 {% endblock %}

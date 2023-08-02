@@ -44,10 +44,25 @@
                         <form action="" method="POST">
                             {% csrf_token %}
 
-                            <div class="mb-3"><input class="form-control" id="idusername" name="user" placeholder="Usuario"></div>
-                            <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Contraseña" /></div>
-                            <div class="mt-4 mb-4"><button class="btn btn-primary shadow d-block w-100" type="submit" style="background: rgb(55, 99, 244);">Acceder</button></div>
-                            <p class="text-muted">Olvidaste la contraseña?</p>  
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
+                                <input class="form-control" id="idusername" name="user" placeholder="Usuario">
+                            </div>
+                            
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                </div>
+                                <input class="form-control" type="password" name="password" placeholder="Contraseña" />
+                            </div>
+                            
+                            <div class="mt-4 mb-4">
+                                <button class="btn btn-primary shadow d-block w-100" type="submit" style="background: rgb(55, 99, 244);">Acceder</button>
+                            </div>
+                            
+                            <p class="text-muted">¿Olvidaste la contraseña?</p>
                         </form>
                     </div>
                 </div>

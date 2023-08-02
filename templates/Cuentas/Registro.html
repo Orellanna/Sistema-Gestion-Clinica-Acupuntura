@@ -28,23 +28,70 @@
                     <div class="card-body ">
                         
                         <div class="form-group">
+                            {% if messages %}
+                                <div class="alert alert-danger" role="alert">
+                                    {% for message in messages %}
+                                        {{ message }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
                             <label for="inputUser">Usuario*</label>
-                            <input type="text" class="form-control" id="inputUser" placeholder="Ingrese su usuario" name="username" required>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                              </div>
+                              <input type="text" class="form-control" id="inputUser" placeholder="Ingrese su usuario" name="username" required value="{{ usuario }}">  
+                              <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                            </span>
+                            </div>   
+                            <div class="instrucciones d-none">
+                              Ingrese el usuario de al menos 6 y máximo 20 caracteres, sin utilizar símbolos ni espacios.
+                            </div>                                                    
                         </div>
 
                         <div class="form-group">
                             <label for="inputPassword">Contraseña*</label>
-                            <input class="form-control" type="password" name="password" placeholder="Ingrese una contraseña" id="inputPassword" required>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user-lock"></i></span>
+                            </div>
+                              <input class="form-control" type="password" name="password" placeholder="Ingrese una contraseña" id="inputPassword" required>
+                              <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-info-circle"></i>
+                              </button>
+                            </span>
+                            </div>
+                            <div class="instrucciones d-none">
+                              Debe Ingresar una contraseña de al menos 8 y máximo 20 caracteres sin caracteres especiales.
+                            </div>  
                         </div>
 
                         <div class="form-group">
-                            <label for="selectCargo">Cargo*</label>
+                          <label for="selectCargo">Cargo*</label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-user-md"></i></span>
+                          </div>
                             <select class="form-control" id="selectCargo" name="cargo" required>
                                 <option value="">Seleccione el cargo</option>
-                                <option value="administrador">Administrador</option>
-                                <option value="acupunturista">Acupunturista</option>
+                                <option value="administrador" {% if request.POST.cargo == 'administrador' %}selected{% endif %}>Administrador</option>
+                                <option value="acupunturista" {% if request.POST.cargo == 'acupunturista' %}selected{% endif %}>Acupunturista</option>
                             </select>
-                        </div>
+                          <span class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                              <i class="fas fa-info-circle"></i>
+                            </button>
+                          </span>
+                          </div>
+                          <div class="instrucciones d-none">
+                            Seleccione al tipo de usuario que utilizara el sistema de la lista desplegable.
+                          </div>  
+                      </div>
 
                         </div>
                         </div>
@@ -60,19 +107,57 @@
                         <div class="card-body">   
                             <div class="form-group">
                             <label for="inputNombre">Nombre</label>
-                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="firstname" required>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                              <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese su nombre" name="firstname" value="{{ primerNombre}}">
+                              <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <div class="instrucciones d-none">
+                              Ingrese el Nombre utilizando solo letras, sin números ni símbolos.
+                            </div> 
                         </div>
-
+                        
                         <div class="form-group">
                             <label for="inputApellidos">Apellido</label>
-                            <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellidos" name="lastname" required>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                              <input type="text" class="form-control" id="inputApellidos" placeholder="Ingrese sus apellido" name="lastname" value="{{ primerApellido }}">
+                              <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                                </button>
+                              </span>
+                            </div>
+                            <div class="instrucciones d-none">
+                              Ingrese el Apellido utilizando solo letras, sin números ni símbolos.
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label for="inputTelefono">Correo</label>
-                            <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email" required>
-                        </div>
-
+                            <div class="input-group">    
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            </div>                   
+                            <input type="text" class="form-control" id="inputCorreo" placeholder="Ingrese su correo" name="email" value="{{ correo }}">
+                            <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-info-circle"></i>
+                              </button>
+                            </span>
+                            </div>
+                            <div class="instrucciones d-none">
+                              Ingrese el correo electronico del usuario.
+                            </div>
+                          </div>
                     </div>
    
                     </div>
@@ -81,8 +166,8 @@
                     <div class="container my-6">
                         <div class="row mt-4">
                         <div class="col-md-12 text-center">
-                            <a href="{% url 'gestionUsuarios' %}" class="btn btn-danger"><i class="fas fa-times"></i>&nbsp; Cancelar</a>
-                            <button type="submit" class="btn btn-primary" > <i class="nav-icon fas fa-save"> </i>&nbsp; Guardar</button>
+                            <a href="{% url 'gestionUsuarios' %}" class="btn btn-primary"><i class="fas fa-arrow-left"></i>&nbsp; Regresar</a>
+                            <button type="submit" class="btn btn-success" > <i class="nav-icon fas fa-save"> </i>&nbsp; Guardar</button>
                         </div>
                         </div>
                     </div>
@@ -98,73 +183,104 @@
 </div>
 
 <script>
-    // Obtiene el formulario y los campos de entrada
-    const form = document.getElementById('registroForm');
-    const inputUser = document.getElementById('inputUser');
-    const inputPassword = document.getElementById('inputPassword');
-    const inputNombre = document.getElementById('inputNombre');
-    const inputApellidos = document.getElementById('inputApellidos');
-    const inputCorreo = document.getElementById('inputCorreo');
-  
-    // Agrega un evento de escucha al enviar el formulario
-    form.addEventListener('submit', (event) => {
-      // Verifica la validez del campo de Usuario
-      if (!/^[\w\d]+$/.test(inputUser.value) || inputUser.value.length > 10) {
-        event.preventDefault();
-        inputUser.setAttribute('data-toggle', 'tooltip');
-        inputUser.setAttribute('data-placement', 'top');
-        inputUser.setAttribute('title', 'El formato del usuario es incorrecto o tiene un máximo de 10 caracteres');
-        $(inputUser).tooltip({
-          trigger: 'manual',
-          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
-        }).tooltip('show');
-      }
-  
-      // Verifica la validez del campo de Contraseña
-      if (inputPassword.value.length > 20) {
-        event.preventDefault();
-        inputPassword.setAttribute('data-toggle', 'tooltip');
-        inputPassword.setAttribute('data-placement', 'top');
-        inputPassword.setAttribute('title', 'La contraseña debe tener un máximo de 20 caracteres');
-        $(inputPassword).tooltip({
-          trigger: 'manual',
-          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
-        }).tooltip('show');
-      }
-  
-      // Verifica la validez del campo inputNombre
-        if (/^\d+$/.test(inputNombre.value) || /[^\w]+/.test(inputNombre.value) || /\s/.test(inputNombre.value) || inputNombre.value.length > 20) {
-            event.preventDefault();
-            inputNombre.setAttribute('data-toggle', 'tooltip');
-            inputNombre.setAttribute('data-placement', 'top');
-            inputNombre.setAttribute('title', 'El nombre contiene caracteres incorrectos y debe tener un máximo de 20 caracteres');
-            $(inputNombre).tooltip('show');
-        }
-  
-      // Verifica la validez del campo de Apellidos
-      if (/^\d+$/.test(inputApellidos.value) || /[^\w\s]+/.test(inputApellidos.value) || /\s/.test(inputApellidos.value) || inputApellidos.value.split(/\s+/).length > 20) {
-        event.preventDefault();
-        inputApellidos.setAttribute('data-toggle', 'tooltip');
-        inputApellidos.setAttribute('data-placement', 'top');
-        inputApellidos.setAttribute('title', 'El apellido contiene caracterires incorrectos y debe tener un máximo de 20 palabras');
-        $(inputApellidos).tooltip({
-          trigger: 'manual',
-          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
-        }).tooltip('show');
-      }
-  
-      // Verifica la validez del campo de Correo
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputCorreo.value)) {
-        event.preventDefault();
-        inputCorreo.setAttribute('data-toggle', 'tooltip');
-        inputCorreo.setAttribute('data-placement', 'top');
-        inputCorreo.setAttribute('title', 'El correo debe tener un formato válido (ej: usuario1@gmail.com)');
-        $(inputCorreo).tooltip({
-          trigger: 'manual',
-          template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
-        }).tooltip('show');
-      }
-    });
-  </script>
+  // Función para mostrar u ocultar las instrucciones de un campo
+  function mostrarInstrucciones(boton) {
+    var instrucciones = boton.parentNode.parentNode.parentNode.querySelector(".instrucciones");
+    instrucciones.classList.toggle("d-none");
+  }
+</script>
+
+<script>
+  // Función para validar un campo
+  function validarCampo(inputId, regex, minLength, maxLength) {
+    var input = document.getElementById(inputId);
+    var valor = input.value.trim();
+
+    if (valor === "") {
+      input.classList.remove("is-valid", "is-invalid");
+      return true; // No se ingresa ningún valor, no se muestra ninguna indicación de error
+    } else if (valor.length < minLength || valor.length > maxLength) {
+      input.classList.remove("is-valid");
+      input.classList.add("is-invalid");
+      return false; // Valor incorrecto, se muestra el estilo de error
+    } else if (!regex.test(valor)) {
+      input.classList.remove("is-valid");
+      input.classList.add("is-invalid");
+      return false; // Valor incorrecto, se muestra el estilo de error
+    } else {
+      input.classList.remove("is-invalid");
+      input.classList.add("is-valid");
+      return true; // Valor válido, se muestra el estilo de éxito
+    }
+  }
+
+  // Función para validar el usuario
+  function validarUsuario() {
+    var regex = /^[a-zA-Z0-9_]+$/;
+    var minLength = 4;
+    var maxLength = 20;
+    return validarCampo("inputUser", regex, minLength, maxLength);
+  }
+
+  // Función para validar la contraseña
+  function validarContraseña() {
+    var regex = /^[a-zA-Z0-9]{8,20}$/;
+    var minLength = 8;
+    var maxLength = 20;
+    return validarCampo("inputPassword", regex, minLength, maxLength);
+  }
+
+  // Función para validar el nombre
+  function validarNombre() {
+    var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
+    var minLength = 1;
+    var maxLength = 20;
+    return validarCampo("inputNombre", regex, minLength, maxLength);
+  }
+
+  // Función para validar el apellido
+  function validarApellido() {
+    var regex = /^[a-zA-Z\u00C0-\u017F]+$/;
+    var minLength = 1;
+    var maxLength = 20;
+    return validarCampo("inputApellidos", regex, minLength, maxLength);
+  }
+
+  // Función para validar el correo
+  function validarCorreo() {
+    var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return validarCampo("inputCorreo", regex, 0, 100);
+  }
+
+  // Función para validar el formulario completo
+  function validarFormulario(event) {
+    event.preventDefault(); // Evitar el envío del formulario por defecto
+
+    var usuarioValido = validarUsuario();
+    var contraseñaValida = validarContraseña();
+    var nombreValido = validarNombre();
+    var apellidoValido = validarApellido();
+    var correoValido = validarCorreo();
+
+    // Verificar si todos los campos son válidos
+    if (usuarioValido && contraseñaValida && nombreValido && apellidoValido && correoValido) {
+      document.getElementById("registroForm").submit(); // Enviar el formulario
+    } else {
+      // Mostrar un mensaje de error
+    }
+  }
+
+  // Agregar eventos de validación en tiempo real a los campos
+  document.getElementById("inputUser").addEventListener("input", validarUsuario);
+  document.getElementById("inputPassword").addEventListener("input", validarContraseña);
+  document.getElementById("inputNombre").addEventListener("input", validarNombre);
+  document.getElementById("inputApellidos").addEventListener("input", validarApellido);
+  document.getElementById("inputCorreo").addEventListener("input", validarCorreo);
+
+  // Agregar evento de envío del formulario
+  document.getElementById("registroForm").addEventListener("submit", validarFormulario);
+</script>
+
+
   
 {% endblock %}
