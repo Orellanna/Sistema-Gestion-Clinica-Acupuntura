@@ -1,0 +1,138 @@
+{% extends 'index_master.html' %}
+
+{% block content %} 
+
+{% if messages %}
+<div class="messages">
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+      {{ message }}
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<section class="content">
+  <div class="container-fluid">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3>5</h3>
+            <p><strong>Pacientes Nuevos</strong></p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3>8</h3>
+
+            <p><strong>Pacientes Reactivados</strong></p>
+          </div>
+          <div class="icon">
+            <i class="far fa-id-badge"></i>
+          </div>
+         
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-warning">
+          <div class="inner">
+            <h3>10</h3>
+
+            <p><strong>Consultas Totales</strong></p>
+          </div>
+          <div class="icon">
+            <i class="far fa-file-alt"></i>
+          </div>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-danger">
+          <div class="inner">
+            <h3>7</h3>
+            <p><strong>Consultas Totales</strong></p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-pie-graph"></i>
+          </div>
+      
+        </div>
+      </div>
+      <!-- ./col -->
+    </div>
+    <!-- /.row (main row) -->
+  </div><!-- /.container-fluid -->
+</section>
+  
+<!-- Main content -->
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+     
+      <!-- /.col-md-6 -->
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-header border-0">
+            <div class="d-flex justify-content-between">
+              <h3 class="card-title">Ingreso Monetario Mensual</h3>
+            </div>
+          </div>
+          <div class="card-body">
+            <!-- /.d-flex -->
+            <div class="position-relative mb-4">
+              <canvas id="sales-chart" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Grafica de pastel-->
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">Pacientes por grupo de edad</h3>
+
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="chart-responsive">
+          <canvas id="pieChart" height="150"></canvas>
+        </div>
+        <!-- ./chart-responsive -->
+      </div>
+      <!-- /.col -->
+      <div class="col-md-4">
+        <ul class="chart-legend clearfix">
+          <li><i class="far fa-circle text-danger"></i> 18-25</li>
+          <li><i class="far fa-circle text-success"></i> 26-35</li>
+          <li><i class="far fa-circle text-warning"></i> 36-45</li>
+          <li><i class="far fa-circle text-info"></i> 46-55</li>
+          <li><i class="far fa-circle text-primary"></i> Mayores a 56</li>
+        </ul>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div>
+
+        <!-- /.card -->
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
