@@ -4,7 +4,6 @@ from django.conf.urls import include
 from Pacientes import views
 from Consultas import views
 from Cuentas import views
-from Citas import views
 from django.conf import settings
 from django.conf.urls.static import static
 

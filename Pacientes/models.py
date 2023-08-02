@@ -147,5 +147,8 @@ class Pago(models.Model):
         managed = False
         db_table = 'pago'
         
+        
+class Citas(models.Model):
+    id_cita = models.CharField(primary_key=True, max_length=10)        
 
 
