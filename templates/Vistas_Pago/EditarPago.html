@@ -14,7 +14,7 @@
 
 <!-- Main content -->
 <form
-  action="{% url 'EditarPagos' paciente_id=paciente.id_paciente consulta_id=pago.id_pago %}" method="POST" id="formEditarPagos">
+  action="{% url 'EditarPago' paciente_id=paciente.id_paciente pago_id=pago.id_pago %}" method="POST" id="formEditarPago">
   {% csrf_token %}
   <section class="content">
     <div class="container-fluid">
@@ -31,27 +31,20 @@
                 <!-- Combo box for selecting the consultation -->
                 <div class="form-group">
                   <label for="consultationSelect">Seleccione la consulta:</label>
-                  <select class="form-control" id="consultationSelect">
-                    <option value="consulta1">Consulta 1</option>
-                    <option value="consulta2">Consulta 2</option>
-                    <!-- Add more options as needed -->
+                  <select class="form-control" id="consultationSelect" name="num_consulta">
+                    {% for consulta in consultas %}
+                    <option value="{{ consulta.id_consulta }}">{{ consulta.obtener_consulta_fecha_formateada }} - {{ consulta.motivo_consulta }}</option>                      
+                    {% endfor %}
                   </select>
                 </div>
 
                 <!-- Textbox for entering the payment amount -->
                 <div class="form-group">
                   <label for="paymentAmount">Cantidad en USD:</label>
-                  <input type="text" class="form-control" id="paymentAmount" placeholder="Ingrese la cantidad en USD">
+                  <input type="text" class="form-control" id="paymentAmount" name="monto_pago" placeholder="Ingrese la cantidad en USD" value="{{ pago.monto_pago}}">
                 </div>
               </div>
               <!-- /.card-body -->
-
-              <div class="card-footer">
-                <!-- Back button -->
-                <button type="button" class="btn btn-primary">Regresar</button>
-                <!-- Save and redirect button -->
-                <button type="submit" class="btn btn-success float-right">Guardar y Continuar</button>
-              </div>
               <!-- /.card-footer -->
             </form>
           </div>
@@ -69,7 +62,7 @@
       <div class="row mb-2 d-flex justify-content-between">
         <div class="col-sm-6">
           <a
-            href="{% url 'ListarPagoss' paciente_id=paciente.id_paciente %}"
+            href="{% url 'ListarPagos' paciente_id=paciente.id_paciente %}"
             class="btn btn-primary float-left"
             ><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a
           >

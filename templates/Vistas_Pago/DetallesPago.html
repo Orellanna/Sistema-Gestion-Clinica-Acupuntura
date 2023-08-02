@@ -18,7 +18,7 @@
               <!-- Combo box for selecting the consultation -->
               <div class="form-group">
                 <label for="consultationSelect">Consulta:</label>
-                <p>{{pago.id_pago}}</p>
+                <p>{{ pago.concepto_pago }}</p>
                   <!-- Add more options as needed -->
                 </select>
               </div>
@@ -66,7 +66,7 @@
 
       </div>
       <div class="col-sm-4">
-        <a href="#" 
+        <a href="{% url 'EditarPago' paciente_id=paciente.id_paciente pago_id=pago.id_pago %}" 
         class="btn btn-success float-right"><i 
         class="nav-icon fas fa-pen"></i>&nbsp;&nbsp;Editar Pago</a>
       </div>
