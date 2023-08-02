@@ -53,7 +53,6 @@ def Registrar(request):
         segundo_nombre = request.POST['segundo_nombre']
         primer_apellido = request.POST['primer_apellido']
         segundo_apellido = request.POST['segundo_apellido']
-        fechanac_paciente = request.POST['fechanac_paciente']
         sexo_paciente = request.POST['sexo_paciente']
         telefono_paciente = request.POST['telefono_paciente']
         email_paciente = request.POST['email_paciente']
@@ -63,7 +62,6 @@ def Registrar(request):
         nuevo_paciente.segundo_nombre = segundo_nombre
         nuevo_paciente.primer_apellido = primer_apellido
         nuevo_paciente.segundo_apellido = segundo_apellido
-        nuevo_paciente.fechanac_paciente = fechanac_paciente
         nuevo_paciente.sexo_paciente = sexo_paciente
         nuevo_paciente.telefono_paciente = telefono_paciente
         nuevo_paciente.email_paciente = email_paciente

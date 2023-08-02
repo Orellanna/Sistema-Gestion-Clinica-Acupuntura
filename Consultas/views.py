@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 
+from django.contrib import messages
 
 @login_required
 def index(request):
@@ -22,8 +23,6 @@ def ListarConsultas(request, paciente_id):
         'consultas': consultas,
         'paciente': paciente,
     })
-
-from django.contrib import messages
 
 @login_required
 def NuevaConsulta(request, paciente_id):
@@ -144,52 +143,3 @@ def generar_reporte_pdf(request, paciente_id, consulta_id):
 def EnConstruccion(request):
     return render(request,'cons.html')
 
-@login_required
-def ListarTerapias(request, paciente_id):
-    paciente = get_object_or_404(Paciente, id_paciente =paciente_id)
-    Terapia = Terapia.objects.filter(id_paciente=paciente_id)
-    return render(request,'Vistas_Consulta/HistorialTerapias.html',{
-        'terapias': ListarTerapias,
-        'paciente': paciente,
-        
-    })
-
-@login_required
-def DetallesTerapia(request, paciente_id, consulta_id):
-    paciente = get_object_or_404(Paciente, pk=paciente_id)
-    consulta = get_object_or_404(Consulta, pk=consulta_id, id_paciente=paciente)
-
-    return render(request, 'Vistas_Terapia/DetallesTerapia.html', {
-        'consulta': consulta,
-        'paciente': paciente,
-    })
-
-@login_required
-def EditarTerapia(request, paciente_id, consulta_id):
-    paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
-    consulta = get_object_or_404(Consulta, id_consulta=consulta_id, id_paciente=paciente)
-    
-    if request.method == 'POST':
-        
-        # Obtenemos los datos del formulario
-        fecha_consulta = request.POST['consulta_fecha']
-        motivo_consulta = request.POST['motivo_consulta']
-        observacion_consulta = request.POST['observacion_consulta']
-        hora_consulta = request.POST['hora_consulta']
-        
-        # Actualizamos los campos de la consulta existente
-        consulta.consulta_fecha = fecha_consulta
-        consulta.motivo_consulta = motivo_consulta
-        consulta.observacion_consulta = observacion_consulta
-        consulta.hora_consulta = hora_consulta
-        consulta.save()
-        
-        # Generamos la URL correcta usando reverse
-        url = reverse('DetallesConsulta', kwargs={'paciente_id': paciente_id, 'consulta_id': consulta_id})
-        
-        messages.success(request, "La consulta se ha actualizado satisfactoriamente")
-        
-        # Redirigimos al usuario a la URL correcta
-        return redirect(url)
-    
-    return render(request, 'Vistas_Consulta/EditarConsulta.html', {'paciente': paciente, 'consulta': consulta})

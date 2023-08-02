@@ -109,9 +109,12 @@ class Inventario(models.Model):
     nombre_suministro = models.CharField(max_length=100)
     cantidad = models.IntegerField()
     costo_unitario = models.TextField()  # This field type is a guess.
-    fecha_vencimiento = models.DateField()
+    fecha_vencimiento = models.DateField( blank=True, null=True)
     imagenprod = models.BinaryField(blank=True, null=True)
     descripcion = models.CharField(max_length=255, blank=True, null=True)
+    categoria = models.CharField(max_length=100)
+    
+    last_sequence = {}
     
     def get_imagenprod_base64(self):
         if self.imagenprod:
@@ -121,13 +124,14 @@ class Inventario(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id_suministro:  # Verificar si es un nuevo registro
-            last_suministro = Inventario.objects.order_by('-id_suministro').first()
-            last_id = last_suministro.id_suministro[1:] if last_suministro else "00000"
-            new_id = f"{self.nombre_suministro[0].upper()}{str(int(last_id) + 1).zfill(5)}"
+            prefix = self.nombre_suministro[0].upper()
+            if prefix not in self.last_sequence:
+                self.last_sequence[prefix] = 0
+            self.last_sequence[prefix] += 1
+            new_id = f"{prefix}{str(self.last_sequence[prefix]).zfill(5)}"
             self.id_suministro = new_id
         super(Inventario, self).save(*args, **kwargs)
 
-    
     class Meta:
         managed = False
         db_table = 'inventario'

@@ -42,6 +42,32 @@
                     </div>
 
                     <div class="form-group">
+                      <label for="inputNombre">Categoria*</label>
+                      <div class="input-group">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-user"></i></span>
+                          </div>
+                          <select class="form-control" id="inputNombre" name="categoria" required>
+                              <option value="" disabled selected>Seleccione la categoria</option>
+                              <option value="Higiene y Desinfección" {% if producto.categoria == "Higiene y Desinfección" %}selected{% endif %}>Higiene y Desinfeccion</option>
+                              <option value="Herramientas de Diagnóstico" {% if producto.categoria == "Herramientas de Diagnostico" %}selected{% endif %}>Herramientas de Diagnóstico</option>
+                              <option value="Material de Oficina" {% if producto.categoria == "Material de Oficina" %}selected{% endif %}>Material de Oficina</option>
+                              <option value="Productos para terapias" {% if producto.categoria == "Productos para terapias" %}selected{% endif %}>Productos para terapias complementarias</option>
+                              <option value="Equipo de tratamiento" {% if producto.categoria == "Equipo de tratamiento" %}selected{% endif %}>Equipo de tratamiento</option>
+                              <!-- Agrega más opciones aquí si es necesario -->
+                          </select>
+                          <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                              </button>
+                          </span>
+                      </div>
+                      <div class="instrucciones d-none">
+                          Seleccione la categoria del producto.
+                      </div>
+                  </div>
+
+                    <div class="form-group">
                       <label for="inputDescripcion">Descripcion*</label>
                       <div class="input-group">
                           <div class="input-group-prepend">

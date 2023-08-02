@@ -42,6 +42,32 @@
                     </div>
 
                     <div class="form-group">
+                      <label for="inputNombre">Categoria*</label>
+                      <div class="input-group">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-user"></i></span>
+                          </div>
+                          <select class="form-control" id="inputNombre" name="categoria" required>
+                              <option value="" disabled selected>Seleccione la categoria</option>
+                              <option value="Higiene y Desinfección">Higiene y Desinfeccion</option>
+                              <option value="Herramientas de Diagnóstico">Herramientas de Diagnostico</option>
+                              <option value="Material de Oficina">Material de Oficina</option>
+                              <option value="Productos para terapias">Productos para terapias</option>
+                              <option value="Equipo de tratamiento">Equipo de tratamiento</option>
+                              <!-- Agrega más opciones aquí si es necesario -->
+                          </select>
+                          <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                  <i class="fas fa-info-circle"></i>
+                              </button>
+                          </span>
+                      </div>
+                      <div class="instrucciones d-none">
+                          Seleccione la categoria del producto.
+                      </div>
+                  </div>
+
+                    <div class="form-group">
                       <label for="inputDescripcion">Descripcion*</label>
                       <div class="input-group">
                           <div class="input-group-prepend">
@@ -100,7 +126,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                             </div>
-                            <input type="date" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" required>
+                            <input type="date" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento">
                             <span class="input-group-append">
                               <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
                                 <i class="fas fa-info-circle"></i>
@@ -116,7 +142,7 @@
                       <label for="inputImagen">Imagen del Producto</label>
                       <div class="input-group">
                         <div class="custom-file">
-                          <input type="file" class="custom-file-input" id="inputImagen" name="imagen">
+                          <input type="file" class="custom-file-input" id="inputImagen" name="imagen" onchange="mostrarNombreImagen(this)">
                           <label class="custom-file-label" for="inputImagen">Seleccione una imagen...</label>
                         </div>
                         <div class="input-group-append">
@@ -233,10 +259,10 @@
     var nombreValido = validarNombre();
     var cantidadValido = validarCantidad();
     var costoValido = validarCostoUnitario();
-    var fechavalido = validarFecha();
+    // var fechavalido = validarFecha();
 
     // Verificar si todos los campos son válidos
-    if (nombreValido && cantidadValido && costoValido && fechavalido) {
+    if (nombreValido && cantidadValido && costoValido //&& fechavalido) {
       document.getElementById("registroForm").submit(); // Enviar el formulario
     } else {
       // Mostrar un mensaje de error
@@ -247,11 +273,27 @@
   document.getElementById("inputNombre").addEventListener("input", validarNombre);
   document.getElementById("inputCantidad").addEventListener("input", validarCantidad);
   document.getElementById("inputCostoUnitario").addEventListener("input", validarCostoUnitario);
-  document.getElementById("nacimiento_fecha").addEventListener("input", validarFecha);
+  //document.getElementById("nacimiento_fecha").addEventListener("input", validarFecha);
  
 
   // Agregar evento de validación al enviar el formulario
   document.getElementById("registroForm").addEventListener("submit", validarFormulario);
+</script>
+
+<script>
+  function mostrarNombreImagen(input) {
+    // Obtener el nombre del archivo seleccionado
+    const nombreArchivo = input.files[0].name;
+    
+    // Actualizar el texto del label con el nombre del archivo seleccionado
+    const label = input.nextElementSibling; // Elemento hermano siguiente al input
+    label.textContent = nombreArchivo;
+  }
+
+  function mostrarInstrucciones(button) {
+    const instrucciones = button.closest('.form-group').querySelector('.instrucciones');
+    instrucciones.classList.toggle('d-none');
+  }
 </script>
 
 {% endblock %}
