@@ -27,13 +27,13 @@ def NuevoPago(request, paciente_id):
     if request.method == 'POST':
         
         # Obtenemos los datos del formulario
-        motivo_consulta = request.POST['motivo_consulta']
+        consulta_id = request.POST['consulta_id']
         monto_pago = request.POST['monto_pago']
         
         # Creamos el nuevo pago para la consulta del paciente
-        pago = Pago.objects.create(
-            id_consulta=Consulta.objects.get(id_consulta='AO08062301C08'),
-            concepto_pago=Consulta.objects.get(motivo_consulta='Uniero'),
+        pago = Pago.objects.create( 
+            id_consulta=Consulta.objects.get(id_consulta=consulta_id),
+            concepto_pago=Consulta.objects.get(id_consulta=consulta_id).motivo_consulta,
             monto_pago=monto_pago,
             fecha_pago="2023-07-23",
         )

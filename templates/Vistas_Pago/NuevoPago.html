@@ -34,7 +34,7 @@
                               <!-- Combo box for selecting the consultation -->
                               <div class="form-group">
                                   <label for="consultationSelect">Seleccione la consulta:</label>
-                                  <select class="form-control" id="motivo_consulta" name="motivo_consulta">
+                                  <select class="form-control" id="motivo_consulta" name="consulta_id">
                                       {% for consulta in consultas %}
                                       <option value="{{ consulta.id_consulta }}">{{ consulta.obtener_consulta_fecha_formateada }} - {{ consulta.motivo_consulta }}</option>
                                       {% endfor %}
