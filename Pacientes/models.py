@@ -95,11 +95,22 @@ class Cita(models.Model):
         db_table = 'cita'
         
 class Terapia(models.Model):
-    id_terapia = models.AutoField(primary_key=True)
+    id_terapia = models.TextField(primary_key=True)
     id_consulta = models.ForeignKey(Consulta, models.DO_NOTHING, db_column='id_consulta')
     observacion_terapia = models.CharField(max_length=150, blank=True, null=True)
     esquema_terapia = models.CharField(max_length=254)
 
+    def save(self, *args, **kwargs):
+        if not self.id_terapia:
+            # Obtener el ID de la consulta asociada a esta terapia
+            consulta_id = self.id_consulta.id_consulta
+            # Obtener el número de terapias previas para esa consulta
+            terapias_previas = Terapia.objects.filter(id_consulta=self.id_consulta).count()
+            numero_terapia = terapias_previas + 1
+            # Crear el ID de la terapia en el formato requerido
+            self.id_terapia = f'{consulta_id}T{numero_terapia:02}'
+        super().save(*args, **kwargs)
+        
     class Meta:
         managed = False
         db_table = 'terapia'

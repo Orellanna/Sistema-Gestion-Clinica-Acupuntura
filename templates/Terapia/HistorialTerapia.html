@@ -43,11 +43,11 @@
                       <td class="text-center">
 
                         <div class="d-inline-flex flex-row align-items-center">
-                          <a href="#" class="ver-terapia mr-5" data-terapia-id="{{Terapia.id_terapia}}" data-paciente-id="{{paciente.id_paciente}}">   
+                          <a href="#" class="ver-terapia mr-5" data-terapia-id="{{terapia.id_terapia}}" data-paciente-id="{{paciente.id_paciente}}">   
                             <i class="fas fa-eye fa-lg" style="color: #0a3461;"></i>
                           </a>
 
-                          <a href="#" class="eliminar-Terapia" data-Terapia-id="{{Terapia.id_terapia}}" data-paciente-id="{{paciente.id_paciente}}">
+                          <a href="{% url 'EliminarTerapia' paciente.id_paciente terapia.id_terapia %}" class="eliminar-Terapia" data-Terapia-id="{{Terapia.id_terapia}}" data-paciente-id="{{paciente.id_paciente}}">
                             <i class="fas fa-trash fa-lg" style="color: #1e3152;"></i>
                           </a>
                         </div>
@@ -67,21 +67,21 @@
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       // Obtener todos los elementos con la clase "ver-consulta"
-      const verConsultas = document.querySelectorAll(".ver-consulta");
+      const verTerapias = document.querySelectorAll(".ver-terapia");
   
       // Agregar un evento de clic a cada enlace
-      verConsultas.forEach(function(enlace) {
+      verTerapias.forEach(function(enlace) {
         enlace.addEventListener("click", function(event) {
           event.preventDefault();
           
           // Obtener el ID de la consulta del atributo data-consulta-id
-          const consultaId = enlace.getAttribute("data-consulta-id");
+          const terapiaId = enlace.getAttribute("data-terapia-id");
 
           //obtener el ID de el paciente del atributo data-paciente-id
           const pacienteId = enlace.getAttribute("data-paciente-id");
           
           // Redirigir a la página de detalles de la consulta con el ID
-          window.location.href = "/"+ pacienteId + "/HistorialConsultas/DetallesConsulta/" + consultaId + "/";
+          window.location.href = "/"+ pacienteId + "/HistorialTerapias/DetallesTerapia/" + terapiaId + "/";
         });
       });
     });
