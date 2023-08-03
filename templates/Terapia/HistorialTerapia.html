@@ -11,7 +11,7 @@
             <h2>Historial de Terapias</h2>
           </div>
           <div class="col-sm-6">
-            <a href="{% url 'NuevaTerapia' %}" class="btn btn-success ml-auto float-right nav-link" id="terapia-link" onclick="highlightIcon('terapias-link')"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Nueva Terapia</a>
+            <a href="{% url 'NuevaTerapia' paciente_id=paciente.id_paciente %}" class="btn btn-success ml-auto float-right nav-link" id="terapia-link" onclick="highlightIcon('terapias-link')"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Nueva Terapia</a>
           </div>
         </div>
       </div>
