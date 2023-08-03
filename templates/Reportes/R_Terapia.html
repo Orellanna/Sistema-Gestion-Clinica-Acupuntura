@@ -1,0 +1,61 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reporte de Terapia</title>
+    <style>
+        @page {
+            size: A4 landscape;
+            margin: 10mm;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between; /* Alinear elementos en la parte superior */
+            align-items: flex-start; /* Alinear elementos en la parte superior */
+        }
+        
+        .info {
+            margin-right: 10px;
+        }
+        .logo {
+            max-width: 100px; /* Tamaño del logo reducido */
+            height: auto;
+            order: 2; /* Cambia el orden del logo para colocarlo al final */
+        }
+    
+        .logo {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="part1">
+            <div class="info">
+                <p>Nombre: {{ terapia.id_consulta }}</p>
+                <p>Fecha: {{ terapia.id_consulta.consulta_fecha }}</p>
+            </div>
+            <img class="logo" src="static/img/logo.jpg" alt="Logo">
+        </div>
+    </div>
+    <div class="part2">
+        <img src="{{ imagen_data_uri }}" alt="Imagen">
+    </div>
+</body>
+</html>
+
+
+
+
+

@@ -56,7 +56,7 @@
                       <td>{{ usuario.date_joined }}</td>
                       <td>
                         {% if usuario.groups.first.name == 'Administrador' %}
-                          Administrador
+                          Administrador 
                         {% elif usuario.groups.first.name == 'Acupunturista' %}
                           Acupunturista
                         {% endif %}
