@@ -1,0 +1,216 @@
+{% extends 'base_pacientes.html' %} {% block content %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Editar pago</h1>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<form
+  action="{% url 'EditarPago' paciente_id=paciente.id_paciente pago_id=pago.id_pago %}" method="POST" id="formEditarPago">
+  {% csrf_token %}
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4 offset-md-4">
+          <!-- Payment Entry Form -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Editar Pago</h3>
+            </div>
+            <!-- /.card-header -->
+            <form>
+              <div class="card-body">
+                <!-- Combo box for selecting the consultation -->
+                <div class="form-group">
+                  <label for="consultationSelect">Seleccione la consulta:</label>
+                  <select class="form-control" id="consultationSelect" name="num_consulta">
+                    {% for consulta in consultas %}
+                    <option value="{{ consulta.id_consulta }}">{{ consulta.obtener_consulta_fecha_formateada }} - {{ consulta.motivo_consulta }}</option>                      
+                    {% endfor %}
+                  </select>
+                </div>
+
+                <!-- Textbox for entering the payment amount -->
+                <div class="form-group">
+                  <label for="paymentAmount">Cantidad en USD:</label>
+                  <input type="text" class="form-control" id="paymentAmount" name="monto_pago" placeholder="Ingrese la cantidad en USD" value="{{ pago.monto_pago}}">
+                </div>
+              </div>
+              <!-- /.card-body -->
+              <!-- /.card-footer -->
+            </form>
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col-md-4 -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2 d-flex justify-content-between">
+        <div class="col-sm-6">
+          <a
+            href="{% url 'ListarPagos' paciente_id=paciente.id_paciente %}"
+            class="btn btn-primary float-left"
+            ><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a
+          >
+        </div>
+
+        <div class="col-sm-6">
+          <button
+            type="submit"
+            name="submit"
+            class="btn btn-success float-right">
+            <i class="fa fa-save"></i>&nbsp; Actualizar pago
+          </button>
+        </div>
+
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+</form>
+<script>
+  // Eliminar espacios en blanco al cargar la página
+  window.addEventListener('DOMContentLoaded', function() {
+    var textarea = document.getElementById('observacion_pago');
+    textarea.value = textarea.value.trim();
+  });
+
+</script>
+<script>
+  // Función para mostrar u ocultar las instrucciones de un campo
+  function mostrarInstrucciones(boton) {
+    var instrucciones = boton.parentNode.parentNode.parentNode.querySelector(".instrucciones");
+    instrucciones.classList.toggle("d-none");
+  }
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Obtener referencias a los elementos del formulario
+    var motivoInput = document.getElementById("motivo_pago");
+    var observacionInput = document.getElementById("observacion_pago");
+    var fechaInput = document.getElementById("consulta_fecha");
+    var horaInput = document.getElementById("hora_pago");
+    var formulario = document.getElementById("formEditarPagos");
+
+    // Agregar evento de validación al campo de motivo
+    motivoInput.addEventListener("input", function() {
+      if (validarMotivo(this.value)) {
+        this.classList.remove("is-invalid");
+        this.classList.add("is-valid");
+      } else {
+        this.classList.remove("is-valid");
+        this.classList.add("is-invalid");
+      }
+    });
+
+    // Agregar evento de validación al campo de observacion
+    observacionInput.addEventListener("input", function() {
+      if (validarObservacion(this.value)) {
+        this.classList.remove("is-invalid");
+        this.classList.add("is-valid");
+      } else {
+        this.classList.remove("is-valid");
+        this.classList.add("is-invalid");
+      }
+    });
+
+    // Agregar evento de validación al campo de fecha
+    fechaInput.addEventListener("input", function() {
+      if (validarFecha(this.value)) {
+        this.classList.remove("is-invalid");
+        this.classList.add("is-valid");
+      } else {
+        this.classList.remove("is-valid");
+        this.classList.add("is-invalid");
+      }
+    });
+
+    // Agregar evento de validación al campo de hora
+    horaInput.addEventListener("input", function() {
+      if (validarHora(this.value)) {
+        this.classList.remove("is-invalid");
+        this.classList.add("is-valid");
+      } else {
+        this.classList.remove("is-valid");
+        this.classList.add("is-invalid");
+      }
+    });
+
+    // Agregar evento de envío del formulario
+    formulario.addEventListener("submit", function(event) {
+      // Validar el campo de motivo antes de enviar el formulario
+      if (!validarMotivo(motivoInput.value)) {
+        motivoInput.classList.add("is-invalid");
+        event.preventDefault(); // Evitar el envío del formulario si hay errores
+      }
+
+      if (!validarObservacion(observacionInput.value)) {
+        observacionInput.classList.add("is-invalid");
+        event.preventDefault(); // Evitar el envío del formulario si hay errores
+      }
+
+      if (!validarFecha(fechaInput.value)) {
+        fechaInput.classList.add("is-invalid");
+        event.preventDefault(); // Evitar el envío del formulario si hay errores
+      }
+    });
+
+    if (!validarHora(horaInput.value)) {
+      horaInput.classList.add("is-invalid");
+      event.preventDefault(); // Evitar el envío del formulario si hay errores
+    }
+
+   // Función de validación para el campo de motivo
+    function validarMotivo(valor) {
+      var motivoRegex = /^[a-zA-Z0-9\sñáéíóúÁÉÍÓÚ\-]+$/; // Expresión regular para letras, números, espacios, ñ, tildes y guiones
+      return motivoRegex.test(valor);
+    }
+
+    // Función de validación para el campo de observacion
+    function validarObservacion(valor) {
+      var observacionRegex = /^[a-zA-Z0-9\sñáéíóúÁÉÍÓÚ\-.,]+$/; // Expresión regular para letras, números, espacios, ñ, tildes, guiones, puntos y comas
+      return observacionRegex.test(valor);
+    }
+
+
+    function validarFecha(valor) {
+      var fechaRegex = /^\d{4}-\d{2}-\d{2}$/; // Expresión regular para fecha
+      if (!fechaRegex.test(valor)) {
+        return false; // La fecha no tiene el formato correcto
+      }
+      
+      var fechaIngresada = new Date(valor);
+      var fechaActual = new Date();
+      fechaActual.setHours(0, 0, 0, 0); // Establecer las horas, minutos, segundos y milisegundos de la fecha actual a cero para comparar solo las fechas
+      
+      if (fechaIngresada >= fechaActual) {
+        return false; // La fecha es igual o posterior a la fecha actual
+      }
+      
+      return true; // La fecha es válida
+    }
+    
+
+    // Funcion para validar la hora
+    function validarHora(valor) {
+      var horaRegex = /^\d{2}:\d{2}$/; // Expresión regular para hora
+      return horaRegex.test(valor);
+    }
+  });
+</script>
+
+{% endblock %}
