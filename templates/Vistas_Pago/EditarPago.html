@@ -13,8 +13,7 @@
 </section>
 
 <!-- Main content -->
-<form
-  action="{% url 'EditarPago' paciente_id=paciente.id_paciente pago_id=pago.id_pago %}" method="POST" id="formEditarPago">
+<form action="{% url 'EditarPago' paciente_id=paciente.id_paciente pago_id=pago.id_pago %}" method="POST" id="formEditarPago">
   {% csrf_token %}
   <section class="content">
     <div class="container-fluid">
@@ -25,28 +24,44 @@
             <div class="card-header">
               <h3 class="card-title">Editar Pago</h3>
             </div>
-            <!-- /.card-header -->
-            <form>
-              <div class="card-body">
-                <!-- Combo box for selecting the consultation -->
-                <div class="form-group">
-                  <label for="consultationSelect">Seleccione la consulta:</label>
-                  <select class="form-control" id="consultationSelect" name="num_consulta">
-                    {% for consulta in consultas %}
-                    <option value="{{ consulta.id_consulta }}">{{ consulta.obtener_consulta_fecha_formateada }} - {{ consulta.motivo_consulta }}</option>                      
-                    {% endfor %}
-                  </select>
-                </div>
-
-                <!-- Textbox for entering the payment amount -->
-                <div class="form-group">
-                  <label for="paymentAmount">Cantidad en USD:</label>
-                  <input type="text" class="form-control" id="paymentAmount" name="monto_pago" placeholder="Ingrese la cantidad en USD" value="{{ pago.monto_pago}}">
+            <div class="card-body">
+              <!-- Combo box for selecting the consultation -->
+              <div class="form-group">
+                <label for="consultationSelect">Seleccione la consulta:</label>
+                <select class="form-control" id="consultationSelect" name="num_consulta">
+                  {% for consulta in consultas %}
+                  <option value="{{ consulta.id_consulta }}">{{ consulta.obtener_consulta_fecha_formateada }} - {{ consulta.motivo_consulta }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-group row">
+                <label for="pago_fecha" class="col-sm-4 col-form-label">Fecha del Pago:</label>
+                <div class="col-sm-5">
+                    <input value type="date" class="form-control" id="pago_fecha" name="pago_fecha" value="{{ pago.id_pago.fecha_pago|date:'Y-m-d' }}"/>
                 </div>
               </div>
-              <!-- /.card-body -->
-              <!-- /.card-footer -->
-            </form>
+              {% comment %} <div class="form-group row">
+                  <label for="hora_pago" class="col-sm-4 col-form-label">Hora del pago:</label>
+                  <div class="col-sm-5">
+                      <input type="time" class="form-control" id="hora_pago" name="hora_pago" required readonly/>
+                  </div>
+              </div> {% endcomment %}
+
+              <!-- Textbox for entering the payment amount -->
+              <div class="form-group">
+                <label for="paymentAmount">Cantidad en USD:</label>
+                <input type="text" class="form-control" id="paymentAmount" name="monto_pago" placeholder="Ingrese la cantidad en USD" value="{{ pago.monto_pago}}">
+              </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+              <button type="submit" name="submit" class="btn btn-success float-right">
+                <i class="fa fa-save"></i>&nbsp; Actualizar pago
+              </button>
+              <a href="{% url 'ListarPagos' paciente_id=paciente.id_paciente %}" class="btn btn-primary float-left">
+                <i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial
+              </a>
+            </div>
           </div>
           <!-- /.card -->
         </div>
@@ -56,32 +71,8 @@
     </div>
     <!-- /.container-fluid -->
   </section>
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2 d-flex justify-content-between">
-        <div class="col-sm-6">
-          <a
-            href="{% url 'ListarPagos' paciente_id=paciente.id_paciente %}"
-            class="btn btn-primary float-left"
-            ><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a
-          >
-        </div>
-
-        <div class="col-sm-6">
-          <button
-            type="submit"
-            name="submit"
-            class="btn btn-success float-right">
-            <i class="fa fa-save"></i>&nbsp; Actualizar pago
-          </button>
-        </div>
-
-      </div>
-    </div>
-    <!-- /.container-fluid -->
-  </section>
 </form>
+
 <script>
   // Eliminar espacios en blanco al cargar la página
   window.addEventListener('DOMContentLoaded', function() {

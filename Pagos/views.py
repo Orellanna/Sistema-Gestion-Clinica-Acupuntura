@@ -29,13 +29,14 @@ def NuevoPago(request, paciente_id):
         # Obtenemos los datos del formulario
         consulta_id = request.POST['consulta_id']
         monto_pago = request.POST['monto_pago']
+        fecha_pago = request.POST['pago_fecha']
         
         # Creamos el nuevo pago para la consulta del paciente
         pago = Pago.objects.create( 
             id_consulta=Consulta.objects.get(id_consulta=consulta_id),
             concepto_pago=Consulta.objects.get(id_consulta=consulta_id).motivo_consulta,
             monto_pago=monto_pago,
-            fecha_pago="2023-07-23",
+            fecha_pago=fecha_pago,
         )
         # Generamos la URL correcta usando reverse
         url = reverse('DetallesPago', kwargs={'paciente_id': paciente_id, 'pago_id': pago.id_pago, 'consulta_id': pago.id_consulta.id_consulta})
@@ -66,16 +67,17 @@ def EditarPago(request, paciente_id, pago_id):
     if request.method == 'POST':
         
         # Obtenemos los datos del formulario
-        fecha_pago = request.POST['pago_fecha']
+
+        consulta_id = request.POST['num_consulta']
         monto_pago = request.POST['monto_pago']
-        observacion_pago = request.POST['observacion_pago']
-        hora_pago = request.POST['hora_pago']
+        fecha_pago = request.POST['pago_fecha']
         
-        # Actualizamos los campos del pago existente
-        pago.fecha_pago = fecha_pago
-        pago.pago_monto = monto_pago
-        pago.observacion_pago = observacion_pago
-        pago.hora_pago = hora_pago
+        # Creamos el nuevo pago para la consulta del paciente
+
+        pago.concepto_pago=Consulta.objects.get(id_consulta=consulta_id).motivo_consulta,
+        pago.monto_pago=monto_pago,
+        pago.fecha_pago=fecha_pago,
+        pago.id_consulta=Consulta.objects.get(id_consulta=consulta_id)
         pago.save()
         
         # Generamos la URL correcta usando reverse
