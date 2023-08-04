@@ -268,7 +268,7 @@
                   </a>
                 </div>
                 <div class="col-3 text-center">
-                  {% comment %} <a href="#" class="nav-link" id="terapia-link" onclick="highlightIcon('terapia-link')"> {% endcomment %}
+                  <a href="{% url 'ListarTerapias' paciente.id_paciente %}" class="nav-link" id="terapia-link" onclick="highlightIcon('terapia-link')">
                     <i class="fas fa-heart fa-2x" style="color: #FF0000;"></i>
                     <p class="mt-2" style="color: #FF0000; font-weight: bold;">Terapia</p>
                     <div class="bar"></div>
@@ -474,6 +474,11 @@ logoutCancelButton.addEventListener('click', function() {
     activateSidebar('pagos-link');
   }
 
+
+
+  else if (path.includes('HistorialTerapias/')) {
+    activateSidebar('terapia-link');
+  }
   // Función para activar la barra lateral
   function activateSidebar(linkId) {
     // Desactiva la clase 'active' en todos los enlaces de la barra lateral
