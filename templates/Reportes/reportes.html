@@ -2,16 +2,6 @@
 
 {% block content %} 
 
-{% if messages %}
-<div class="messages">
-  {% for message in messages %}
-    <div class="alert alert-{{ message.tags }}">
-      {{ message }}
-    </div>
-  {% endfor %}
-</div>
-{% endif %}
-
 <section class="content">
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
@@ -20,11 +10,11 @@
         <!-- small box -->
         <div class="small-box bg-info">
           <div class="inner">
-            <h3>5</h3>
+            <h3>{{ total_pacientes }}</h3>
             <p><strong>Pacientes Nuevos</strong></p>
           </div>
           <div class="icon">
-            <i class="ion ion-person-add"></i>
+            <i class="fas fa-user-plus"></i>
           </div>
           
         </div>
@@ -49,7 +39,7 @@
         <!-- small box -->
         <div class="small-box bg-warning">
           <div class="inner">
-            <h3>10</h3>
+            <h3>{{ total_consulta }}</h3>
 
             <p><strong>Consultas Totales</strong></p>
           </div>
@@ -99,40 +89,58 @@
           </div>
         </div>
       </div>
-<!-- Grafica de pastel-->
-<div class="card">
+
+<!-- PIE CHART -->
+<div class="card card-danger">
   <div class="card-header">
     <h3 class="card-title">Pacientes por grupo de edad</h3>
-
   </div>
-  <!-- /.card-header -->
   <div class="card-body">
-    <div class="row">
-      <div class="col-md-8">
-        <div class="chart-responsive">
-          <canvas id="pieChart" height="150"></canvas>
-        </div>
-        <!-- ./chart-responsive -->
-      </div>
-      <!-- /.col -->
-      <div class="col-md-4">
-        <ul class="chart-legend clearfix">
-          <li><i class="far fa-circle text-danger"></i> 18-25</li>
-          <li><i class="far fa-circle text-success"></i> 26-35</li>
-          <li><i class="far fa-circle text-warning"></i> 36-45</li>
-          <li><i class="far fa-circle text-info"></i> 46-55</li>
-          <li><i class="far fa-circle text-primary"></i> Mayores a 56</li>
-        </ul>
-      </div>
-      <!-- /.col -->
-    </div>
-    <!-- /.row -->
+    <canvas id="graficoPastel" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
   </div>
-
-        <!-- /.card -->
-    </div>
-  </div>
+  <!-- /.card-body -->
 </div>
+<!-- /.card -->
+
+
+<script>
+  $(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+ 
+  // Datos para el gráfico
+  var datos = {
+    labels: ["18-25", "26-35", "36-45","46-55","Mayores a 56"],
+    datasets: [{
+      data: [10,20,30,20,50],
+      backgroundColor: ["red", "blue", "green","yellow", "purple"], // Colores para cada categoría
+    }]
+  };
+
+  // Configuración del gráfico
+  var opciones = {
+    responsive: true,
+    maintainAspectRatio: false,
+  };
+
+  var contexto = document.getElementById("graficoPastel").getContext("2d");
+
+  // Crear el gráfico de pastel
+  var graficoPastel = new Chart(contexto, {
+    type: "pie",
+    data: datos,
+    options: opciones,
+  });
+</script>
+
 
 
 {% endblock %}
+
+
+

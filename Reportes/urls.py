@@ -6,6 +6,6 @@ from django.contrib import admin
 
 urlpatterns = [
     #urls libreria
-    path('Reportes/', views.Reportes,name='reportes'),
+    path('Reportes/', views.ListarReportes,name='reportes'),
 
 ]
