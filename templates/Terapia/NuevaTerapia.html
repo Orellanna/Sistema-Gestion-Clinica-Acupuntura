@@ -54,6 +54,7 @@
         <form id="imageForm" method="POST">
           {% csrf_token %}
           <input type="hidden" name="image_data" id="imageDataInput">
+          <input type="hidden" name="numero_puntos" id="numberOfPointsInput">
           
           <div class="form-group">
             <label for="selectTerapia">Consulta:</label>
@@ -105,6 +106,7 @@
       imageContainer.appendChild(canvas); // Agregar el lienzo al contenedor
       
       const markedPoints = []; // Array para almacenar los puntos marcados
+      let numberOfPoints = 0; // Variable para contar los puntos
     
       imageContainer.addEventListener("mousemove", function (event) {
         // Obtener las coordenadas del clic dentro del contenedor de la imagen
@@ -143,7 +145,11 @@
     
         // Agregar el punto actual al array de puntos marcados
         markedPoints.push({ x, y });
-    
+        
+        // Incrementar la variable de conteo de puntos
+        numberOfPoints = markedPoints.length;
+        console.log("Número de puntos marcados:", numberOfPoints);
+
         // Convertir el lienzo con los puntos marcados a Base64
         const imageData = canvas.toDataURL();
         console.log("Valor de imageData:", imageData); // Agrega este mensaje de depuración
@@ -151,6 +157,11 @@
         // Asignar la imagen en Base64 al campo oculto image_data
         const imageDataInput = document.getElementById("imageDataInput");
         imageDataInput.value = imageData;
+
+        // Actualizar el campo oculto con la cantidad de puntos marcados
+        const numberOfPointsInput = document.getElementById("numberOfPointsInput");
+        numberOfPointsInput.value = numberOfPoints;
+
       });
     });
   </script>

@@ -30,6 +30,7 @@
                     <thead>
                     <tr>
                       <th>Id</th>
+                      <th>Consulta</th>
                       <th>Observacion</th>
                       <th>Accion</th>
                     </tr>
@@ -39,6 +40,7 @@
                       {% comment %} {% if not Terapia.deshabilitado %} {% endcomment %}
                     <tr>
                       <td>{{terapia.id_terapia}}</td>
+                      <td>{{terapia.id_consulta.motivo_consulta}}</td>
                       <td>{{terapia.observacion_terapia}}</td>
                       <td class="text-center">
 
