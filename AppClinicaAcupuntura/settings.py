@@ -42,10 +42,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Pacientes',
     'Consultas',
+<<<<<<< Updated upstream
     'Cuentas', 
     'Inventario',
     'Citas',
      
+=======
+    'Cuentas',
+    'Citas', 
+    'Inventario', 
+    
+>>>>>>> Stashed changes
 ]
 
 MIDDLEWARE = [
