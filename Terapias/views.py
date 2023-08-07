@@ -1,6 +1,6 @@
 from django.shortcuts import render
 # Create your views here.
-from Pacientes.models import Terapia,Paciente,Consulta
+from Pacientes.models import Terapia,Paciente,Consulta,Inventario
 from django.shortcuts import render, get_object_or_404,redirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -28,10 +28,18 @@ def NuevaTerapia(request,paciente_id):
     if request.method == 'POST':
         # Procesar el formulario enviado
         image_data = request.POST.get('image_data')
-        print("Imagen en Base64 recibida:", image_data)
+        numero_puntos = int(request.POST.get('numero_puntos'))
+        
 
         observacion_terapia = request.POST['observacion_terapia']
         consulta_terapia= request.POST['consulta_terapia']
+        
+        #Obtenemos el producto del inventario 
+        producto = Inventario.objects.get(id_suministro='A00001')
+        
+        #le restamos los puntos equivalentes a agujas que se usaron
+        producto.cantidad -= numero_puntos
+        producto.save()
         
         # Guardar los datos en el modelo Terapia vinculándolo a la consulta
         nueva_terapia = Terapia.objects.create(
