@@ -1,173 +1,221 @@
-{% extends 'index_master.html' %} 
-{% load static %}
+{% extends 'base_pacientes.html' %} 
+
 {% block content %}
-  
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agregar Terapia</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-
-  <style>
-    /* Estilos para el contenedor de la imagen */
-    .image-container {
-      max-width: 850px;
-      margin: 0 auto;
-      position: relative;
-      overflow: hidden; /* Evita que el lienzo se desborde */
-      display: inline-block; /* Ajustar el tamaño del contenedor al tamaño de la imagen */
-    }
-    /* Estilo para los puntos marcados */
-    .marked-point {
-      position: absolute;
-      width: 15px;
-      height: 15px;
-      border: 2px solid red;
-      border-radius: 50%;
-      pointer-events: none; /* Para evitar que los puntos bloqueen el clic en el canvas */
-    }
-    /* Estilo para el lienzo */
-    canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-  </style>
-
-</head>
-
-<body>
-
-  <div class="container mt-5">
-    <h1>Agregar Terapia</h1>
-    <div class="row">
-      <div class="col-md-8">
-        <div class="image-container">
-          <img src="{% static 'img/humanbody.jpg' %}" alt="Cuerpo humano" id="bodyImage" class="img-fluid" width="900">
-          <div id="markedPoints"></div> <!-- Aquí se mostrarán los puntos marcados -->
-        </div>
-      </div>
-      <div class="col-md-4">
-        <form id="imageForm" method="POST">
-          {% csrf_token %}
-          <input type="hidden" name="image_data" id="imageDataInput">
-          <input type="hidden" name="numero_puntos" id="numberOfPointsInput">
-          
-          <div class="form-group">
-            <label for="selectTerapia">Consulta:</label>
-            <select class="form-control" id="consulta_terapia" name="consulta_terapia" required>
-
-              {% for consulta in consultas %}
-                {% if not consulta.deshabilitado %}
-                <option value="{{ consulta.id_consulta }}">{{ consulta.obtener_consulta_fecha_formateada }}  - {{ consulta.motivo_consulta }}</option>
-                {% endif %}
-              {% endfor %}
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="textboxTerapia">Observaciones:</label>
-            <textarea class="form-control" id="observacion_terapia" rows="4"  name="observacion_terapia" required></textarea>
-          </div>
-          <button type="submit" id="finalizarBtn" class="btn btn-success mt-3 float-right">Finalizar y Guardar</button>
-        </form>
-        <a href="{% url 'ListarTerapias' paciente.id_paciente %}" class="btn btn-primary mt-3 float-left">Volver al Historial</a>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Nueva Terapia</h1>
       </div>
     </div>
   </div>
+  <!-- /.container-fluid -->
+</section>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<!-- Main content -->
+<form action="{% url 'NuevaTerapia' paciente_id=paciente.id_paciente %}" method="POST" id="formNuevaTerapia">
+  {% csrf_token %}
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <!-- Default box -->
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <div class="form-group row">
+                    <label for="fechacita" class="col-sm-4 col-form-label"
+                      >Fecha de Consulta:</label>
+                    <div class="col-sm-5">
+                      <input type="date" class="form-control" id="consultafecha" name="consulta_fecha" required readonly/>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group row">
+                    <label for="horainicio" class="col-sm-4 col-form-label"
+                      >Hora de inicio:</label>
+                    <div class="col-sm-5">
+                      <input type="time" class="form-control" id="hora_consulta" name="hora_consulta" required readonly/>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-  
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const imageContainer = document.querySelector(".image-container");
-      const bodyImage = document.getElementById("bodyImage");
-      const canvas = document.createElement("canvas");
-      canvas.width = bodyImage.width;
-      canvas.height = bodyImage.height;
-      const context = canvas.getContext("2d");
-    
-      // Ajustar el tamaño del contenedor de la imagen cuando se carga la imagen
-      bodyImage.addEventListener("load", function () {
-        const imageAspectRatio = bodyImage.width / bodyImage.height;
-        const containerWidth = imageContainer.clientWidth;
-        const containerHeight = containerWidth / imageAspectRatio;
-        imageContainer.style.height = `${containerHeight}px`;
-        canvas.width = containerWidth;
-        canvas.height = containerHeight;
-        context.drawImage(bodyImage, 0, 0, containerWidth, containerHeight);
-      });
-    
-      imageContainer.appendChild(canvas); // Agregar el lienzo al contenedor
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label for="motivo">Motivo:</label>
+                    <div class="input-group">
+
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-stethoscope"></i></span>
+                      </div>
+
+                      <input class="form-control" id="motivo_consulta" name="motivo_consulta" required/>
+
+                      <span class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                          <i class="fas fa-info-circle"></i>
+                        </button>
+                      </span>
+                    </div>
+                    <div class="instrucciones d-none">
+                      Ingrese el motivo de la consulta. No utilice simbolos ni caracteres especiales. 
+                    </div>
+                    <div class="col-sm-10">
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label for="observacion">Observaciones:</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-file"></i></span>
+                      </div>
+                      <textarea class="form-control" rows="3" name="observacion_consulta" id="observacion_consulta"></textarea>
+                      <span class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                          <i class="fas fa-info-circle"></i>
+                        </button>
+                      </span>
+                    </div>
+                    <div class="instrucciones d-none">
+                      Ingrese las observaciones. No utilice simbolos ni caracteres especiales.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% comment %} <div class="row">
+                <div class="col">
+                  <div class="form-group row">
+                    <label for="finalizada" class="col-sm-2 col-form-label">Estado: </label>
+                    <div class="col-sm-10">
+                      <input type="checkbox" name="finalizada" id="finalizada" />
+                    </div>
+                  </div>
+                </div>
+              </div> {% endcomment %}
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer"></div>
+            <!-- /.card-footer-->
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2 d-flex justify-content-between" >
+
+        <div class="col-sm-6">
+          <a href="{% url 'ListarConsultas' paciente_id=paciente.id_paciente %}" class="btn btn-primary float-left"><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a>
+        </div>
+
+        <div class="col-sm-6">
+          <button
+            type="submit"
+            name="submit"
+            class="btn btn-success float-right">
+            <i class="fa fa-save"></i>&nbsp; Guardar Consulta
+          </button>
+        </div>
+
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+</form>
+
+<script>
+  // Función para mostrar u ocultar las instrucciones de un campo
+  function mostrarInstrucciones(boton) {
+    var instrucciones = boton.parentNode.parentNode.parentNode.querySelector(".instrucciones");
+    instrucciones.classList.toggle("d-none");
+  }
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Obtener referencias a los elementos del formulario
+    var motivoInput = document.getElementById("motivo_consulta");
+    var observacionInput = document.getElementById("observacion_consulta");
+    var formulario = document.getElementById("formNuevaConsulta");
+
+    // Agregar evento de validación al campo de motivo
+    motivoInput.addEventListener("input", function() {
+      if (validarMotivo(this.value)) {
+        this.classList.remove("is-invalid");
+        this.classList.add("is-valid");
+      } else {
+        this.classList.remove("is-valid");
+        this.classList.add("is-invalid");
+      }
       
-      const markedPoints = []; // Array para almacenar los puntos marcados
-      let numberOfPoints = 0; // Variable para contar los puntos
-    
-      imageContainer.addEventListener("mousemove", function (event) {
-        // Obtener las coordenadas del clic dentro del contenedor de la imagen
-        const rect = canvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-    
-        // Dibujar la imagen original en el lienzo
-        const containerWidth = canvas.width;
-        const containerHeight = canvas.height;
-        context.clearRect(0, 0, containerWidth, containerHeight);
-        context.drawImage(bodyImage, 0, 0, containerWidth, containerHeight);
-    
-        // Dibujar todos los puntos marcados en el lienzo
-        markedPoints.forEach(point => {
-          context.beginPath();
-          context.arc(point.x, point.y, 7.5, 0, 2 * Math.PI);
-          context.strokeStyle = "red";
-          context.lineWidth = 2;
-          context.stroke();
-        });
-    
-        // Dibujar el punto marcado en el lienzo actual
-        context.beginPath();
-        context.arc(x, y, 7.5, 0, 2 * Math.PI);
-        context.strokeStyle = "red";
-        context.lineWidth = 2;
-        context.stroke();
-      });
-    
-      imageContainer.addEventListener("click", function (event) {
-        // Obtener las coordenadas del clic dentro del contenedor de la imagen
-        const rect = canvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-    
-        // Agregar el punto actual al array de puntos marcados
-        markedPoints.push({ x, y });
-        
-        // Incrementar la variable de conteo de puntos
-        numberOfPoints = markedPoints.length;
-        console.log("Número de puntos marcados:", numberOfPoints);
-
-        // Convertir el lienzo con los puntos marcados a Base64
-        const imageData = canvas.toDataURL();
-        console.log("Valor de imageData:", imageData); // Agrega este mensaje de depuración
-    
-        // Asignar la imagen en Base64 al campo oculto image_data
-        const imageDataInput = document.getElementById("imageDataInput");
-        imageDataInput.value = imageData;
-
-        // Actualizar el campo oculto con la cantidad de puntos marcados
-        const numberOfPointsInput = document.getElementById("numberOfPointsInput");
-        numberOfPointsInput.value = numberOfPoints;
-
-      });
     });
-  </script>
-</body>
-</html>
 
+    // Agregar evento de validación al campo de observacion
+    observacionInput.addEventListener("input", function() {
+      if (validarObservacion(this.value)) {
+        this.classList.remove("is-invalid");
+        this.classList.add("is-valid");
+      } else {
+        this.classList.remove("is-valid");
+        this.classList.add("is-invalid");
+      }
+    });
 
+    // Agregar evento de envío del formulario
+    formulario.addEventListener("submit", function(event) {
+      // Validar el campo de motivo antes de enviar el formulario
+      if (!validarMotivo(motivoInput.value)) {
+        motivoInput.classList.add("is-invalid");
+        event.preventDefault(); // Evitar el envío del formulario si hay errores
+      }
+
+      if (!validarObservacion(observacionInput.value)) {
+        observacionInput.classList.add("is-invalid");
+        event.preventDefault(); // Evitar el envío del formulario si hay errores
+      }
+    });
+
+    // Función de validación para el campo de motivo
+    function validarMotivo(valor) {
+      var motivoRegex = /^[a-zA-Z0-9\sñáéíóúÁÉÍÓÚ\-]+$/; // Expresión regular para letras, números y espacios
+      return motivoRegex.test(valor);
+    }
+
+    // Función de validación para el campo de observacion
+    function validarObservacion(valor) {
+      var observacionRegex = /^[a-zA-Z0-9\sñáéíóúÁÉÍÓÚ\-.,]+$/; // Expresión regular para letras, números, espacios, ñ, tildes, guiones, puntos y comas
+      return observacionRegex.test(valor);
+    }
+
+  });
+</script>
+
+<script>
+  // Obtener la fecha y hora actual
+  var fechaActual = new Date();
+  var fecha = fechaActual.toISOString().slice(0, 10);
+  var hora = fechaActual.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  // Establecer la fecha y hora actual en los campos de entrada
+  document.getElementById('consultafecha').value = fecha;
+  document.getElementById('hora_consulta').value = hora;
+</script>
 
 {% endblock %}

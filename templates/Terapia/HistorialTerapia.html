@@ -8,10 +8,10 @@
       <div class="container-fluid">
         <div class="row mb-2 justify-content-between">
           <div class="col-sm-6">
-            <h2>Historial de Terapias</h2>
+            <h2>Historial de Terapia</h2>
           </div>
           <div class="col-sm-6">
-            <a href="{% url 'NuevaTerapia' paciente_id=paciente.id_paciente %}" class="btn btn-success ml-auto float-right nav-link" id="terapia-link" onclick="highlightIcon('terapias-link')"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Nueva Terapia</a>
+            <a href="{% url 'NuevaConsulta' paciente_id=paciente.id_paciente %}" class="btn btn-success ml-auto float-right nav-link" id="consulta-link" onclick="highlightIcon('consultas-link')"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Nueva Terapia</a>
           </div>
         </div>
       </div>
@@ -30,32 +30,33 @@
                     <thead>
                     <tr>
                       <th>Id</th>
-                      <th>Consulta</th>
+                      <th>consulta</th>
                       <th>Observacion</th>
-                      <th>Accion</th>
+                      <th>esquema</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for terapia in terapias %}
-                      {% comment %} {% if not Terapia.deshabilitado %} {% endcomment %}
+                    {% for Terapia in terapias %}
+                      {% if not Terapia.deshabilitado %}
                     <tr>
-                      <td>{{terapia.id_terapia}}</td>
-                      <td>{{terapia.id_consulta.motivo_consulta}}</td>
-                      <td>{{terapia.observacion_terapia}}</td>
+                      <td>{{Terapia.id_terapia}}</td>
+                      <td>{{Terapia.id_consulta}}</td>
+                      <td>{{Terapia.observacion_terapia}}</td>
+                      <td>{{Terapia.esquema_terapia}}</td>
                       <td class="text-center">
 
                         <div class="d-inline-flex flex-row align-items-center">
-                          <a href="#" class="ver-terapia mr-5" data-terapia-id="{{terapia.id_terapia}}" data-paciente-id="{{paciente.id_paciente}}">   
+                          <a href="#" class="ver-terapia mr-5" data-terapia-id="{{Terapia.id_terapia}}" data-paciente-id="{{paciente.id_paciente}}">   
                             <i class="fas fa-eye fa-lg" style="color: #0a3461;"></i>
                           </a>
 
-                          <a href="{% url 'EliminarTerapia' paciente.id_paciente terapia.id_terapia %}" class="eliminar-Terapia" data-Terapia-id="{{Terapia.id_terapia}}" data-paciente-id="{{paciente.id_paciente}}">
+                          <a href="{% url 'EliminarTerapia' paciente_id=paciente.id_paciente consulta_id=consulta.id_consulta %}" class="eliminar-Terapia" data-Terapia-id="{{Terapia.id_terapia}}" data-paciente-id="{{paciente.id_paciente}}">
                             <i class="fas fa-trash fa-lg" style="color: #1e3152;"></i>
                           </a>
                         </div>
                       </td>
                     </tr>
-                      {% comment %} {% endif %} {% endcomment %}
+                      {% endif %}
                     {% endfor %}
                     </tbody> 
                   </table>
@@ -69,21 +70,21 @@
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       // Obtener todos los elementos con la clase "ver-consulta"
-      const verTerapias = document.querySelectorAll(".ver-terapia");
+      const verConsultas = document.querySelectorAll(".ver-consulta");
   
       // Agregar un evento de clic a cada enlace
-      verTerapias.forEach(function(enlace) {
+      verConsultas.forEach(function(enlace) {
         enlace.addEventListener("click", function(event) {
           event.preventDefault();
           
           // Obtener el ID de la consulta del atributo data-consulta-id
-          const terapiaId = enlace.getAttribute("data-terapia-id");
+          const consultaId = enlace.getAttribute("data-consulta-id");
 
           //obtener el ID de el paciente del atributo data-paciente-id
           const pacienteId = enlace.getAttribute("data-paciente-id");
           
           // Redirigir a la página de detalles de la consulta con el ID
-          window.location.href = "/"+ pacienteId + "/HistorialTerapias/DetallesTerapia/" + terapiaId + "/";
+          window.location.href = "/"+ pacienteId + "/HistorialConsultas/DetallesConsulta/" + consultaId + "/";
         });
       });
     });

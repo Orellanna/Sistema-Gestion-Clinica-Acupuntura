@@ -268,14 +268,14 @@
                   </a>
                 </div>
                 <div class="col-3 text-center">
-                  <a href="{% url 'ListarTerapias' paciente.id_paciente %}" class="nav-link" id="terapia-link" onclick="highlightIcon('terapia-link')">
+                  {% comment %} <a href="#" class="nav-link" id="terapia-link" onclick="highlightIcon('terapia-link')"> {% endcomment %}
                     <i class="fas fa-heart fa-2x" style="color: #FF0000;"></i>
                     <p class="mt-2" style="color: #FF0000; font-weight: bold;">Terapia</p>
                     <div class="bar"></div>
                   </a>
                 </div>
                 <div class="col-3 text-center">
-                 <a href="{% url 'ListarPagos' paciente_id=paciente.id_paciente %}" class="nav-link" id="pagos-link" onclick="highlightIcon('pagos-link')"> 
+                  {% comment %} <a href="#" class="nav-link" id="pagos-link" onclick="highlightIcon('pagos-link')"> {% endcomment %}
                     <i class="fas fa-hand-holding-usd fa-2x" style="color: #00BB2D;"></i>
                     <p class="mt-2" style="color: #00BB2D; font-weight: bold;">Pagos</p>
                     <div class="bar"></div>
@@ -470,15 +470,8 @@ logoutCancelButton.addEventListener('click', function() {
     activateSidebar('consultas-link');
   } else if (path.includes('/historial')) {
     activateSidebar('historial-link');
-  } else if (path.includes('/HistorialPagos/')) {
-    activateSidebar('pagos-link');
   }
 
-
-
-  else if (path.includes('HistorialTerapias/')) {
-    activateSidebar('terapia-link');
-  }
   // Función para activar la barra lateral
   function activateSidebar(linkId) {
     // Desactiva la clase 'active' en todos los enlaces de la barra lateral

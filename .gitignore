@@ -22,4 +22,3 @@ __pycache__/
 **/migrations/*.json
 
 *.pyc
-*.pyc
