@@ -15,6 +15,12 @@ urlpatterns = [
     path('', include('Consultas.urls')),
     path('',include('Cuentas.urls')),
     path('',include('Inventario.urls')),
+<<<<<<< Updated upstream
     path('',include('Citas.urls')),
 
+=======
+    path('',include('Terapias.urls')),
+    path('',include('Pagos.urls')),
+    path('',include('Citas.urls')),
+>>>>>>> Stashed changes
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

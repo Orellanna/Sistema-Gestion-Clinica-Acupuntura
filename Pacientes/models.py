@@ -81,7 +81,7 @@ class Consulta(models.Model):
         db_table = 'consulta'
     
         
-class Cita(models.Model):
+class Citas(models.Model):
     id_cita = models.AutoField(primary_key=True)
     id_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='id_paciente', blank=True, null=True)
     cita_fecha = models.DateField()
