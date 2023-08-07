@@ -8,15 +8,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ver Terapia</title>
+    <style>
+        .elegant-border {
+            border: 2px solid #ccc;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Imagen Marcada de la Terapia {{ terapia.id_terapia }}</h1>
-    <div class="image-container">
-      <img src="data:image/jpeg;base64,{{ imagen_marcada_base64|safe }}" alt="Imagen Marcada" class="img-fluid">
+    <h2 class="ml-4">Detalles de la Terapia {{ terapia.id_terapia }}</h2>
+    <div class="image-container d-flex justify-content-center mb-3 mt-3">
+      {% if imagen_data_uri %}
+      <img src="{{ imagen_data_uri }}" alt="Imagen del Insumo" class="img-fluid rounded elegant-border">
 
+      {% else %}
+      <p>No hay imagen disponible</p>
+      {% endif %}
     </div>
+    <div class="container-fluid mb-4">
+      <div class="row mb-2">
+        <div class="col-sm-4 d-flex justify-content-center">
+          <a href="{% url 'ListarTerapias' paciente.id_paciente %}" class="btn btn-primary">
+            <i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial
+          </a>
+        </div>
+        <div class="col-sm-4 text-center d-flex justify-content-center">
+          <a href="{% url 'Imprimir_Terapia' paciente.id_paciente|urlencode terapia.id_terapia|urlencode %}" target="_blank" class="btn btn-dark">
+            <i class="nav-icon fas fa-print"></i>&nbsp;&nbsp; Imprimir
+          </a>
+        </div>
+      </div>
+    </div>
+    
 </body>
 </html>
+
 
 
 {% endblock %}
