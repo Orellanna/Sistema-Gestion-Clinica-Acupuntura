@@ -21,7 +21,7 @@ def ListarPagos(request, paciente_id):
 
 @login_required
 def NuevoPago(request, paciente_id):
-    consultas = Consulta.objects.filter(id_paciente=paciente_id, pagada=False)  # Obtienen todas las consultas desde la base de datos
+    consultas = Consulta.objects.filter(id_paciente=paciente_id, pagada=False, deshabilitado=False)  # Obtienen todas las consultas desde la base de datos
     paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
     
     if request.method == 'POST':
@@ -67,18 +67,19 @@ from django.urls import reverse
 
 @login_required
 def EditarPago(request, paciente_id, pago_id):
-    consultas = Consulta.objects.filter(id_paciente=paciente_id)  # Obtener consultas del paciente
+    consultas = Consulta.objects.filter(id_paciente=paciente_id, pagada=False, deshabilitado=False)  # Obtener consultas del paciente
     paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
     pago = get_object_or_404(Pago, id_pago=pago_id)
     
     if request.method == 'POST':
         consulta_id = request.POST['num_consulta']
         monto_pago = request.POST['monto_pago']
-        fecha_pago = pago.fecha_pago  # Mantener la fecha original asignada
+        fecha_pago = request.POST['pago_fecha']  # Mantener la fecha original asignada
         
         # Actualizar el pago
         pago.concepto_pago = Consulta.objects.get(id_consulta=consulta_id).motivo_consulta
         pago.monto_pago = monto_pago
+        pago.fecha_pago = fecha_pago
         pago.id_consulta = Consulta.objects.get(id_consulta=consulta_id)
         pago.save()
         

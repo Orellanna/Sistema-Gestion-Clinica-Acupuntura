@@ -5,64 +5,106 @@
 <section class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
-      <div class="col-sm-6">
-        <h1>Editar Pago</h1>
-      </div>
     </div>
   </div>
   <!-- /.container-fluid -->
 </section>
-
-<!-- Main content -->
+<form
 <form action="{% url 'EditarPago' paciente_id=paciente.id_paciente pago_id=pago.id_pago %}" method="POST" id="formEditarPago">
   {% csrf_token %}
   <section class="content">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-4 offset-md-4">
-          <!-- Payment Entry Form -->
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">Editar Pago</h3>
+        <div class="col-12 d-flex justify-content-center">
+          
+          <!-- Default box -->
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <h3 class="mb-0">Editar Pago</h3>
             </div>
             <div class="card-body">
-              <!-- Combo box for selecting the consultation -->
-              <div class="form-group">
-                <label for="consultationSelect">Seleccione la consulta:</label>
-                <select class="form-control" id="consultationSelect" name="num_consulta">
-                  {% for consulta in consultas %}
-                  <option value="{{ consulta.id_consulta }}"
-                    {% if consulta.id_consulta == pago.id_consulta.id_consulta %} selected {% endif %}>
-                    {{ consulta.obtener_consulta_fecha_formateada }} - {{ consulta.motivo_consulta }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-              <div class="form-group row">
-                <label for="pago_fecha" class="col-sm-4 col-form-label">Fecha del Pago:</label>
-                <div class="col-sm-5">
-                    <input type="date" class="form-control" id="pago_fecha" name="pago_fecha" value="{{ pago.fecha_pago|date:'Y-m-d' }}"/>
+              <div class="row">
+                <div class="col">
+                  <p>ID del Pago: {{pago.id_pago}}</p>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="paymentAmount">Cantidad en USD:</label>
-                <input type="text" class="form-control" id="paymentAmount" name="monto_pago" placeholder="Ingrese la cantidad en USD" value="{{ pago.monto_pago }}">
-              </div>
+
+              <div class="row">
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="consultationSelect">Seleccione la consulta:</label>
+                      <select class="form-control" id="motivo_consulta" name="consulta_id">
+                        {% for consulta in consultas %}
+                        <option value="{{ consulta.id_consulta }}">{{ consulta.obtener_consulta_fecha_formateada }} - {{ consulta.motivo_consulta }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="paymentAmount">Cantidad en USD:</label>
+                      <div class="input-group">
+                        <div class = "input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="paymentAmount" name="monto_pago" placeholder="Ingrese la cantidad en USD" value="{{ pago.monto_pago }}">
+                        <span class="input-group-append">
+                          <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                            <i class="fas fa-info-circle"></i>
+                          </button>
+                        </span>
+                      </div>
+                      <div class="instrucciones d-none">
+                        Ingrese el monto del pago. No utilice simbolos ni caracteres especiales.
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="pago_fecha">Fecha del Pago:</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                        </div>
+                        <input type="date" class="form-control" id="pago_fecha" name="pago_fecha" value="{{ pago.fecha_pago|date:'Y-m-d' }}"/>
+                        <span class="input-group-append">
+                          <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                            <i class="fas fa-info-circle"></i>
+                          </button>
+                        </span>
+                      </div>
+                      <div class="instrucciones d-none">
+                        Ingrese la fecha del pago correctamente; Debe ingresar una fecha actual o anterior a la fecha actual
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
-            <!-- /.card-body -->
-            <div class="card-footer">
-              <button type="submit" name="submit" class="btn btn-success float-right">
-                <i class="fa fa-save"></i>&nbsp; Actualizar Pago
-              </button>
-              <a href="{% url 'ListarPagos' paciente_id=paciente.id_paciente %}" class="btn btn-primary float-left">
-                <i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial
-              </a>
-            </div>
-          </div>
           <!-- /.card -->
         </div>
-        <!-- /.col-md-4 -->
       </div>
-      <!-- /.row -->
+    </div>
+  </section>
+
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2 d-flex justify-content-between">
+        <div class="col-sm-6">
+          <a
+            href="{% url 'ListarPagos' paciente_id=paciente.id_paciente %}"
+            class="btn btn-primary float-left"
+            ><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a
+          >
+        </div>
+
+        <div class="col-sm-6">
+          <button
+            type="submit"
+            name="submit"
+            class="btn btn-success float-right">
+            <i class="fa fa-save"></i>&nbsp; Actualizar Pago
+          </button>
+        </div>
+
+      </div>
     </div>
     <!-- /.container-fluid -->
   </section>
@@ -128,16 +170,17 @@
 
     // Función de validación para el campo de monto
     function validarMonto(valor) {
-      var montoRegex = /^\d+(\.\d{1,2})?$/; // Expresión regular para número decimal con hasta 2 decimales
+      var montoRegex = /^\$?\d+(\.\d{1,2})?$/; // Expresión regular para número decimal con hasta 2 decimales y opcionalmente un signo de dólar al principio
       return montoRegex.test(valor);
     }
+    
 
     // Función de validación para el campo de fecha
     function validarFecha(valor) {
       var fechaRegex = /^\d{4}-\d{2}-\d{2}$/; // Expresión regular para fecha
       if (!fechaRegex.test(valor)) {
         return false; // La fecha no tiene el formato correcto
-      }
+      } 
 
       var fechaIngresada = new Date(valor);
       var fechaActual = new Date();
@@ -147,7 +190,7 @@
         return false; // La fecha es posterior a la fecha actual
       }
 
-      return true; // La fecha es válida
+      return true; // La fecha es válida 
     }
   });
 </script>
