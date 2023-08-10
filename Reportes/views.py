@@ -26,8 +26,13 @@ def ListarReportes(request):
     total_consulta = numconsulta.count()
     total_terapias = numTerapias.count()
 
-    total_pago = Pago.objects.all()
-    total = total_pago.aggregate(total=Sum('monto_pago'))['total']
+   # Obtener la lista de pacientes con su total de pagos
+    listado_pacientes = []
+    
+    for paciente in datospacientes:
+        total_pago = Pago.objects.filter(id_consulta__id_paciente=paciente.id_paciente).aggregate(total=Sum('monto_pago'))['total']
+        paciente.total_pago = total_pago if total_pago else 0
+        listado_pacientes.append(paciente)
    
     #calculo de los rangos de edades
     rangos_edad=[(0,18),(19,35),(36,50),(51,65),(66,100),]
@@ -43,7 +48,6 @@ def ListarReportes(request):
    
 
     return render(request, 'Reportes/reportes.html', {
-        'total': total,
         'pacientes': datospacientes,
         'total_pacientes': total_pacientes,
         'total_consulta': total_consulta,
