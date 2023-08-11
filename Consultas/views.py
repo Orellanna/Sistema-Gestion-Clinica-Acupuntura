@@ -23,7 +23,16 @@ def ListarConsultas(request, paciente_id):
         'consultas': consultas,
         'paciente': paciente,
     })
-
+    
+@login_required
+def ListarConsultasDeshabilitadas(request, paciente_id):
+    paciente = get_object_or_404(Paciente, id_paciente =paciente_id)
+    consultas = Consulta.objects.filter(id_paciente=paciente_id, deshabilitado = True)
+    return render(request,'Vistas_Consulta/HistorialConsultasDeshabilitadas.html',{
+        'consultas': consultas,
+        'paciente': paciente,
+    })
+    
 @login_required
 def NuevaConsulta(request, paciente_id):
     paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
@@ -139,6 +148,19 @@ def generar_reporte_pdf(request, paciente_id, consulta_id):
     pisa.CreatePDF(html, dest=response)
 
     return response
+
+@login_required
+def ReactivarConsulta(request, paciente_id, consulta_id):
+    
+    consulta = get_object_or_404(Consulta, id_consulta=consulta_id)
+    
+    # Deshabilitar al paciente
+    consulta.deshabilitado = False
+    consulta.save()
+
+    # Redirigir a la página de gestión de pacientes
+    messages.success(request, "La consulta se ha reactivado satisfactoriamente")
+    return redirect('ListarConsultasDesabilitadas', paciente_id=paciente_id)
 
 def EnConstruccion(request):
     return render(request,'cons.html')
