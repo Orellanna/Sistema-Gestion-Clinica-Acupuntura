@@ -31,13 +31,14 @@
         }
     
         .logo {
-            width: 120px;
-            height: 120px;
+            width: 150px;
+            height: 150px;
             position: absolute;
             top: 0;
             right: 0;
         }
     </style>
+</head>
 </head>
 <body>
     <table>
@@ -58,19 +59,26 @@
     <div class="container">
         <div class="part1">
             <div class="info">
-                <td style="text-align: center;"></td>
-                    <p>Descripcion: {{ terapia.id_consulta }}</p>
-                    <p>Fecha: {{ terapia.id_consulta.consulta_fecha }}</p>
+                <td style="text-align: center;">
+                    <center>
+                        <p><strong>Descripcion:</strong> {{ terapia.id_consulta }}</p>
+                        <p><strong>Fecha:</strong> {{ terapia.id_consulta.consulta_fecha }}</p>
+                    </center>
                 </td>
             </div>
             
         </div>
     </div>
     <div class="part2">
-        <img src="{{ imagen_data_uri }}" alt="Imagen">
+        <center>
+           <img src="{{ imagen_data_uri }}" alt="Imagen">
+        </center>
     </div>
 </body>
 </html>
+
+
+
 
 
 
