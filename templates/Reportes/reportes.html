@@ -1,0 +1,277 @@
+{% extends 'index_master.html' %}
+
+{% block content %} 
+
+<section class="content">
+  <div class="container-fluid">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3>{{ total_pacientes }}</h3>
+            <p><strong>Pacientes Nuevos</strong></p>
+          </div>
+          <div class="icon">
+            <i class="fas fa-user-plus"></i>
+          </div>
+          
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3>8</h3>
+
+            <p><strong>Pacientes Reactivados</strong></p>
+          </div>
+          <div class="icon">
+            <i class="far fa-id-badge"></i>
+          </div>
+         
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-warning">
+          <div class="inner">
+            <h3>{{ total_consulta }}</h3>
+
+            <p><strong>Consultas Totales</strong></p>
+          </div>
+          <div class="icon">
+            <i class="far fa-file-alt"></i>
+          </div>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-danger">
+          <div class="inner">
+            <h3>{{ total_terapias }}</h3>
+            <p><strong>Terapias Totales</strong></p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-user-md"></i>
+          </div>
+      
+        </div>
+      </div>
+      <!-- ./col -->
+    </div>
+    <!-- /.row (main row) -->
+  </div><!-- /.container-fluid -->
+</section>
+  
+<!-- Main content -->
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+     
+      <!-- /.col-md-6 -->
+      <div class="col-lg-12">
+       <!-- BAR CHART -->
+<div class="card card-primary">
+  <div class="card-header">
+     <h3 class="card-title">Ingreso Monetario Mensual</h3>
+  </div>
+<div class="card-body">
+  
+
+<canvas id="grafica" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+
+
+</div>
+<!-- /.card-body -->
+</div>
+<!-- /.card -->
+    
+     </div>
+
+
+</div>
+</div>
+</div>
+
+<!-- Main content -->
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+     
+      <!-- /.col-md-6 -->
+      <div class="col-lg-6">
+        <div class="card card-green">
+          <div class="card-header">
+            <h3 class="card-title">Total de Pagos por Paciente</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body table-responsive p-0" style="height: 300px;">
+            <table id="example2" class="table table-head-fixed text-nowrap">
+              <thead>
+                <tr>
+                  <th>Codigo</th>
+                  <th>Nombre</th>
+                  <th>Total de Pagos</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for paciente in pacientes %}
+                {% if not paciente.deshabilitado %}
+                  <tr>
+                    <td>{{paciente.id_paciente}}</td>                  
+                      <td>
+                        <a class="ver-pacientes mr-5 text-dark" data-pacientes-id="{{paciente.id_paciente}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Paciente">
+                          {{paciente.primer_nombre}} {{paciente.primer_apellido}}
+                        </a>
+                      </td>
+                    </a>
+                                    
+                      <td>{{paciente.total_pago}}</td>
+                  </tr>
+              {% endif %}
+            {% endfor %}
+               
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+    
+     </div>
+
+<!-- PIE CHART -->
+<div class="card card-danger">
+  <div class="card-header">
+     <h3 class="card-title">Pacientes por grupo de edad</h3>
+  </div>
+<div class="card-body">
+  <canvas id="graficoPastel" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+</div>
+<!-- /.card-body -->
+</div>
+<!-- /.card -->
+</div>
+</div>
+</div>
+
+<script>
+  $(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+ 
+  const edadesData= {{ contador_edades|safe }}
+  // Datos para el gráfico
+  var datos = {
+    labels: ["0-18", "19-35", "36-50","51-65","Mayores a 66"],
+    datasets: [{
+      data: edadesData,
+      backgroundColor: ["red", "blue", "green","yellow", "purple"], // Colores para cada categoría
+    }]
+  };
+
+  // Configuración del gráfico
+  var opciones = {
+    responsive: true,
+    maintainAspectRatio: false,
+  };
+
+  var contexto = document.getElementById("graficoPastel").getContext("2d");
+
+  // Crear el gráfico de pastel
+  var graficoPastel = new Chart(contexto, {
+    type: "pie",
+    data: datos,
+    options: opciones,
+  });
+
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": false,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": false,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+</script>
+
+
+<script>
+// Obtener una referencia al elemento canvas del DOM
+const $grafica = document.querySelector("#grafica");
+// Las etiquetas son las que van en el eje X. 
+const etiquetas = ["Enero", "Febrero", "Marzo", "Abril","Mayo", "Junio", "Julio", "Agosto","Septiembre", "Octubre", "Noviembre", "Diciembre"]
+// Podemos tener varios conjuntos de datos. Comencemos con uno
+const ingresos_mensuales = {{ ingresos_mensuales|safe }};
+
+const datasetIngresos = {
+  label: "Ingreso por mes",
+  data: ingresos_mensuales,
+  backgroundColor: 'rgba(54, 162, 235, 0.2)',
+  borderColor: 'rgba(54, 162, 235, 1)',
+  borderWidth: 1,
+};
+
+new Chart($grafica, {
+    type: 'bar',// Tipo de gráfica
+    data: {
+        labels: etiquetas,
+        datasets: [
+         datasetIngresos,
+        ]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }],
+        },
+    }
+});
+</script>
+
+<script>
+    
+  document.addEventListener("DOMContentLoaded", function() {
+
+    
+
+    // Agregar un evento de clic a cada enlace
+    verPacientes.forEach(function(enlace) {
+      
+        // Obtener el ID de la consulta del atributo data-consulta-id
+        const pacienteId = enlace.getAttribute("data-pacientes-id");
+        const pacienteNombres = enlace.getAttribute("data-paciente-nombres");
+        
+      
+    });
+  });
+
+</script>
+
+
+
+
+{% endblock %}
+
+
+
