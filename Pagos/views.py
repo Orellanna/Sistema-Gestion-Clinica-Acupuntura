@@ -67,30 +67,37 @@ from django.urls import reverse
 
 @login_required
 def EditarPago(request, paciente_id, pago_id):
-    consultas = Consulta.objects.filter(id_paciente=paciente_id, pagada=False, deshabilitado=False)  # Obtener consultas del paciente
+    consultas = Consulta.objects.filter(id_paciente=paciente_id, deshabilitado=False)
     paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
     pago = get_object_or_404(Pago, id_pago=pago_id)
-    
+
     if request.method == 'POST':
-        consulta_id = request.POST['num_consulta']
+        consulta_id = request.POST['consulta_id']
         monto_pago = request.POST['monto_pago']
-        fecha_pago = request.POST['pago_fecha']  # Mantener la fecha original asignada
-        
-        # Actualizar el pago
-        pago.concepto_pago = Consulta.objects.get(id_consulta=consulta_id).motivo_consulta
+        fecha_pago = request.POST['pago_fecha']
+
+        if consulta_id != str(pago.id_consulta.id_consulta):
+            # User changed the associated consultation
+            consulta_anterior = Consulta.objects.get(id_consulta=pago.id_consulta.id_consulta, deshabilitado=False)
+            consulta_anterior.pagada = False
+            consulta_anterior.save()
+
+            consulta_nueva = Consulta.objects.get(id_consulta=consulta_id)
+            consulta_nueva.pagada = True
+            consulta_nueva.save()
+
+            pago.id_consulta = consulta_nueva
+
+        pago.concepto_pago = pago.id_consulta.motivo_consulta
         pago.monto_pago = monto_pago
         pago.fecha_pago = fecha_pago
-        pago.id_consulta = Consulta.objects.get(id_consulta=consulta_id)
         pago.save()
-        
-        # Generar la URL correcta usando reverse para DetallesPago
+
         url = reverse('DetallesPago', kwargs={'paciente_id': paciente_id, 'consulta_id': pago.id_consulta.id_consulta, 'pago_id': pago_id})
-        
+
         messages.success(request, "El pago se ha actualizado satisfactoriamente")
-        
-        # Redirigir al usuario a la URL correcta
         return redirect(url)
-    
+
     return render(request, 'Vistas_Pago/EditarPago.html', {'paciente': paciente, 'pago': pago, 'consultas': consultas})
 
 
