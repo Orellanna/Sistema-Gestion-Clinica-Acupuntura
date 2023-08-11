@@ -1,0 +1,141 @@
+{% extends 'index_master.html' %}
+
+{% block content %}
+
+<div class="container my-4">
+    <div class="container-fluid">
+        <form>
+        <div class="row">
+            <h2>Registrar una nueva Cita </h2>
+        </form>
+        </div>
+    </div>
+    
+  <div class="row">
+      <div class="col-md-6">
+        
+          <div class="card card-secondary">
+              <div class="card-header">
+                  <h3 class="card-title">Datos de la Cita</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form action="{% url 'RegistrarCitas' %}" method="POST" id="registroForm">
+                {% csrf_token %}
+                
+                    <div class="form-group">
+                        <label for="fechanaCita" class="sm-4 col-form-label">Fecha de la Cita:*</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="form-control" id="cita_fecha" name="cita_fecha" required>
+                            <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-info-circle"></i>
+                              </button>
+                            </span>
+                        </div>
+                        <div class="instrucciones d-none">
+                         Fecha para la cita medica .
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="selectMotivo">Motivo de Cita*</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa-solid fa-laptop-medical"></i>
+                            <select class="form-control" id="selectMotivo" name="cita_motivo" required>
+                                <option value="">Seleccione el motivo de la cita</option>
+                                <option value="M">Primera vez </option>
+                                <option value="F">Control</option>
+                            </select>
+                            <span class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
+                                <i class="fas fa-info-circle"></i>
+                              </button>
+                            </span>
+                        </div>
+                        
+                    </div>
+                </div>
+                <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                </div>
+                
+                        <!-- /.card-header -->
+                        <!-- form start -->
+            
+                        
+                                
+                <div class="container my-6">
+                    <div class="row mt-4">
+                        <div class="col-md-12 text-center">
+                            <a href="{% url 'GestionCitas' %}" class="btn btn-primary"><i class="fas fa-arrow-left"></i>Regresar</a>
+                            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+  </div>
+</div>
+
+<script>
+  // Función para mostrar u ocultar las instrucciones de un campo
+  function mostrarInstrucciones(boton) {
+    var instrucciones = boton.parentNode.parentNode.parentNode.querySelector(".instrucciones");
+    instrucciones.classList.toggle("d-none");
+  }
+</script>
+
+<script>
+  // Función para validar un campo
+  function validarCampo(inputId, regex) {
+    var input = document.getElementById(inputId);
+    var valor = input.value.trim();
+
+    if (valor === "") {
+      input.classList.remove("is-valid", "is-invalid");
+      return true; // No se ingresa ningún valor, no se muestra ninguna indicación de error
+    } else if (!regex.test(valor)) {
+      input.classList.remove("is-valid");
+      input.classList.add("is-invalid");
+      return false; // Valor incorrecto, se muestra el estilo de error
+    } else {
+      input.classList.remove("is-invalid");
+      input.classList.add("is-valid");
+      return true; // Valor válido, se muestra el estilo de éxito
+    }
+  }
+
+  
+
+ 
+  
+
+  // Función para validar la fecha de nacimiento
+ 
+  
+
+  // Función para validar el correo
+  
+
+    // Verificar si todos los campos son válidos
+    if (fechavalido) {
+      document.getElementById("registroForm").submit(); // Enviar el formulario
+    } else {
+      // Mostrar un mensaje de error
+    }
+  }
+
+  // Agregar eventos de validación en tiempo real a los campos
+  document.getElementById("cita_fecha").addEventListener("input", validarFecha);
+
+
+  // Agregar evento de validación al enviar el formulario
+  document.getElementById("registroForm").addEventListener("submit", validarFormulario);
+</script>
+
+{% endblock %}
+
