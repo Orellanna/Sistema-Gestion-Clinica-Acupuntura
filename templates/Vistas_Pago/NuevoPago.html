@@ -1,0 +1,103 @@
+{% extends 'index_master.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ingreso de Pago</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+  <!-- AdminLTE CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+
+    <!-- Main content -->
+    <form action="{% url 'NuevoPago' paciente_id=paciente.id_paciente %}" method="POST" id="formNuevoPago">
+      {% csrf_token %}
+      <section class="content">
+          <div class="container-fluid">
+              <div class="row">
+                  <div class="col-md-4 offset-md-4">
+                      <!-- Payment Entry Form -->
+                      <div class="card card-primary">
+                          <div class="card-header">
+                              <h3 class="card-title">Ingreso de Pago</h3>
+                          </div>
+                          <!-- /.card-header -->
+                          <div class="card-body">
+                              <!-- Combo box for selecting the consultation -->
+                              <div class="form-group">
+                                  <label for="consultationSelect">Seleccione la consulta:</label>
+                                  <select class="form-control" id="motivo_consulta" name="consulta_id">
+                                      {% for consulta in consultas %}
+                                      <option value="{{ consulta.id_consulta }}">{{ consulta.obtener_consulta_fecha_formateada }} - {{ consulta.motivo_consulta }}</option>
+                                      {% endfor %}
+                                  </select>
+                              </div>
+                              <div class="form-group row">
+                                  <label for="pago_fecha" class="col-sm-4 col-form-label">Fecha del Pago:</label>
+                                  <div class="col-sm-5">
+                                      <input type="date" class="form-control" id="pago_fecha" name="pago_fecha" required readonly/>
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label for="hora_pago" class="col-sm-4 col-form-label">Hora del pago:</label>
+                                  <div class="col-sm-5">
+                                      <input type="time" class="form-control" id="hora_pago" name="hora_pago" required readonly/>
+                                  </div>
+                              </div>
+  
+                              <!-- Textbox for entering the payment  amount -->
+                              <div class="form-group">
+                                  <label for="paymentAmount">Cantidad en USD:</label>
+                                  <input type="text" class="form-control" id="paymentAmount" name="monto_pago" placeholder="Ingrese la cantidad en USD">
+                              </div>
+                          </div>
+                          <!-- /.card-body -->
+  
+                          <div class="card-footer">
+                              <!-- Back button -->
+                              <button type="button" class="btn btn-primary">Regresar</button>
+                              <!-- Save and redirect button -->
+                              <button type="submit" name="submit" class="btn btn-success float-right">
+                                  <i class="fa fa-save"></i>&nbsp; Guardar Pago
+                              </button>
+                          </div>
+                          <!-- /.card-footer -->
+                      </div>
+                      <!-- /.card -->
+                  </div>
+                  <!-- /.col-md-4 -->
+              </div>
+              <!-- /.row -->
+          </div>
+          <!-- /.container-fluid -->
+      </section>
+  </form>
+  
+    <!-- /.content -->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+<script>
+  // Obtener la fecha y hora actual
+  var fechaActual = new Date();
+  var fecha = fechaActual.toISOString().slice(0, 10);
+  var hora = fechaActual.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  // Establecer la fecha y hora actual en los campos de entrada
+  document.getElementById('pago_fecha').value = fecha;
+  document.getElementById('hora_pago').value = hora;
+</script>
+{% endblock %}
+```

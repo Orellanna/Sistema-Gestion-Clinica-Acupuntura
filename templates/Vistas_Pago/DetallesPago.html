@@ -1,0 +1,80 @@
+{% extends 'base_pacientes.html' %} 
+
+{% block content %}
+  
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4 offset-md-4">
+        <!-- Payment Entry Form -->
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Detalles de Pago</h3>
+          </div>
+          <!-- /.card-header -->
+          <form>
+            <div class="card-body">
+              <!-- Combo box for selecting the consultation -->
+              <div class="form-group">
+                <label for="consultationSelect">Consulta:</label>
+                <p>{{ pago.concepto_pago }}</p>
+                  <!-- Add more options as needed -->
+                </select>
+              </div>
+
+              <!-- Textbox for entering the payment amount -->
+              <div class="form-group">
+                <label for="paymentAmount">Monto de pago en USD:</label>
+                <p>{{pago.monto_pago}}</p>
+              </div>
+              <div class="form-group">
+                <label for="fechaPago">Fecha de pago:</label>
+                <p>{{pago.fecha_pago}}</p>
+              </div>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+            </div>
+            <!-- /.card-footer -->
+          </form>
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /.col-md-4 -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-4">
+        <a
+          href="{% url 'ListarPagos' paciente_id=paciente.id_paciente %}"
+          class="btn btn-primary"
+          ><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a>
+      </div>
+      <div class="col-sm-4 text-center">
+        <a href="#" target="_blank" class="btn btn-dark">
+          <i class="nav-icon fas fa-print"></i>&nbsp;&nbsp;Generar Reporte</a>
+
+      </div>
+      <div class="col-sm-4">
+        <a href="{% url 'EditarPago' paciente_id=paciente.id_paciente pago_id=pago.id_pago %}" 
+        class="btn btn-success float-right"><i 
+        class="nav-icon fas fa-pen"></i>&nbsp;&nbsp;Editar Pago</a>
+      </div>
+      
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+
+
+{% endblock %}

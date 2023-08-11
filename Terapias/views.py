@@ -1,15 +1,62 @@
 from django.shortcuts import render
 # Create your views here.
-from Pacientes.models import Terapia
+from Pacientes.models import Terapia,Paciente,Consulta,Inventario
+from django.shortcuts import render, get_object_or_404,redirect
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.template.loader import get_template
+from django.http import JsonResponse
+import base64
+from xhtml2pdf import pisa
+
+@login_required
+def ListarTerapias(request, id_paciente):
+    paciente = get_object_or_404(Paciente,id_paciente=id_paciente)
+    terapias = Terapia.objects.filter(id_consulta__id_paciente=paciente)
+    
+    return render(request, 'Terapia/HistorialTerapia.html', {'paciente': paciente, 'terapias': terapias})
+
+@login_required
+def NuevaTerapia(request,paciente_id):
+    
+    consultas = Consulta.objects.filter(id_paciente=paciente_id).order_by('-consulta_fecha')
+    paciente = get_object_or_404(Paciente,id_paciente=paciente_id)
+    
+    if request.method == 'POST':
+        # Procesar el formulario enviado
+        image_data = request.POST.get('image_data')
+        numero_puntos = int(request.POST.get('numero_puntos'))
+        
+
+        observacion_terapia = request.POST['observacion_terapia']
+        consulta_terapia= request.POST['consulta_terapia']
+        
+        #Obtenemos el producto del inventario 
+        producto = Inventario.objects.get(id_suministro='A00001')
+        
+        #le restamos los puntos equivalentes a agujas que se usaron
+        producto.cantidad -= numero_puntos
+        producto.save()
+        
+        # Guardar los datos en el modelo Terapia vinculándolo a la consulta
+        nueva_terapia = Terapia.objects.create(
+            id_consulta = Consulta.objects.get(id_consulta=consulta_terapia),
+            observacion_terapia= observacion_terapia,
+            esquema_terapia=image_data
+        )
+        # nueva_terapia.save()
+        return redirect('ListarTerapias', id_paciente=paciente_id)
+
+    return render(request, 'Terapia/NuevaTerapia.html',{
+        'paciente':paciente,
+        'consultas':consultas,
+    })
 
 
 @login_required
-<<<<<<< Updated upstream
-def NuevaTerapia(request):
-    return render(request,'Terapia/NuevaTerapia.html')
-=======
 def DetallesTerapia(request, terapia_id, id_paciente):
     paciente = get_object_or_404(Paciente, id_paciente=id_paciente)
     terapia = get_object_or_404(Terapia, id_terapia=terapia_id, id_consulta__id_paciente=paciente)
@@ -77,34 +124,3 @@ def Imprimir_Terapia(request, paciente_id, terapia_id):
     pisa.CreatePDF(html, dest=response)
 
     return response 
-
-@login_required
-def generar_reporte_pdf(request, paciente_id, consulta_id):
-    # Obtiene los datos del paciente y la consulta
-    paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
-    consulta = get_object_or_404(Consulta, id_consulta=consulta_id, id_paciente=paciente)
-
-    # Obtiene la plantilla HTML
-    template = get_template('Reportes/R_DetallesConsulta.html') 
-
-    # Contexto de la plantilla
-    context = {
-        'paciente': paciente,
-        'consulta': consulta,
-    }
-
-    # Renderiza la plantilla HTML con el contexto
-    html = template.render(context)
-
-    # Crea el objeto HttpResponse con el tipo de contenido apropiado para un PDF
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'inline; filename="reporte_consulta.pdf"'  
-
-    # Genera el PDF a partir del HTML renderizado
-    pisa.CreatePDF(html, dest=response)
-
-    return response
-
-def EnConstruccion(request):
-    return render(request,'cons.html')
->>>>>>> Stashed changes

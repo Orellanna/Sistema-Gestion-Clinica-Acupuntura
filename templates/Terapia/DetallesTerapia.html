@@ -2,88 +2,47 @@
 
 {% block content %}
   
-<!-- Main content -->
-<section class="content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-body" style="background-color: #eef5f9; border: 1px solid #dee2e6;">
-            <div class="text-center mb-4">
-              <h4 class="text-primary">Detalles de la Terapia</h4>
-              <hr>
-            </div>
-            <div class="row">
-              <div class="col-4">
-                <div class="text-center">
-                  <h6 class="text-secondary">ID de la Terapia</h6>
-                  <p class="font-weight-bold">{{terapia.id_terapia}}</p>
-                </div>
-              </div>
-              <div class="col-4">
-                <div class="text-center">
-                  <h6 class="text-secondary">Fecha de Consulta</h6>
-                  <p>{{consulta.obtener_consulta_fecha_formateada}}</p>
-                </div>
-              </div>
-              <div class="col-4">
-                <div class="text-center">
-                  <h6 class="text-secondary">Hora de Inicio</h6>
-                  <p>{{consulta.hora_consulta}}</p>
-                </div>
-              </div>
-            </div>
-            <div class="row mt-4">
-              <div class="col">
-                <div class="text-center">
-                  <h6 class="text-secondary">Motivo de la Consulta</h6>
-                  <p class="font-weight-bold">{{consulta.motivo_consulta}}</p>
-                </div>
-              </div>
-            </div>
-            <div class="row mt-4">
-              <div class="col">
-                <div class="text-center" >
-                  <h6 class="text-secondary">Observaciones</h6>
-                  <div class="list-group" >
-                    <a class="list-group-item list-group-item-action flex-column align-items-start" style="background-color: #eef5f9;">
-                      <p class="mb-1" style="background-color: #eef5f9;">{{Terapia.observacion_terapia}}</p>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Terapia</title>
+    <style>
+        .elegant-border {
+            border: 2px solid #ccc;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h2 class="ml-4">Detalles de la Terapia {{ terapia.id_terapia }}</h2>
+    <div class="image-container d-flex justify-content-center mb-3 mt-3">
+      {% if imagen_data_uri %}
+      <img src="{{ imagen_data_uri }}" alt="Imagen del Insumo" class="img-fluid rounded elegant-border">
+
+      {% else %}
+      <p>No hay imagen disponible</p>
+      {% endif %}
+    </div>
+    <div class="container-fluid mb-4">
+      <div class="row mb-2">
+        <div class="col-sm-4 d-flex justify-content-center">
+          <a href="{% url 'ListarTerapias' paciente.id_paciente %}" class="btn btn-primary">
+            <i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial
+          </a>
+        </div>
+        <div class="col-sm-4 text-center d-flex justify-content-center">
+          <a href="{% url 'Imprimir_Terapia' paciente.id_paciente|urlencode terapia.id_terapia|urlencode %}" target="_blank" class="btn btn-dark">
+            <i class="nav-icon fas fa-print"></i>&nbsp;&nbsp; Imprimir
+          </a>
         </div>
       </div>
     </div>
-  </div>
-</section>
+    
+</body>
+</html>
 
-<!-- Content Header (Page header) -->
-<section class="content-header">
-  <div class="container-fluid">
-    <div class="row mb-2">
-      <div class="col-sm-4">
-        <a
-          href="{% url 'ListarTerapias' paciente_id=paciente.id_paciente %}"
-          class="btn btn-primary"
-          ><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a>
-      </div>
-      <div class="col-sm-4 text-center">
-        <a href="{% url 'GenerarReportePDF' paciente_id=paciente.id_paciente|urlencode consulta_id=consulta.id_consulta|urlencode %}" target="_blank" class="btn btn-dark"><i 
-          class="nav-icon fas fa-print"></i>&nbsp;&nbsp;Generar Reporte</a>
-      </div>
-      <div class="col-sm-4">
-        <a href="{% url 'EditarTerapia' paciente_id=paciente.id_paciente Terapia=id_terapia %}" 
-        class="btn btn-success float-right"><i 
-        class="nav-icon fas fa-pen"></i>&nbsp;&nbsp;Editar Terapia</a>
-      </div>
-      
-    </div>
-  </div>
-  <!-- /.container-fluid -->
-</section>
 
 
 {% endblock %}
