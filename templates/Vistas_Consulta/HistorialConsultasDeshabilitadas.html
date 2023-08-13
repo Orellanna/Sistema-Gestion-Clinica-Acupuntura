@@ -1,0 +1,187 @@
+{% extends 'base_pacientes.html' %}
+{% load static %}
+{% block content %} 
+
+
+<!-- Content Wrapper. Contains page content -->
+
+    <!-- Content Header (Page header) -->
+    
+    <style>
+      /* Estilos para la ventana emergente */
+      .ventana-emergente {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+      }
+    
+      .ventana-emergente h3 {
+        margin-top: 0;
+      }
+    
+      .ventana-emergente p {
+        margin-bottom: 20px;
+      }
+    
+      .ventana-emergente button {
+        margin: 0 10px;
+      }
+    
+      /* Estilos para el fondo difuminado */
+      .fondo-difuminado {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(1px);
+        z-index: 9999;
+      }
+    </style>
+    <!-- Content Header (Page header) -->
+    
+    <section class="content-header">  
+      <div class="container-fluid">
+        <div class="row mb-2 justify-content-between">
+          <div class="col-sm-6">
+            <h2>Historial de Consultas Deshabilitadas</h2>
+          </div>
+        </div>
+      </div>
+      
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                
+                <!-- /.card-header -->
+                <div class="card-body">
+
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                      <th>Id</th>
+                      <th>Motivo</th>
+                      <th>Fecha</th>
+                      <th class="pagada-column">Pagada</th>
+                      <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for consulta in consultas %}
+                      {% if consulta.deshabilitado %}
+                    <tr>
+                      <td>{{consulta.id_consulta}}</td>
+                      <td class="ver-consultas mr-5 text-dark" data-consultas-id="{{consulta.id_consulta}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Consulta">{{consulta.motivo_consulta}}</td>
+                      <td>{{consulta.obtener_consulta_fecha_formateada}}</td>
+                      <td class="text-center">
+                        {% if consulta.pagada %}
+                          <i>✓</i>
+                        {% else %}
+                          <i>X</i>
+                        {% endif %}
+                      </td>
+                      <td class="text-center">
+
+                        <div class="d-inline-flex flex-row align-items-center">
+                          <a href="#" class="ver-consultas mr-5" data-consultas-id="{{consulta.id_consulta}}" data-paciente-id="{{paciente.id_paciente}}">   
+                            <i class="fas fa-eye fa-lg" style="color: #0a3461;"></i>
+                          </a>
+                          <a href="{% url 'reactivarConsulta' paciente_id=paciente.id_paciente consulta_id=consulta.id_consulta%}" class="habilitar-consulta mr-5" data-consulta="{{consulta.id_consulta}} {{consulta.motivo_consulta}}"
+                                  data-consulta-id="{{consulta.id_consulta}}" data-paciente-id="{{paciente.id_paciente}}" onclick="confirmarHabilitacion(event)" data-bs-toggle="tooltip" data-bs-placement="top" title="Habilitar Consulta">
+                                  <i class="fas fa-check" style="color: #1e3152;"></i>
+                                </a>
+                        </div>
+                      </td>
+                    </tr>
+                      {% endif %}
+                    {% endfor %}
+                    </tbody> 
+                  </table>
+                  
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+  <!-- /.content-wrapper -->
+  <script>
+    $(function () {
+      $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Obtener todos los elementos con la clase "ver-consulta"
+      const verConsultas = document.querySelectorAll(".ver-consultas");
+  
+      // Agregar un evento de clic a cada enlace
+      verConsultas.forEach(function(enlace) {
+        enlace.addEventListener("click", function(event) {
+          event.preventDefault();
+          
+          // Obtener el ID de la consulta del atributo data-consulta-id
+          const consultaId = enlace.getAttribute("data-consultas-id");
+
+          //obtener el ID de el paciente del atributo data-paciente-id
+          const pacienteId = enlace.getAttribute("data-pacientes-id");
+          
+          // Redirigir a la página de detalles de la consulta con el ID de la consulta
+      });
+    });
+  });
+  </script>
+  <script>
+    function confirmarHabilitacion(event) {
+      event.preventDefault();
+  
+      const enlace = event.currentTarget;
+      const pacienteId = enlace.getAttribute("data-paciente-id");
+      const consultaId = enlace.getAttribute("data-consulta-id");
+      const motivoConsulta = enlace.getAttribute("data-consulta-id"); // Cambio realizado aquí
+      
+      const ventanaEmergente = document.createElement("div");
+      ventanaEmergente.classList.add("ventana-emergente");
+  
+      const titulo = document.createElement("h3");
+      titulo.textContent = "Confirmar habilitación";
+  
+      const mensaje = document.createElement("p");
+      mensaje.textContent = "¿Estás seguro que quieres habilitar la consulta " + motivoConsulta + "?"; // Cambio realizado aquí
+  
+      const botonAceptar = document.createElement("button");
+      botonAceptar.textContent = "Aceptar";
+      botonAceptar.addEventListener("click", function() {
+        window.location.href = `/reactivarConsulta/${pacienteId}/${consultaId}/`;
+      });
+  
+      const botonCancelar = document.createElement("button");
+      botonCancelar.textContent = "Cancelar";
+      botonCancelar.addEventListener("click", function() {
+        ventanaEmergente.remove();
+        document.body.removeChild(fondoDifuminado);
+      });
+  
+      ventanaEmergente.appendChild(titulo);
+      ventanaEmergente.appendChild(mensaje);
+      ventanaEmergente.appendChild(botonAceptar);
+      ventanaEmergente.appendChild(botonCancelar);
+  
+      const fondoDifuminado = document.createElement("div");
+      fondoDifuminado.classList.add("fondo-difuminado");
+      fondoDifuminado.appendChild(ventanaEmergente);
+  
+      document.body.appendChild(fondoDifuminado);
+    }
+  </script>
+  
+ 
+{% endblock %}

@@ -6,18 +6,19 @@
 <section class="content">
   <div class="container-fluid">
     <div class="row">
+
       <div class="col-md-4 offset-md-4">
         <!-- Payment Entry Form -->
         <div class="card card-primary">
-          <div class="card-header">
-            <h3 class="card-title">Detalles de Pago</h3>
+          <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Detalles de Pago</h3>
           </div>
           <!-- /.card-header -->
           <form>
             <div class="card-body">
               <!-- Combo box for selecting the consultation -->
               <div class="form-group">
-                <label for="consultationSelect">Consulta:</label>
+                <label for="consultationSelect">Consulta Pagada:</label>
                 <p>{{ pago.concepto_pago }}</p>
                   <!-- Add more options as needed -->
                 </select>
@@ -29,15 +30,11 @@
                 <p>{{pago.monto_pago}}</p>
               </div>
               <div class="form-group">
-                <label for="fechaPago">Fecha de pago:</label>
+                <label for="fechaPago">Fecha del pago:</label>
                 <p>{{pago.fecha_pago}}</p>
               </div>
             </div>
             <!-- /.card-body -->
-
-            <div class="card-footer">
-            </div>
-            <!-- /.card-footer -->
           </form>
         </div>
         <!-- /.card -->

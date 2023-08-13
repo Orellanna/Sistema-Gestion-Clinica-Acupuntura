@@ -18,4 +18,10 @@ urlpatterns = [
     path('verUsuario/<str:username>/',views.VerUsuario,name='verUsuario'),
     path('eliminarUsuario/<str:username>/', views.EliminarUsuario, name='eliminarUsuario'),
     path('editarUsuario/<str:username>/', views.EditarUsuario, name='editarUsuario'),
+<<<<<<< HEAD
 ]
+=======
+    path('ListarPacientesDeshabilitados/', views.ListarPacientesDeshabilitados, name='listarPacientesDeshabilitados'),
+    path('habilitarPaciente/<str:paciente_id>/', views.HabilitarPaciente, name='habilitarPaciente'),
+    ]
+>>>>>>> main
