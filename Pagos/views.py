@@ -59,17 +59,59 @@ def DetallesPago(request, paciente_id, pago_id, consulta_id):
     
 @login_required
 def EditarPago(request, paciente_id, pago_id):
-    consultas = Consulta.objects.all()  # Obtienen todas las consultas desde la base de datos
+    consultas = Consulta.objects.filter(id_paciente=paciente_id, deshabilitado=False)
     paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
     pago = get_object_or_404(Pago, id_pago=pago_id)
-    
+
     if request.method == 'POST':
+        consulta_id = request.POST['consulta_id']
+        monto_pago = request.POST['monto_pago']
+        fecha_pago = request.POST['pago_fecha']
+
+        if consulta_id != str(pago.id_consulta.id_consulta):
+            # User changed the associated consultation
+            consulta_anterior = Consulta.objects.get(id_consulta=pago.id_consulta.id_consulta, deshabilitado=False)
+            consulta_anterior.pagada = False
+            consulta_anterior.save()
+
+            consulta_nueva = Consulta.objects.get(id_consulta=consulta_id)
+            consulta_nueva.pagada = True
+            consulta_nueva.save()
+
+            pago.id_consulta = consulta_nueva
+
+        pago.concepto_pago = pago.id_consulta.motivo_consulta
+        pago.monto_pago = monto_pago
+        pago.fecha_pago = fecha_pago
+        pago.save()
+
+        url = reverse('DetallesPago', kwargs={'paciente_id': paciente_id, 'consulta_id': pago.id_consulta.id_consulta, 'pago_id': pago_id})
+
+        messages.success(request, "El pago se ha actualizado satisfactoriamente")
+        return redirect(url)
+
+    return render(request, 'Vistas_Pago/EditarPago.html', {'paciente': paciente, 'pago': pago, 'consultas': consultas})
+
+
+
+
+def EliminarPago(request, paciente_id, pago_id):
+    paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
+    pago = get_object_or_404(Pago, id_pago=pago_id)
+
+    if request.method == 'POST':
+        # Marcar el pago como eliminado y desvincularlo de la consulta
+        consulta = pago.id_consulta
+        consulta.pagada = False
+        consulta.save()
+        pago.delete()
         
         # Redirigir al usuario a la página de historial de pagos u otra página deseada
         messages.success(request, "El pago se ha eliminado satisfactoriamente")
         return redirect('ListarPagos', paciente_id=paciente_id)
 
     return render(request, 'Vistas_Pago/EliminarPago.html', {'paciente': paciente, 'pago': pago})
+
 
 @login_required
 def Imprimir_Pago(request, paciente_id, terapia_id, pago_id):
