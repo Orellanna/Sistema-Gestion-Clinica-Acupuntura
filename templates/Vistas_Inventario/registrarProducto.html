@@ -20,7 +20,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form enctype="multipart/form-data" action="{% url 'RegistrarProducto' %}" method="POST" id="registroForm">
+              <form enctype="multipart/form-data" action="{% url 'RegistrarProducto' %}" method="POST" id="productoForm">
                 {% csrf_token %}
                 <div class="card-body">
                     <div class="form-group">
@@ -47,7 +47,7 @@
                           <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fas fa-user"></i></span>
                           </div>
-                          <select class="form-control" id="inputNombre" name="categoria" required>
+                          <select class="form-control" id="inputCategoria" name="categoria" required>
                               <option value="" disabled selected>Seleccione la categoria</option>
                               <option value="Higiene y Desinfección">Higiene y Desinfeccion</option>
                               <option value="Herramientas de Diagnóstico">Herramientas de Diagnostico</option>
@@ -91,7 +91,7 @@
                           <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fas fa-user"></i></span>
                           </div>
-                          <input type="text" class="form-control" id="inputCantidad" placeholder="Ingrese la cantidad" name="cantidad">
+                          <input type="text" class="form-control" id="inputCantidad" placeholder="Ingrese la cantidad" name="cantidad" required>
                           <span class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
                               <i class="fas fa-info-circle"></i>
@@ -126,7 +126,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                             </div>
-                            <input type="date" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento">
+                            <input type="date" class="form-control" id="inputFechaVencimiento" name="fecha_vencimiento">
                             <span class="input-group-append">
                               <button class="btn btn-outline-secondary" type="button" onclick="mostrarInstrucciones(this)">
                                 <i class="fas fa-info-circle"></i>
@@ -183,101 +183,134 @@
 </script>
 
 <script>
-  // Función para validar un campo
-  function validarCampo(inputId, regex) {
-    var input = document.getElementById(inputId);
-    var valor = input.value.trim();
+  document.addEventListener("DOMContentLoaded", function() {
+    // Obtener referencias a los elementos del formulario
+    var nombreInput = document.getElementById("inputNombre");
+    var descripcionInput = document.getElementById("inputDescripcion");
+    var cantidadInput = document.getElementById("inputCantidad");
+    var costoUnitarioInput = document.getElementById("inputCostoUnitario");
+    var fechaVenciInput = document.getElementById("inputFechaVencimiento");
+    var formulario = document.getElementById("productoForm");
 
-    if (valor === "") {
-      input.classList.remove("is-valid", "is-invalid");
-      return true; // No se ingresa ningún valor, no se muestra ninguna indicación de error
-    } else if (!regex.test(valor)) {
-      input.classList.remove("is-valid");
-      input.classList.add("is-invalid");
-      return false; // Valor incorrecto, se muestra el estilo de error
-    } else {
-      input.classList.remove("is-invalid");
-      input.classList.add("is-valid");
-      return true; // Valor válido, se muestra el estilo de éxito
-    }
-  }
-
-  // Función para validar el nombre
-  function validarNombre() {
-    var regex = /^[a-zA-Z\u00C0-\u017F\s]+$/;
-    return validarCampo("inputNombre", regex);
-  }
-
-  // Función para validar la Cantidad
-  function validarCantidad() {
-    var regex = /^\d/;
-    return validarCampo("inputCantidad", regex);
-  }
-
-  // Función para validar el Costo Unitario
-  function validarCostoUnitario() {
-    var regex = /^\d/;
-    return validarCampo("inputCostoUnitario", regex);
-  }
-
-  // Función para validar la fecha de vencimiento
-  function validarFecha() {
-    var input = document.getElementById("nacimiento_fecha");
-    var valor = input.value;
-  
-    if (valor === "") {
-      input.classList.remove("is-valid", "is-invalid");
-      return true; // No se ingresa ninguna fecha, no se muestra ninguna indicación de error
-    } else {
-      var fechaIngresada = new Date(valor);
-      var fechaActual = new Date();
-      var edadMinima = 10;
-      var edadMaxima = 110;
-  
-      var edad = fechaActual.getFullYear() - fechaIngresada.getFullYear();
-      if (
-        (edad < edadMinima || edad > edadMaxima) ||
-        (edad === edadMinima && fechaActual.getMonth() < fechaIngresada.getMonth()) ||
-        (edad === edadMinima && fechaActual.getMonth() === fechaIngresada.getMonth() && fechaActual.getDate() < fechaIngresada.getDate())
-      ) {
-        input.classList.remove("is-valid");
-        input.classList.add("is-invalid");
-        return false; // La fecha está fuera del rango permitido, se muestra el estilo de error
+    // Agregar evento de validación al campo de Nombre
+    nombreInput.addEventListener("input", function() {
+      if (validarNombre(this.value)) {
+        this.classList.remove("is-invalid");
+        this.classList.add("is-valid");
       } else {
-        input.classList.remove("is-invalid");
-        input.classList.add("is-valid");
-        return true; // La fecha es válida, se muestra el estilo de éxito
+        this.classList.remove("is-valid");
+        this.classList.add("is-invalid");
       }
+      
+    });
+
+    // Agregar evento de validación al campo de Descripcion
+    descripcionInput.addEventListener("input", function() {
+      if (validarDescripcion(this.value)) {
+        this.classList.remove("is-invalid");
+        this.classList.add("is-valid");
+      } else {
+        this.classList.remove("is-valid");
+        this.classList.add("is-invalid");
+      }
+    });
+
+    // Agregar evento de validación al campo de Cantidad
+    cantidadInput.addEventListener("input", function() {
+      if (validarCantidad(this.value)) {
+        this.classList.remove("is-invalid");
+        this.classList.add("is-valid");
+      } else {
+        this.classList.remove("is-valid");
+        this.classList.add("is-invalid");
+      }
+    });
+
+    // Agregar evento de validación al campo de costo Unitario
+    costoUnitarioInput.addEventListener("input", function() {
+      if (validarCostoUnitario(this.value)) {
+        this.classList.remove("is-invalid");
+        this.classList.add("is-valid");
+      } else {
+        this.classList.remove("is-valid");
+        this.classList.add("is-invalid");
+      }
+    });
+
+    // Agregar evento de validación al campo de Fecha de Vencimiento
+    fechaVenciInput.addEventListener("input", function() {
+      if (validarFechaVenci(this.value)) {
+        this.classList.remove("is-invalid");
+        this.classList.add("is-valid");
+      } else {
+        this.classList.remove("is-valid");
+        this.classList.add("is-invalid");
+      }
+    });
+
+    // Agregar evento de envío del formulario
+    formulario.addEventListener("submit", function(event) {
+      // Validar el campo de motivo antes de enviar el formulario
+      if (!validarNombre(NombreInput.value)) {
+        NombreInput.classList.add("is-invalid");
+        event.preventDefault(); // Evitar el envío del formulario si hay errores
+      }
+
+      if (!validarDescripcion(descripcionInput.value)) {
+        observacionInput.classList.add("is-invalid");
+        event.preventDefault(); // Evitar el envío del formulario si hay errores
+      }
+
+      if (!validarCantidad(cantidadInput.value)) {
+        cantidadInput.classList.add("is-invalid");
+        event.preventDefault(); // Evitar el envío del formulario si hay errores
+      }
+
+      if (!validarCostoUnitario(costoUnitarioInput.value)) {
+        costoUnitarioInput.classList.add("is-invalid");
+        event.preventDefault(); // Evitar el envío del formulario si hay errores
+      }
+
+      if (!validarFechaVenci(fechaVenciInput.value)) {
+        fechaVenciInput.classList.add("is-invalid");
+        event.preventDefault(); // Evitar el envío del formulario si hay errores
+      }
+
+    });
+
+    // Función de validación para el campo de Nombre
+    function validarNombre(valor) {
+      var nombreRegex = /^[A-Za-zñÑáéíóúÁÉÍÓÚ\s\-.,]{4,50}$/; // Expresión regular para letras, números y espacios
+      return nombreRegex.test(valor);
     }
-  }
-  
 
-  // Función para validar el formulario completo
-  function validarFormulario(event) {
-    event.preventDefault(); // Evitar el envío del formulario por defecto
-
-    var nombreValido = validarNombre();
-    var cantidadValido = validarCantidad();
-    var costoValido = validarCostoUnitario();
-    // var fechavalido = validarFecha();
-
-    // Verificar si todos los campos son válidos
-    if (nombreValido && cantidadValido && costoValido //&& fechavalido) {
-      document.getElementById("registroForm").submit(); // Enviar el formulario
-    } else {
-      // Mostrar un mensaje de error
+        
+    // Función de validación para el campo de Descripcion
+    function validarDescripcion(valor) {
+      var descripcionRegex = /^[A-Za-zñÑáéíóúÁÉÍÓÚ\s\-.,()0-9]{4,255}$/; // Expresión regular para descripción con números y paréntesis
+      return descripcionRegex.test(valor);
     }
-  }
 
-  // Agregar eventos de validación en tiempo real a los campos
-  document.getElementById("inputNombre").addEventListener("input", validarNombre);
-  document.getElementById("inputCantidad").addEventListener("input", validarCantidad);
-  document.getElementById("inputCostoUnitario").addEventListener("input", validarCostoUnitario);
-  //document.getElementById("nacimiento_fecha").addEventListener("input", validarFecha);
- 
+    // Función de validación para el campo de Cantidad
+    function validarCantidad(valor) {
+      var cantidadRegex = /^\d+$/; // Expresión regular para letras, números, espacios, ñ, tildes, guiones, puntos y comas
+      return cantidadRegex.test(valor);
+    }
 
-  // Agregar evento de validación al enviar el formulario
-  document.getElementById("registroForm").addEventListener("submit", validarFormulario);
+    // Función de validación para el campo de Costo Unitario
+    function validarCostoUnitario(valor) {
+      var costouRegex = /^\$?\d+(\.\d{1,2})?$/;  // Expresión regular para letras, números, espacios, ñ, tildes, guiones, puntos y comas
+      return costouRegex.test(valor);
+    }
+
+    // Función de validación para el campo de Fecha de Vencimiento
+function validarFechaVencimiento(valor) {
+  var fechaRegex = /^(?:\d{4}-\d{2}-\d{2})?$/; // Expresión regular para fechas en formato YYYY-MM-DD o vacío
+  return fechaRegex.test(valor);
+}
+
+
+  });
 </script>
 
 <script>

@@ -59,6 +59,7 @@ class Consulta(models.Model):
     consulta_fecha = models.DateField()
     deshabilitado = models.BooleanField(default=False)
     hora_consulta = models.TimeField()
+    pagada= models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if not self.id_consulta:  

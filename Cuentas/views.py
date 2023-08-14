@@ -1,3 +1,5 @@
+from Pacientes.models import Paciente
+from datetime import date, datetime
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -161,4 +163,34 @@ def EditarUsuario(request, username):
         'usuario': usuario,
         'grupos_usuario': grupos_usuario
     })
+    
+@login_required
+def ListarPacientesDeshabilitados(request):
+    pacientes = Paciente.objects.filter(deshabilitado=True)
+    fecha_actual = datetime.today()
+
+    for paciente in pacientes:
+        edad= fecha_actual.year - paciente.fechanac_paciente.year
+        if fecha_actual.month < paciente.fechanac_paciente.month and fecha_actual.day < paciente.fechanac_paciente.day:
+            edad -=1
+        elif fecha_actual.month == paciente.fechanac_paciente.month and fecha_actual.day < paciente.fechanac_paciente.day:
+            edad -=1
+        paciente.edad = edad    
+    return render(request,'Administracion/ListarPacientesDeshabilitados.html',{
+        'pacientes': pacientes
+    })
+@login_required
+def HabilitarPaciente(request, paciente_id):
+    
+    paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
+    
+    # Deshabilitar al paciente
+    paciente.deshabilitado = False
+    paciente.save()
+
+    # Redirigir a la página de gestión de pacientes
+    messages.success(request, "El Paciente se ha habilitado satisfactoriamente")
+    return redirect('listarPacientesDeshabilitados')
+
+
 

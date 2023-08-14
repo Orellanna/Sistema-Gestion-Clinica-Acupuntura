@@ -38,16 +38,25 @@
         <div class="row mb-5">
             <div class="col-md-1"></div>
             <div class="col-8">
-            <h2>Administracion</h2>
+                <h2>Administracion</h2>
+            </div>
+        </div>
+        <div class="card-container d-flex justify-content-center">
+            <div class="custom-card text-center mr-3">
+                <a href="{% url 'gestionUsuarios' %}" class="nav-link">
+                    <i class="fas fa-users-cog fa-3x"></i>
+                    <h5 class="mt-2">Gestión de Usuarios</h5>
+                </a>
+            </div>
+            <div class="custom-card text-center ml-3">
+                <a href="{% url 'listarPacientesDeshabilitados' %}" class="nav-link">
+                    <i class="fas fa-user-slash fa-3x"></i>
+                    <h5 class="mt-2">Pacientes Deshabilitados</h5>
+                </a>
+            </div>
         </div>
     </div>
+</body>
 
-    <div class="card-container">
-      <div class="custom-card float-upper">
-        <a href="{%url 'gestionUsuarios'%}" class="nav-link">
-        <i class="fas fa-users-cog"></i>
-        <h5>Gestión de Usuarios</h5>
-      </div>
-    </div>
-  </body>
+
 {% endblock %}

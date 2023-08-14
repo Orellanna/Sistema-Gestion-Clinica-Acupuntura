@@ -21,7 +21,7 @@ def ListarPagos(request, paciente_id):
 
 @login_required
 def NuevoPago(request, paciente_id):
-    consultas = Consulta.objects.all()  # Obtienen todas las consultas desde la base de datos
+    consultas = Consulta.objects.filter(id_paciente=paciente_id, pagada=False, deshabilitado=False)  # Obtienen todas las consultas desde la base de datos
     paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
     
     if request.method == 'POST':
@@ -29,14 +29,20 @@ def NuevoPago(request, paciente_id):
         # Obtenemos los datos del formulario
         consulta_id = request.POST['consulta_id']
         monto_pago = request.POST['monto_pago']
+        fecha_pago = request.POST['pago_fecha']
         
         # Creamos el nuevo pago para la consulta del paciente
         pago = Pago.objects.create( 
             id_consulta=Consulta.objects.get(id_consulta=consulta_id),
             concepto_pago=Consulta.objects.get(id_consulta=consulta_id).motivo_consulta,
             monto_pago=monto_pago,
-            fecha_pago="2023-07-23",
+            fecha_pago=fecha_pago,
         )
+        # Actualizamos el campo 'pagada' de la consulta a True
+        consulta_pagada = Consulta.objects.get(id_consulta=consulta_id)
+        consulta_pagada.pagada = True
+        consulta_pagada.save()
+        
         # Generamos la URL correcta usando reverse
         url = reverse('DetallesPago', kwargs={'paciente_id': paciente_id, 'pago_id': pago.id_pago, 'consulta_id': pago.id_consulta.id_consulta})
         messages.success(request, "El pago se ha registrado satisfactoriamente")
@@ -57,33 +63,60 @@ def DetallesPago(request, paciente_id, pago_id, consulta_id):
         'paciente': paciente, 'pago': pago, 'consultas': consulta
     })
     
+from django.urls import reverse
+
 @login_required
 def EditarPago(request, paciente_id, pago_id):
-    consultas = Consulta.objects.all()  # Obtienen todas las consultas desde la base de datos
+    consultas = Consulta.objects.filter(id_paciente=paciente_id, deshabilitado=False)
     paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
     pago = get_object_or_404(Pago, id_pago=pago_id)
-    
+
     if request.method == 'POST':
-        
-        # Obtenemos los datos del formulario
-        fecha_pago = request.POST['pago_fecha']
+        consulta_id = request.POST['consulta_id']
         monto_pago = request.POST['monto_pago']
-        observacion_pago = request.POST['observacion_pago']
-        hora_pago = request.POST['hora_pago']
-        
-        # Actualizamos los campos del pago existente
+        fecha_pago = request.POST['pago_fecha']
+
+        if consulta_id != str(pago.id_consulta.id_consulta):
+            # User changed the associated consultation
+            consulta_anterior = Consulta.objects.get(id_consulta=pago.id_consulta.id_consulta, deshabilitado=False)
+            consulta_anterior.pagada = False
+            consulta_anterior.save()
+
+            consulta_nueva = Consulta.objects.get(id_consulta=consulta_id)
+            consulta_nueva.pagada = True
+            consulta_nueva.save()
+
+            pago.id_consulta = consulta_nueva
+
+        pago.concepto_pago = pago.id_consulta.motivo_consulta
+        pago.monto_pago = monto_pago
         pago.fecha_pago = fecha_pago
-        pago.pago_monto = monto_pago
-        pago.observacion_pago = observacion_pago
-        pago.hora_pago = hora_pago
         pago.save()
-        
-        # Generamos la URL correcta usando reverse
-        url = reverse('DetallesPago', kwargs={'paciente_id': paciente_id, 'pago_id': pago_id})
-        
+
+        url = reverse('DetallesPago', kwargs={'paciente_id': paciente_id, 'consulta_id': pago.id_consulta.id_consulta, 'pago_id': pago_id})
+
         messages.success(request, "El pago se ha actualizado satisfactoriamente")
-        
-        # Redirigimos al usuario a la URL correcta
         return redirect(url)
-    
+
     return render(request, 'Vistas_Pago/EditarPago.html', {'paciente': paciente, 'pago': pago, 'consultas': consultas})
+
+
+
+
+def EliminarPago(request, paciente_id, pago_id):
+    paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
+    pago = get_object_or_404(Pago, id_pago=pago_id)
+
+    if request.method == 'POST':
+        # Marcar el pago como eliminado y desvincularlo de la consulta
+        consulta = pago.id_consulta
+        consulta.pagada = False
+        consulta.save()
+        pago.delete()
+        
+        # Redirigir al usuario a la página de historial de pagos u otra página deseada
+        messages.success(request, "El pago se ha eliminado satisfactoriamente")
+        return redirect('ListarPagos', paciente_id=paciente_id)
+
+    return render(request, 'Vistas_Pago/EliminarPago.html', {'paciente': paciente, 'pago': pago})
+
