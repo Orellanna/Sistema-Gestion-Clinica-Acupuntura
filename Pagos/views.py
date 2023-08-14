@@ -65,30 +65,6 @@ def EditarPago(request, paciente_id, pago_id):
     
     if request.method == 'POST':
         
-<<<<<<< Updated upstream
-        # Obtenemos los datos del formulario
-        fecha_pago = request.POST['pago_fecha']
-        monto_pago = request.POST['monto_pago']
-        observacion_pago = request.POST['observacion_pago']
-        hora_pago = request.POST['hora_pago']
-        
-        # Actualizamos los campos del pago existente
-        pago.fecha_pago = fecha_pago
-        pago.pago_monto = monto_pago
-        pago.observacion_pago = observacion_pago
-        pago.hora_pago = hora_pago
-        pago.save()
-        
-        # Generamos la URL correcta usando reverse
-        url = reverse('DetallesPago', kwargs={'paciente_id': paciente_id, 'pago_id': pago_id})
-        
-        messages.success(request, "El pago se ha actualizado satisfactoriamente")
-        
-        # Redirigimos al usuario a la URL correcta
-        return redirect(url)
-    
-    return render(request, 'Vistas_Pago/EditarPago.html', {'paciente': paciente, 'pago': pago, 'consultas': consultas})
-=======
         # Redirigir al usuario a la página de historial de pagos u otra página deseada
         messages.success(request, "El pago se ha eliminado satisfactoriamente")
         return redirect('ListarPagos', paciente_id=paciente_id)
@@ -131,4 +107,3 @@ def Imprimir_Pago(request, paciente_id, terapia_id, pago_id):
     pisa.CreatePDF(html, dest=response)
 
     return response 
->>>>>>> Stashed changes
