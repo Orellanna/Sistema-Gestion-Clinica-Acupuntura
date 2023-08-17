@@ -101,8 +101,6 @@ def EditarPago(request, paciente_id, pago_id):
     return render(request, 'Vistas_Pago/EditarPago.html', {'paciente': paciente, 'pago': pago, 'consultas': consultas})
 
 
-
-
 def EliminarPago(request, paciente_id, pago_id):
     paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
     pago = get_object_or_404(Pago, id_pago=pago_id)
@@ -125,23 +123,16 @@ def Imprimir_Pago(request, paciente_id, pago_id):
     
     # Obtiene los datos del paciente y la terapia
     paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
-    pago =    get_object_or_404(Pago, id_pago=pago_id)
+    pago =  get_object_or_404(Pago, id_pago=pago_id, id_consulta__id_paciente=paciente_id)
 
-
-   
-
-    # Decodificar la imagen base64 y convertirla en una URL válida
-    #imagen_data_uri = imagen_marcada_base64
-    
     # Obtiene la plantilla HTML
     template = get_template('Reportes/R_Pago.html') 
 
     # Contexto de la plantilla
     context = {
         'paciente': paciente,
-        #'terapia': terapia,
         'pago' : pago,
-        #'imagen_data_uri': imagen_data_uri,
+       
     }
 
     # Renderiza la plantilla HTML con el contexto
@@ -149,6 +140,7 @@ def Imprimir_Pago(request, paciente_id, pago_id):
 
     # Crea el objeto HttpResponse con el tipo de contenido apropiado para un PDF
     response = HttpResponse(content_type='application/pdf')
+    
     response['Content-Disposition'] = 'inline; filename="pago.pdf"'  
 
     # Genera el PDF a partir del HTML renderizado
