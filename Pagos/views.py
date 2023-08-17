@@ -1,14 +1,6 @@
 from django.shortcuts import render, get_object_or_404,redirect
 from django.http import HttpResponse
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-from Pacientes.models import Pago, Paciente, Consulta, Terapia
-=======
 from Pacientes.models import Pago, Pago, Paciente, Consulta, Terapia
->>>>>>> Stashed changes
-=======
-from Pacientes.models import Pago, Pago, Paciente, Consulta, Terapia
->>>>>>> main
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -109,11 +101,6 @@ def EditarPago(request, paciente_id, pago_id):
     return render(request, 'Vistas_Pago/EditarPago.html', {'paciente': paciente, 'pago': pago, 'consultas': consultas})
 
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> main
 def EliminarPago(request, paciente_id, pago_id):
     paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
     pago = get_object_or_404(Pago, id_pago=pago_id)
@@ -131,26 +118,6 @@ def EliminarPago(request, paciente_id, pago_id):
 
     return render(request, 'Vistas_Pago/EliminarPago.html', {'paciente': paciente, 'pago': pago})
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
-@login_required
-def Imprimir_Pago(request, paciente_id, terapia_id, pago_id):
-    
-    # Obtiene los datos del paciente y la terapia
-    paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
-    terapia = get_object_or_404(Terapia, id_terapia=terapia_id, id_consulta__id_paciente=paciente)
-    pago =    get_object_or_404(Pago, id_pago=pago_id)
-
-
-    imagen_marcada_base64 = terapia.esquema_terapia
-
-    # Decodificar la imagen base64 y convertirla en una URL válida
-    imagen_data_uri = imagen_marcada_base64
-    
-=======
 @login_required
 def Imprimir_Pago(request, paciente_id, pago_id):
     
@@ -158,21 +125,14 @@ def Imprimir_Pago(request, paciente_id, pago_id):
     paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
     pago =  get_object_or_404(Pago, id_pago=pago_id, id_consulta__id_paciente=paciente_id)
 
->>>>>>> main
     # Obtiene la plantilla HTML
     template = get_template('Reportes/R_Pago.html') 
 
     # Contexto de la plantilla
     context = {
         'paciente': paciente,
-<<<<<<< HEAD
-        'terapia': terapia,
-        'pago' : pago,
-        'imagen_data_uri': imagen_data_uri,
-=======
         'pago' : pago,
        
->>>>>>> main
     }
 
     # Renderiza la plantilla HTML con el contexto
@@ -180,23 +140,11 @@ def Imprimir_Pago(request, paciente_id, pago_id):
 
     # Crea el objeto HttpResponse con el tipo de contenido apropiado para un PDF
     response = HttpResponse(content_type='application/pdf')
-<<<<<<< HEAD
-=======
     
->>>>>>> main
     response['Content-Disposition'] = 'inline; filename="pago.pdf"'  
 
     # Genera el PDF a partir del HTML renderizado
     pisa.CreatePDF(html, dest=response)
 
     return response 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
-=======
-
-
-
->>>>>>> main
