@@ -1,6 +1,10 @@
 from django.shortcuts import render, get_object_or_404,redirect
 from django.http import HttpResponse
+<<<<<<< Updated upstream
 from Pacientes.models import Pago, Paciente, Consulta, Terapia
+=======
+from Pacientes.models import Pago, Pago, Paciente, Consulta, Terapia
+>>>>>>> Stashed changes
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -112,7 +116,10 @@ def EliminarPago(request, paciente_id, pago_id):
 
     return render(request, 'Vistas_Pago/EliminarPago.html', {'paciente': paciente, 'pago': pago})
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 @login_required
 def Imprimir_Pago(request, paciente_id, terapia_id, pago_id):
     
@@ -149,3 +156,7 @@ def Imprimir_Pago(request, paciente_id, terapia_id, pago_id):
     pisa.CreatePDF(html, dest=response)
 
     return response 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
