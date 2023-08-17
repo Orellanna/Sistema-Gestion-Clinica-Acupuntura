@@ -9,14 +9,14 @@
     <div class="row">
       <div class="col-12">
         <div class="card">
-          <div class="card-body text-center"> <!-- Agregada la clase "text-center" para centrar el contenido -->
-            <h3>Eliminar Consulta</h3>
-            <p class="text-center">¿Estás seguro de que deseas eliminar la consulta <strong>{{consulta.id_consulta}}</strong> - <strong>{{consulta.motivo_consulta}}</strong>?</p>
-            <form method="POST" action="{% url 'EliminarConsulta' paciente_id=paciente.id_paciente consulta_id=consulta.id_consulta %}">
+          <div class="card-body text-center">
+            <h3>Eliminar Pago</h3>
+            <p class="text-center">¿Estás seguro de que deseas eliminar el pago <strong>{{ pago.id_pago }}</strong> - <strong>{{ pago.concepto_pago }}</strong>?</p>
+            <form method="POST" action="{% url 'EliminarPago' paciente_id=paciente.id_paciente pago_id=pago.id_pago %}">
               {% csrf_token %}
-              <div class="d-flex justify-content-center"> <!-- Agregada la clase "d-flex justify-content-center" para centrar los botones -->
+              <div class="d-flex justify-content-center">
                 <input type="submit" value="Eliminar" class="btn btn-danger mx-4">
-                <a href="{% url 'ListarConsultas' paciente_id=paciente.id_paciente %}" class="btn btn-secondary">Cancelar</a>
+                <a href="{% url 'ListarPagos' paciente_id=paciente.id_paciente %}" class="btn btn-secondary">Cancelar</a>
               </div>
             </form>
           </div>
