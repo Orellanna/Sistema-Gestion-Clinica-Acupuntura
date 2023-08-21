@@ -124,6 +124,7 @@ def Imprimir_Pago(request, paciente_id, pago_id):
     # Obtiene los datos del paciente y la terapia
     paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
     pago =  get_object_or_404(Pago, id_pago=pago_id, id_consulta__id_paciente=paciente_id)
+ 
 
     # Obtiene la plantilla HTML
     template = get_template('Reportes/R_Pago.html') 
@@ -132,6 +133,7 @@ def Imprimir_Pago(request, paciente_id, pago_id):
     context = {
         'paciente': paciente,
         'pago' : pago,
+        
        
     }
 
