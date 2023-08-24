@@ -70,16 +70,20 @@
             <div class="part1">
                 <div class="info">
                     <td style="text-align: left;">
-                        <br>
-                        <br>
+                        
+                        
                         
                         <center><FONT SIZE=7><p><strong>DETALLES DE PAGO</strong></p></FONT></center>
                         <br>
                         <br>
-                        <p><strong>Descripcion:</strong> {{ pago.concepto_pago }}</p>
-                        <p><strong>Monto del Pago:</strong> {{ pago.monto_pago }}</p>
-                        <p><strong>Fecha:</strong> {{ pago.fecha_pago  }}</p>
-                        
+                        <FONT SIZE=4><p><strong>Descripcion:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;{{ pago.concepto_pago }}</p></FONT>
+                            <FONT SIZE=4><p><strong>Monto del Pago:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ pago.monto_pago }}</p></FONT>
+                            <FONT SIZE=4><p><strong>Fecha:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ pago.fecha_pago  }}</p></FONT>
+                            <br>
+                            <br>
+                            <br>
                     </td>
                 </div>
                 
@@ -87,12 +91,20 @@
     </table>
     </div>
     <table>
-        <td style="text-align: right;">
+        <td style="text-align: left;">
             <br>
             <br>
             <br>
             <p><strong>firma o sello: _______________________________</strong></p>
-            <p><strong>firma paciente:_______________________________</strong></p>   
+            <td style="text-align: right;">
+                <br>
+                <br>
+                <br>
+                <p><strong>firma paciente:___________________________________</strong></p> 
+                
+                         
+            </td>
+                      
         </td>
     </table>
         
