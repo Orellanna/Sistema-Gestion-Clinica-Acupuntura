@@ -84,11 +84,12 @@ class Consulta(models.Model):
         
 class Cita(models.Model):
     id_cita = models.AutoField(primary_key=True)
-    id_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='id_paciente', blank=True, null=True)
+    #id_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='id_paciente', blank=True, null=True)
     cita_fecha = models.DateField()
     horainicio = models.TimeField()
     horafin = models.TimeField()
-    observacion_cita = models.CharField(max_length=250, blank=True, null=True)
+    titulo_cita = models.TextField(null=False, blank=False)
+    descripcion_cita = models.CharField(blank=True, null=True)
     estadocita = models.BooleanField()
 
     class Meta:

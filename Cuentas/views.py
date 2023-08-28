@@ -39,13 +39,13 @@ def Login(request):
         user = authenticate(request,username=name,password=password)
         if user is not None:
             login(request,user)
-            return redirect('index')
+            return redirect('ListarCitas')
         else:
             messages.error(request, 'Usuario o contraseña incorrectos')
-            return redirect('index')
+            return redirect('ListarCitas')
     else:
         if request.user.is_authenticated:
-            return redirect('index')  # Redirige al usuario autenticado a la vista 'panel'
+            return redirect('ListarCitas')  # Redirige al usuario autenticado a la vista 'panel'
         else:
             return render(request, "Cuentas/login.html",{})
         

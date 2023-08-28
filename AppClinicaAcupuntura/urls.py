@@ -19,4 +19,5 @@ urlpatterns = [
     path('',include('Reportes.urls')),
     path('',include('Terapias.urls')),
     path('',include('Pagos.urls')),
+    path('',include('Citas.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

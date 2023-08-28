@@ -4,7 +4,6 @@ from django.contrib import admin
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
     
     path('<str:paciente_id>/HistorialConsultas/NuevaConsulta/', views.NuevaConsulta, name='NuevaConsulta'),
     
