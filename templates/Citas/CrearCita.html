@@ -47,7 +47,7 @@
                     <label for="horainicio" class="col-sm-4 col-form-label"
                       >Hora de inicio:</label>
                     <div class="col-sm-5">
-                      <input type="time" class="form-control" id="horainicio" name="horainicio" required/>
+                      <input value="08:00" type="time" class="form-control" id="horainicio" name="horainicio" step="900" required/>
                     </div>
                   </div>
                 </div>
@@ -60,7 +60,7 @@
                     <div class="input-group">
 
                       <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-stethoscope"></i></span>
+                        <span class="input-group-text"><i class="fas fa-exclamation-circle"></i></span>
                       </div>
 
                       <input class="form-control" id="titulo_cita" name="titulo_cita" required/>
@@ -86,7 +86,7 @@
                   <label for="descripcion_cita">Descripcion de la Cita:</label>
                   <div class="input-group">
                     <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fas fa-stethoscope"></i></span>
+                      <span class="input-group-text"><i class="fas fa-file"></i></span>
                     </div>
                     <input class="form-control" id="descripcion_cita" name="descripcion_cita" required/>
                     <span class="input-group-append">
@@ -150,9 +150,9 @@
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     // Obtener referencias a los elementos del formulario
-    var motivoInput = document.getElementById("motivo_consulta");
-    var observacionInput = document.getElementById("observacion_consulta");
-    var formulario = document.getElementById("formNuevaConsulta");
+    var motivoInput = document.getElementById("titulo_cita");
+    var observacionInput = document.getElementById("descripcion_cita");
+    var formulario = document.getElementById("formNuevaCita");
 
     // Agregar evento de validación al campo de motivo
     motivoInput.addEventListener("input", function() {
