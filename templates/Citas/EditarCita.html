@@ -157,6 +157,11 @@
         observacionInput.classList.add("is-invalid");
         event.preventDefault(); // Evitar el envío del formulario si hay errores
       }
+
+      if (horainicio.value >= horafin.value) {
+        horainicio.classList.add("is-invalid");
+        event.preventDefault(); // Evitar el envío del formulario si hay errores
+      }
     });
 
     // Función de validación para el campo de motivo
