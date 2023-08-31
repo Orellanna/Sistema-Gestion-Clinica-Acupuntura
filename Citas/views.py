@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render, get_object_or_404,redirect
 from django.http import HttpResponse
-from Pacientes.models import Cita
+from Pacientes.models import Cita, Paciente
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -98,3 +98,35 @@ def HistorialCitas(request):
     return render(request,'Citas/HistorialCitas.html',{
         'citas': citas,
     })
+
+@login_required
+def Imprimir_Cita(request,  cita_id):
+    
+    # Obtiene los datos del paciente y la cita
+    #paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
+    cita =  get_object_or_404(Cita, id_cita=cita_id)
+ 
+
+    # Obtiene la plantilla HTML
+    template = get_template('Reportes/R_Cita.html') 
+
+    # Contexto de la plantilla
+    context = {
+        #'paciente': paciente,
+        'cita' : cita,
+        
+       
+    }
+
+    # Renderiza la plantilla HTML con el contexto
+    html = template.render(context)
+
+    # Crea el objeto HttpResponse con el tipo de contenido apropiado para un PDF
+    response = HttpResponse(content_type='application/pdf')
+    
+    response['Content-Disposition'] = 'inline; filename="cita.pdf"'  
+
+    # Genera el PDF a partir del HTML renderizado
+    pisa.CreatePDF(html, dest=response)
+
+    return response 

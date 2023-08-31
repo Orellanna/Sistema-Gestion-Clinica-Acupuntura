@@ -10,4 +10,5 @@ urlpatterns = [
     path('EditarCita/<int:cita_id>/', views.EditarCita, name='EditarCita'),
     path('EliminarCita/<int:cita_id>/', views.EliminarCita, name='EliminarCita'),
     path('VerCita/<int:cita_id>/', views.VerCita, name='VerCita'),
+    path('VerCita/<int:cita_id>/imprimir_cita/', views.Imprimir_Cita, name='Imprimir_cita')
 ]
