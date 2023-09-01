@@ -87,12 +87,12 @@
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ cita.horafin }}</p></FONT>
                             <FONT SIZE=4><p><strong>Fecha:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ cita.cita_fecha  }}</p></FONT>
-                            <FONT SIZE=4><p><strong>Estado de la Cita:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></FONT>
-                            
-                            <FONT SIZE=4>pendiente</FONT> 
-                            
-                            <FONT SIZE=4>finalizada</FONT> 
-                            
+                            <FONT SIZE=4><p><strong>Estado de la Cita:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% if cita.estadocita %}
+                                finalizada
+                                {% else %}
+                                Pendiente</FONT> </p>
+                            {% endif %}
                             <br>
                             <br>
                             <br>
