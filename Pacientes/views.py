@@ -56,6 +56,7 @@ def Registrar(request):
         sexo_paciente = request.POST['sexo_paciente']
         telefono_paciente = request.POST['telefono_paciente']
         email_paciente = request.POST['email_paciente']
+        fechanac_paciente = request.POST['fechanac_paciente']
         
         nuevo_paciente = Paciente()
         nuevo_paciente.primer_nombre = primer_nombre
@@ -65,7 +66,7 @@ def Registrar(request):
         nuevo_paciente.sexo_paciente = sexo_paciente
         nuevo_paciente.telefono_paciente = telefono_paciente
         nuevo_paciente.email_paciente = email_paciente
-        nuevo_paciente.fecharegistro_paciente = datetime.now()
+        nuevo_paciente.fechanac_paciente = fechanac_paciente
         nuevo_paciente.save()
         
         messages.success(request, "El Paciente se ha registrado satisfactoriamente")
