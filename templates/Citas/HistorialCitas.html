@@ -70,56 +70,56 @@
                 
                 <!-- /.card-header -->
                 <div class="card-body">
+                  <div class="table-responsive">
+                    <table id="example2" class="table table-bordered table-hover">
+                      <thead>
+                      <tr>
+                        <th>Id</th>
+                        <th>Titulo</th>
+                          <th>Fecha Cita</th>
+                          <th>Hora Inicio</th>
+                        <th class="estado-column">Estado</th>
+                        <th>Accion</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      {% for cita in citas %}
+                        {% if not cita.deshabilitado %}
+                      <tr>
+                        <td>{{cita.id_cita}}</td>
+                        <td>{{cita.titulo_cita}}</td>
+                        <td>{{cita.cita_fecha}}</td>
+                          <td>{{cita.horainicio}}</td>
 
-                  <table id="example2" class="table table-bordered table-hover">
-                    <thead>
-                    <tr>
-                      <th>Id</th>
-                      <th>Titulo</th>
-                        <th>Fecha Cita</th>
-                        <th>Hora Inicio</th>
-                      <th class="estado-column">Estado</th>
-                      <th>Accion</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for cita in citas %}
-                      {% if not cita.deshabilitado %}
-                    <tr>
-                      <td>{{cita.id_cita}}</td>
-                      <td>{{cita.titulo_cita}}</td>
-                      <td>{{cita.cita_fecha}}</td>
-                        <td>{{cita.horainicio}}</td>
+                        <td class="text-center">
+                          {% if cita.estadocita %}
+                            <i>✓</i>
+                          {% else %}
+                            <i>X</i>
+                          {% endif %}
+                        </td>
+                        <td class="text-center">
 
-                      <td class="text-center">
-                        {% if cita.estadocita %}
-                          <i>✓</i>
-                        {% else %}
-                          <i>X</i>
+                          <div class="d-inline-flex flex-row align-items-center">
+                              <a href="#" class="ver-citas mr-5 text-dark" data-citas-id="{{cita.id_cita}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Cita">
+                              <i class="fas fa-eye fa-lg" style="color: #0a3461;"></i>
+                            </a>
+                            <a href="{% url 'EliminarCita' cita_id=cita.id_cita %}" class="eliminar-cita mr-5" data-cita-titulo="{{cita.titulo_cita}}"
+                                    data-cita-id="{{cita.id_cita}}" onclick="confirmarEliminacion(event)" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Cita">
+                                    <i class="fas fa-ban fa-lg" style="color: #1e3152;"></i>
+                                  </a>
+                          </div>
+                        </td>
+                      </tr>
                         {% endif %}
-                      </td>
-                      <td class="text-center">
-
-                        <div class="d-inline-flex flex-row align-items-center">
-                            <a href="#" class="ver-citas mr-5 text-dark" data-citas-id="{{cita.id_cita}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Cita">
-                            <i class="fas fa-eye fa-lg" style="color: #0a3461;"></i>
-                          </a>
-                          <a href="{% url 'EliminarCita' cita_id=cita.id_cita %}" class="eliminar-cita mr-5" data-cita-titulo="{{cita.titulo_cita}}"
-                                  data-cita-id="{{cita.id_cita}}" onclick="confirmarEliminacion(event)" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Cita">
-                                  <i class="fas fa-ban fa-lg" style="color: #1e3152;"></i>
-                                </a>
-                        </div>
-                      </td>
-                    </tr>
-                      {% endif %}
-                    {% endfor %}
-                    </tbody> 
-                  </table>
-                  {% comment  %}
-                  <a href="{% url 'ListarConsultasDesabilitadas' paciente_id=paciente.id_paciente%}" class="listar-consultas-deshab">
-                    <i class="fas fa-eye fa-lg" style="color: #1e3152;">Consultas Deshabilitadas</i>
-                  </a> {% endcomment %}
-                  
+                      {% endfor %}
+                      </tbody> 
+                    </table>
+                    {% comment  %}
+                    <a href="{% url 'ListarConsultasDesabilitadas' paciente_id=paciente.id_paciente%}" class="listar-consultas-deshab">
+                      <i class="fas fa-eye fa-lg" style="color: #1e3152;">Consultas Deshabilitadas</i>
+                    </a> {% endcomment %}
+                  </div>
                 </div>
                 
                 <!-- /.card-body -->
