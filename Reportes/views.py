@@ -1,5 +1,5 @@
 from datetime import date, datetime, timedelta
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from Pacientes.models import Paciente
@@ -7,12 +7,8 @@ from Pacientes.models import Consulta
 from Pacientes.models import Pago
 from Pacientes.models import Terapia
 from django.db.models import Q
-from django.contrib import messages
-import base64
 from django.db.models import Sum
-import json
 from django.db.models.functions import TruncMonth
-from decimal import Decimal
 
 @login_required
 def Reportes(request):
@@ -28,6 +24,10 @@ def ListarReportes(request):
     total_pacientes = numpacientes.count()
     total_consulta = numconsulta.count()
     total_terapias = numTerapias.count()
+   
+   # Obtener el total de pacientes reactivados
+    pacientes_habilitados = Paciente.objects.filter(deshabilitado=True).exclude(id_paciente__in=datospacientes).count()
+
 
    # Obtener la lista de pacientes con su total de pagos
     listado_pacientes = []
@@ -69,6 +69,7 @@ def ListarReportes(request):
         'total_consulta': total_consulta,
         'contador_edades': contador_edades,
         'total_terapias': total_terapias,
-        'ingresos_mensuales': ingresos_mensuales
+        'ingresos_mensuales': ingresos_mensuales,
+        'pacientes_habilitados': pacientes_habilitados,
     })
 

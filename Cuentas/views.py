@@ -18,7 +18,11 @@ from django.views.decorators.csrf import csrf_exempt
 
 @login_required
 def HomePage(request):
-    contexto = {'usuario':request.user}
+    contexto = {'usuario':request.user,'pacientes_habilitados': pacientes_habilitados}
+   
+    pacientes_habilitados = Paciente.objects.filter(deshabilitado=True).count()
+    contexto['pacientes_habilitados'] = pacientes_habilitados
+
     return render(request,'index.html',contexto)
 
 def es_administrador(user):
