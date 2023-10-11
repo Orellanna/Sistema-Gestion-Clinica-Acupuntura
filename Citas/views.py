@@ -1,4 +1,4 @@
-import datetime
+from datetime import date, datetime
 from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render, get_object_or_404,redirect
@@ -22,13 +22,17 @@ def CrearCita(request):
         hora_cita = request.POST['horainicio']
         titulo_cita = request.POST['titulo_cita']
         descripcion_cita = request.POST['descripcion_cita']
-
+        import datetime
+        fecha_registro = datetime.datetime.now().strftime("%Y-%m-%d")
+        
+        nueva_cita.fecha_registro = fecha_registro
         nueva_cita.cita_fecha = cita_fecha
         nueva_cita.horainicio = hora_cita
         nueva_cita.descripcion_cita = descripcion_cita
         nueva_cita.titulo_cita = titulo_cita
         #sumar 60 minutos a la hora de inicio
         # Calcular la hora de finalización sumando 60 minutos a la hora de inicio
+        import datetime
         hora_inicio = datetime.datetime.strptime(hora_cita, "%H:%M")
         hora_fin_dt = hora_inicio + datetime.timedelta(minutes=60)
         
@@ -52,14 +56,43 @@ def CrearCita(request):
     return render(request, 'Citas/CrearCita.html', {
         'nueva_cita': nueva_cita,
     })
+
 @login_required
 def ListarCitas(request):
     citas = Cita.objects.all()
-    return render(request,'index.html',{
+    now = datetime.now()
+    
+    for cita in citas:
+        cita_fecha = cita.cita_fecha
+        hora_cita = cita.horainicio
+        fecha_hora_cita = datetime.combine(cita_fecha, hora_cita)
+        
+        if fecha_hora_cita < now:
+            cita.estadocita = True
+        else:
+            cita.estadocita = False
+        
+        cita.save()  # Asegúrate de guardar los cambios en la base de datos
+    
+    return render(request, 'index.html', {
         'citas': citas,
     })
+
 def VerCita(request, cita_id):
     cita = get_object_or_404(Cita, id_cita=cita_id)
+
+    now = datetime.now()
+
+    cita_fecha = cita.cita_fecha
+    hora_cita = cita.horainicio
+    fecha_hora_cita = datetime.combine(cita_fecha, hora_cita)
+        
+    if fecha_hora_cita < now:
+        cita.estadocita = True
+    else:
+        cita.estadocita = False
+        
+    cita.save()  # Asegúrate de guardar los cambios en la base de datos
     return render(request, 'Citas/VerCita.html', {
         'cita': cita,
     })
