@@ -1,4 +1,5 @@
 from datetime import date, datetime
+from datetime import timedelta
 from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render, get_object_or_404,redirect
@@ -59,23 +60,21 @@ def CrearCita(request):
 
 @login_required
 def ListarCitas(request):
-    citas = Cita.objects.all()
     now = datetime.now()
+    end_of_day = now + timedelta(days=1)  # Fin del día actual
+    citas_proximas = Cita.objects.filter(cita_fecha__gte=now, cita_fecha__lt=end_of_day).order_by('cita_fecha', 'horainicio')
     
-    for cita in citas:
-        cita_fecha = cita.cita_fecha
-        hora_cita = cita.horainicio
-        fecha_hora_cita = datetime.combine(cita_fecha, hora_cita)
-        
-        if fecha_hora_cita < now:
+    for cita in citas_proximas:
+        cita_fecha_hora = datetime.combine(cita.cita_fecha, cita.horainicio)  # Combina fecha y hora
+        if cita_fecha_hora < now:
             cita.estadocita = True
         else:
             cita.estadocita = False
-        
-        cita.save()  # Asegúrate de guardar los cambios en la base de datos
+        cita.save()
     
     return render(request, 'index.html', {
-        'citas': citas,
+        'citas': Cita.objects.all(),
+        'citas_proximas': citas_proximas,
     })
 
 def VerCita(request, cita_id):

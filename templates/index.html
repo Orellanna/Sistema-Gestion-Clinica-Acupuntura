@@ -5,95 +5,188 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+  <style>
+
+    .cita-card {
+      margin-bottom: 10px; /* Controla el espaciado entre las tarjetas */
+    }
+    
+    .cita-card-body {
+      padding: 10px; /* Controla el espaciado interno en las tarjetas */
+    }
+
+    #cita-card-container {
+      max-height: 1000px; /* Establece la altura máxima del contenedor */
+      overflow-y: auto; /* Habilita la barra de desplazamiento vertical si es necesario */
+    }
+
+    /* Estilo para el evento */
+    .custom-event {
+      color: #000000; /* Texto negro (#000000) */
+      font-weight: bold;
+      border: 1px solid #D9D9D9; /* Borde ligeramente más oscuro */
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap; /* Evita que el texto se divida en múltiples líneas */
+      overflow: hidden; /* Oculta el texto que desborda el evento */
+      text-overflow: ellipsis; /* Agrega puntos suspensivos (...) al texto que desborda */
+      max-width: 200px; /* Limita el ancho máximo del evento (ajusta según tus necesidades) */
+    }
+
+    .custom-event .event-title {
+      margin: 0;
+    }
+
+    .custom-event .event-icon {
+      margin-right: 5px;
+    }
+
+    /* Estilo para el evento de citas completadas */
+    .completed-event {
+      background-color: #A3D3A5; /* Verde suave para citas completadas */
+      color: #000000; /* Texto negro en negrita para fuerte contraste */
+      font-weight: bold;
+      border: 1px solid #6C966C; /* Borde más oscuro del verde de fondo */
+    }
+
+    /* Estilo para el evento de citas pendientes */
+    .pending-event {
+      background-color: #FFB7C4; /* Rosa suave para citas pendientes */
+      color: #000000; /* Texto negro en negrita para fuerte contraste */
+      font-weight: bold;
+      border: 1px solid #FF8F9B; /* Borde más oscuro del rosa de fondo */
+    }
+
+  </style>
+
   <meta charset="utf-8">
 
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      var calendarEl = document.getElementById('calendar');
-      var eventListEl = document.getElementById('event-list');
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-        eventContent: function(arg) {
-          var eventTitle = arg.event.title;
-          var eventBackgroundColor;
-          var eventTextColor = 'white'; // Definir el color del texto
-          var eventBorderColor = 'black'; // Definir el color del borde
-  
-          if (arg.event.extendedProps.estadocita === true) {
-            eventBackgroundColor = 'green'; // Color verde para citas completadas (estadocita = true)
-          } else {
-            eventBackgroundColor = 'red'; // Color rojo para citas pendientes (estadocita = false)
-          }
-  
-          var eventContent = document.createElement('div');
-          eventContent.classList.add('fc-event');
-          eventContent.style.backgroundColor = eventBackgroundColor;
-          eventContent.style.color = eventTextColor;
-          eventContent.style.borderColor = eventBorderColor;
-          eventContent.textContent = eventTitle;
-  
-          return { domNodes: [eventContent] };
+        var calendarEl = document.getElementById('calendar');
+        var eventListEl = document.getElementById('event-list');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          eventContent: function(arg) {
+            var eventTitle = arg.event.title;
+            var eventClassName = arg.event.extendedProps.estadocita ? 'completed-event' : 'pending-event';
+
+            var eventContent = document.createElement('div');
+            eventContent.classList.add('custom-event', eventClassName);
+
+            var eventIcon = document.createElement('i');
+            eventIcon.classList.add('fas', 'fa-calendar', 'event-icon');
+
+            var eventTitleElement = document.createElement('p');
+            eventTitleElement.classList.add('event-title');
+            eventTitleElement.textContent = eventTitle;
+
+            eventContent.appendChild(eventIcon);
+            eventContent.appendChild(eventTitleElement);
+
+            return { domNodes: [eventContent] };
         },
-        headerToolbar: {
-          start: 'dayGridMonth,timeGridWeek,timeGridDay custom1',
-          center: 'title',
-          end: 'prevYear,prev,next,nextYear'
-        },
-        locale: 'es',
-        eventDisplay: 'block',
-        nowIndicator: true,
-        events: [{% for cita in citas %}
-          {
-            title: '{{ cita.titulo_cita }}',
-            start: '{{ cita.cita_fecha|date:"Y-m-d" }}T{{ cita.horainicio|time:"H:i:s" }}',
-            end: '{{ cita.cita_fecha|date:"Y-m-d" }}T{{ cita.horafin|time:"H:i:s" }}',
-            url: '{% url 'VerCita' cita_id=cita.id_cita %}',
-            extendedProps: {
-              estadocita: {{ cita.estadocita|lower }} // Convierte el valor booleano en minúsculas
+            headerToolbar: {
+                start: 'dayGridMonth,timeGridWeek,timeGridDay custom1',
+                center: 'title',
+                end: 'prevYear,prev,next,nextYear'
+            },
+            locale: 'es',
+            eventDisplay: 'block',
+            nowIndicator: true,
+            events: [{% for cita in citas %}
+                {
+                    title: '{{ cita.titulo_cita }}',
+                    start: '{{ cita.cita_fecha|date:"Y-m-d" }}T{{ cita.horainicio|time:"H:i:s" }}',
+                    end: '{{ cita.cita_fecha|date:"Y-m-d" }}T{{ cita.horafin|time:"H:i:s" }}',
+                    url: '{% url 'VerCita' cita_id=cita.id_cita %}',
+                    extendedProps: {
+                        estadocita: {{ cita.estadocita|lower }}
+                    }
+                },
+            {% endfor %}
+            ],
+            customButtons: {
+                custom1: {
+                    text: 'Crear',
+                    click: function() { window.location.href = '/CrearCita/'; }
+                },
+                dayGridMonth: { text: 'Mes', click: function() { calendar.changeView('dayGridMonth'); }},
+                timeGridWeek: { text: 'Semana', click: function() { calendar.changeView('timeGridWeek'); }},
+                timeGridDay: { text: 'Día', click: function() { calendar.changeView('timeGridDay'); }}
+            },
+            eventClick: function(info) {
+                info.jsEvent.preventDefault();
+                if (info.event.url) {
+                    window.location.href = info.event.url;
+                }
             }
-          },
-        {% endfor %}
-        
-        ],
-        customButtons: {
-          custom1: {
-            text: 'Crear',
-            click: function() { window.location.href = '/CrearCita/'; }
-          },
-          dayGridMonth: { text: 'Mes', click: function() { calendar.changeView('dayGridMonth'); }},
-          timeGridWeek: { text: 'Semana', click: function() { calendar.changeView('timeGridWeek'); }},
-          timeGridDay: { text: 'Día', click: function() { calendar.changeView('timeGridDay'); }}
-        },
-        eventClick: function(info) {
-          info.jsEvent.preventDefault();
-          if (info.event.url) {
-            window.location.href = info.event.url;
-          }
-        }
-      });
-      calendar.render();
-  
-      // Populate the event list
-      var events = calendar.getEvents();
-      events.sort(function(a, b) {
-        return a.start - b.start; // Sort events from most recent to oldest
-      });
-      events.forEach(function(event) {
-        var eventCard = document.createElement('div');
-        eventCard.classList.add('event-card');
-        eventCard.textContent = event.title;
-        eventListEl.appendChild(eventCard);
-      });
+        });
+        calendar.render();
+
+        var events = calendar.getEvents();
+        events.sort(function(a, b) {
+            return a.start - b.start;
+        });
+        events.forEach(function(event) {
+            var eventCard = document.createElement('div');
+            eventCard.classList.add('event-card');
+            eventCard.textContent = event.title;
+            eventListEl.appendChild(eventCard);
+        });
     });
-  </script>
-  
+</script>
 </head>
 <body>
-    <div id='calendar'></div>
-</body>
-</html>
+  
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+
+        <!-- Eventos proximos-->
+        <div class="col-md-3">
+          <div class="sticky-top mb-3">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">Eventos de Hoy</h2>
+              </div>
+
+              <div class="card-body" id="cita-card-container">
+                <ul class="list-group">
+                  {% for cita in citas_proximas %}
+                    <li class="list-group-item">
+                      <div class="card cita-card bg-light ">
+                        <div class="card-body cita-card-body ">
+                          <h5 class="card-header">{{ cita.titulo_cita }}</h5>
+                          
+                          <p class="card-text"><strong>Hora:</strong> {{ cita.horainicio|time:"H:i" }}</p>
+                        </div>
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              
+              
+              
+
+            </div>
+          </div>
+        </div>
+    
+        <!-- Calendario-->
+        <div class="col-md-9">
+          <div class="card card-primary">
+            <div class="card-body p-0">
+              <div id="calendar"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
 
 
-  
-  
 {% endblock %}
