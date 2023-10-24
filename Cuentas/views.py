@@ -56,6 +56,7 @@ def cierre_sesion(request):
         
 
 @login_required
+@user_passes_test(es_administrador)
 def GestionUsuarios(request):
     usuarios = User.objects.all()
     return render(request,'Administracion/GestionUsuarios.html',{
@@ -66,6 +67,7 @@ def GestionUsuarios(request):
 from django.contrib import messages
 
 @login_required
+@user_passes_test(es_administrador)
 def NuevoUsuario(request):
     if request.method == 'POST':
         usuario = request.POST['username']
@@ -106,6 +108,7 @@ def NuevoUsuario(request):
 
 
 @login_required
+@user_passes_test(es_administrador)
 def VerUsuario(request, username):
     usuario = get_object_or_404(User, username=username)
     
@@ -115,6 +118,7 @@ def VerUsuario(request, username):
     
 
 @login_required
+@user_passes_test(es_administrador)
 def EliminarUsuario(request, username):
     usuario = get_object_or_404(User, username=username)
     
@@ -126,6 +130,7 @@ def EliminarUsuario(request, username):
     return render(request, 'Cuentas/eliminarUsuario.html', {'usuario': usuario})
 
 @login_required
+@user_passes_test(es_administrador)
 def EditarUsuario(request, username):
     usuario = get_object_or_404(User, username=username)
     grupos_usuario = usuario.groups.values_list('name', flat=True)
@@ -165,6 +170,7 @@ def EditarUsuario(request, username):
     })
     
 @login_required
+@user_passes_test(es_administrador)
 def ListarPacientesDeshabilitados(request):
     pacientes = Paciente.objects.filter(deshabilitado=True)
     fecha_actual = datetime.today()
@@ -179,7 +185,9 @@ def ListarPacientesDeshabilitados(request):
     return render(request,'Administracion/ListarPacientesDeshabilitados.html',{
         'pacientes': pacientes
     })
+    
 @login_required
+@user_passes_test(es_administrador)
 def HabilitarPaciente(request, paciente_id):
     
     paciente = get_object_or_404(Paciente, id_paciente=paciente_id)
