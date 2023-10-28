@@ -154,3 +154,7 @@ locale.setlocale(locale.LC_ALL, 'es_ES.UTF-8')
 MEDIA_URL= '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static','img')
 
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'AppClinicaAcupuntura.settings')
+os.environ["LANG"] = "es_ES.UTF-8"
+os.environ["LC_ALL"] = "es_ES.UTF-8"
+
