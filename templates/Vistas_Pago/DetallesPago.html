@@ -11,14 +11,19 @@
         <!-- Payment Entry Form -->
         <div class="card card-primary">
           <div class="card-header bg-primary text-white">
-            <h3 class="mb-0">Detalles de Pago</h3>
+            <h3 class="mb-0">Detalles de Pago:</h3>
           </div>
           <!-- /.card-header -->
           <form>
             <div class="card-body">
               <!-- Combo box for selecting the consultation -->
               <div class="form-group">
-                <label for="consultationSelect">Consulta Pagada:</label>
+                <label color="lightgray" for="consultationSelect">ID Pago: {{pago.id_pago}}</label>
+                  <!-- Add more options as needed -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="consultationSelect">Consulta:</label>
                 <p>{{ pago.concepto_pago }}</p>
                   <!-- Add more options as needed -->
                 </select>
@@ -58,7 +63,8 @@
           ><i class="fas fa-arrow-left"></i>&nbsp; Volver al Historial</a>
       </div>
       <div class="col-sm-4 text-center">
-        <a href="#" target="_blank" class="btn btn-dark">
+        <a href="{%url 'Imprimir_Pago' paciente_id=paciente.id_paciente pago_id=pago.id_pago  %}" target="_blank" class="btn btn-dark">
+
           <i class="nav-icon fas fa-print"></i>&nbsp;&nbsp;Generar Reporte</a>
 
       </div>

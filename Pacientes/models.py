@@ -1,4 +1,5 @@
 from datetime import date
+import datetime
 from django.db import models
 import base64
 
@@ -83,14 +84,25 @@ class Consulta(models.Model):
     
         
 class Cita(models.Model):
-    id_cita = models.AutoField(primary_key=True)
-    id_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='id_paciente', blank=True, null=True)
+    id_cita = models.TextField(primary_key=True)
+    #id_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='id_paciente', blank=True, null=True)
     cita_fecha = models.DateField()
     horainicio = models.TimeField()
     horafin = models.TimeField()
-    observacion_cita = models.CharField(max_length=250, blank=True, null=True)
+    titulo_cita = models.TextField(null=False, blank=False)
+    descripcion_cita = models.CharField(blank=True, null=True)
     estadocita = models.BooleanField()
-
+    fecha_registro = models.DateField()
+    def save(self, *args, **kwargs):
+        if not self.id_cita:
+            # Obtener el dia de registro de la cita
+            fecha_actual = datetime.datetime.now().strftime("%Y-%m-%d")
+            # Obtener el número de citas previas para ese dia
+            citas_previas = Cita.objects.filter(fecha_registro=fecha_actual).count() 
+            numero_cita = citas_previas + 1
+            # Crear el ID de la cita en el formato requerido
+            self.id_cita = f'{fecha_actual}C{numero_cita:02}'
+        super().save(*args, **kwargs)
     class Meta:
         managed = False
         db_table = 'cita'
@@ -149,12 +161,21 @@ class Inventario(models.Model):
         db_table = 'inventario'
 
 class Pago(models.Model):
-    id_pago = models.AutoField(primary_key=True)
+    id_pago = models.TextField(primary_key=True)
     id_consulta = models.ForeignKey(Consulta, models.DO_NOTHING, db_column='id_consulta', blank=True, null=True)
     monto_pago = models.TextField()  # This field type is a guess.
     fecha_pago = models.DateField()
     concepto_pago = models.CharField(max_length=150)
-
+    def save(self, *args, **kwargs):
+        if not self.id_pago:
+            # Obtener el ID de la consulta asociada a este pago
+            consulta_id = self.id_consulta.id_consulta
+            # Obtener el número de terapias previas para esa consulta
+            pagos_previos = Pago.objects.filter(id_consulta=self.id_consulta).count()
+            numero_pago = pagos_previos + 1
+            # Crear el ID de la terapia en el formato requerido
+            self.id_pago = f'{consulta_id}P{numero_pago:02}'
+        super().save(*args, **kwargs)
     class Meta:
         managed = False
         db_table = 'pago'

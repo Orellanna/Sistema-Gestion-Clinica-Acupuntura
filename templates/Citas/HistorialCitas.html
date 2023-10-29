@@ -1,0 +1,201 @@
+{% extends 'index_master.html' %}
+{% load static %}
+{% block content %} 
+{% if messages %}
+<div class="messages">
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+      {{ message }}
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+    <!-- Content Header (Page header) -->
+    <style>
+        /* Estilos para la ventana emergente */
+        .ventana-emergente {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-color: rgba(255, 255, 255, 0.9);
+          border-radius: 8px;
+          padding: 20px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+          text-align: center;
+        }
+      
+        .ventana-emergente h3 {
+          margin-top: 0;
+        }
+      
+        .ventana-emergente p {
+          margin-bottom: 20px;
+        }
+      
+        .ventana-emergente button {
+          margin: 0 10px;
+        }
+      
+        /* Estilos para el fondo difuminado */
+        .fondo-difuminado {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          backdrop-filter: blur(1px);
+          z-index: 9999;
+        }
+      </style>
+    <section class="content-header">  
+      <div class="container-fluid">
+        <div class="row mb-2 justify-content-between">
+          <div class="col-sm-6">
+            <h2>Historial de Citas</h2>
+          </div>
+          <div class="col-sm-6">
+            <a href="{% url 'CrearCita' %}" class="btn btn-success ml-auto float-right nav-link" id="consulta-link" onclick="highlightIcon('consultas-link')"><i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;Nueva Cita</a>
+          </div>
+        </div>
+      </div>
+      
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table id="example1" class="table table-bordered table-hover">
+                      <thead>
+                      <tr>
+                        <th>Id</th>
+                        <th>Titulo</th>
+                          <th>Fecha Cita</th>
+                          <th>Hora Inicio</th>
+                        <th class="estado-column">Estado</th>
+                        <th>Accion</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      {% for cita in citas %}
+                        {% if not cita.deshabilitado %}
+                      <tr>
+                        <td>{{cita.id_cita}}</td>
+                        <td>{{cita.titulo_cita}}</td>
+                        <td>{{cita.cita_fecha}}</td>
+                          <td>{{cita.horainicio}}</td>
+
+                        <td class="text-center">
+                          {% if cita.estadocita %}
+                            <i>✓</i>
+                          {% else %}
+                            <i>X</i>
+                          {% endif %}
+                        </td>
+                        <td class="text-center">
+
+                          <div class="d-inline-flex flex-row align-items-center">
+                              <a href="#" class="ver-citas mr-5 text-dark" data-citas-id="{{cita.id_cita}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Cita">
+                              <i class="fas fa-eye fa-lg" style="color: #0a3461;"></i>
+                            </a>
+                            <a href="{% url 'EliminarCita' cita_id=cita.id_cita %}" class="eliminar-cita mr-5" data-cita-titulo="{{cita.titulo_cita}}"
+                                    data-cita-id="{{cita.id_cita}}" onclick="confirmarEliminacion(event)" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Cita">
+                                    <i class="fas fa-ban fa-lg" style="color: #1e3152;"></i>
+                                  </a>
+                          </div>
+                        </td>
+                      </tr>
+                        {% endif %}
+                      {% endfor %}
+                      </tbody> 
+                    </table>
+                    {% comment  %}
+                    <a href="{% url 'ListarConsultasDesabilitadas' paciente_id=paciente.id_paciente%}" class="listar-consultas-deshab">
+                      <i class="fas fa-eye fa-lg" style="color: #1e3152;">Consultas Deshabilitadas</i>
+                    </a> {% endcomment %}
+                  </div>
+                </div>
+                
+                <!-- /.card-body -->
+              </div>
+              
+              <!-- /.card -->
+  <!-- /.content-wrapper -->
+
+  <script>
+    $(function () {
+      $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+  <script>
+    
+    document.addEventListener("DOMContentLoaded", function() {
+
+      // Obtener todos los elementos con la clase "ver-consulta"
+      const verCitas = document.querySelectorAll(".ver-citas");
+  
+      // Agregar un evento de clic a cada enlace
+        verCitas.forEach(function(enlace) {
+        enlace.addEventListener("click", function(event) {
+        event.preventDefault();
+          
+          // Obtener el ID de la consulta del atributo data-consulta-id
+          const citaId = enlace.getAttribute("data-citas-id");
+       
+          // Redirigir a la página de detalles de la consulta con el ID
+          window.location.href = "/"+ "VerCita/" + citaId + "/";
+        });
+      });
+    });
+
+  </script>
+  <script>
+    function confirmarEliminacion(event) {
+      event.preventDefault();
+  
+      const enlace = event.currentTarget;
+      const citaId = enlace.getAttribute("data-cita-id");
+      const tituloCita = enlace.getAttribute("data-cita-titulo");
+  
+      const ventanaEmergente = document.createElement("div");
+      ventanaEmergente.classList.add("ventana-emergente");
+  
+      const titulo = document.createElement("h3");
+      titulo.textContent = "Confirmar eliminacion";
+  
+      const mensaje = document.createElement("p");
+      mensaje.textContent = "¿Estás seguro que quieres eliminar la cita '" + tituloCita + "'?";
+  
+      const botonAceptar = document.createElement("button");
+      botonAceptar.textContent = "Aceptar";
+      botonAceptar.addEventListener("click", function() {
+        window.location.href = `/EliminarCita/${citaId}/`;
+      });
+  
+      const botonCancelar = document.createElement("button");
+      botonCancelar.textContent = "Cancelar";
+      botonCancelar.addEventListener("click", function() {
+        ventanaEmergente.remove();
+        document.body.removeChild(fondoDifuminado);
+      });
+  
+      ventanaEmergente.appendChild(titulo);
+      ventanaEmergente.appendChild(mensaje);
+      ventanaEmergente.appendChild(botonAceptar);
+      ventanaEmergente.appendChild(botonCancelar);
+  
+      const fondoDifuminado = document.createElement("div");
+      fondoDifuminado.classList.add("fondo-difuminado");
+      fondoDifuminado.appendChild(ventanaEmergente);
+  
+      document.body.appendChild(fondoDifuminado);
+    }
+  </script>
+{% endblock %}

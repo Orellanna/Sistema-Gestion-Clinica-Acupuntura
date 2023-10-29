@@ -127,8 +127,7 @@
           <div class="logout-dialog-content">
             <h3>¿Estás seguro de que deseas cerrar sesión?</h3>
             <div class="logout-dialog-buttons">
-              <a href="{% url 'cerrar_sesion' %}" class="btn btn-danger">SI</a>
-              
+              <a href="{% url 'cerrar_sesion' %}" style="opacity: 1; color: white;" class="btn btn-danger">SI</a>              
 
               <button id="logout-cancel" class="btn btn-secondary">Cancelar</button>
             </div>
@@ -141,7 +140,7 @@
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
             <li class="nav-item">
-              <a href="{%url 'index'%}" class="nav-link">
+              <a href="{%url 'ListarCitas'%}" class="nav-link">
                 <i class="nav-icon fas fa-home" style="color: #000000; font-size: 1.25em;"></i>
                 <p style="color: #000000; font-size: 1.25em;">
                   Inicio
@@ -157,7 +156,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{% url 'construccion' %}" class="nav-link">
+              <a href="{%url 'HistorialCitas' %}" class="nav-link">
                 <i class="nav-icon fas fa-calendar-plus" style="color: #000000; font-size: 1.25em;"></i>
                 <p style="color: #000000; font-size: 1.25em;">
                   Citas
@@ -381,7 +380,6 @@
       "ordering": true,
       "info": true,
       "autoWidth": true,
-      "responsive": true,
       "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
       "buttons": ["copy","excel", "pdf", "print"],
       "dom": 'Bfrtip',

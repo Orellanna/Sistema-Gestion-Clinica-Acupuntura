@@ -4,9 +4,7 @@ from django.contrib import admin
 
 
 
-urlpatterns = [
-    path('', views.index, name='index'),
-    
+urlpatterns = [    
     #urls libreria
     path('GestionPacientes/', views.GestionPacientes,name='GestionPacientes'),
     path('datosPersonales/<str:id_paciente>/', views.DatosPersonales,name='DatosPersonales'),

@@ -1,0 +1,80 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reporte de Terapia</title>
+    <style>
+        @page {
+            size: A4 landscape;
+            margin: 10mm;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between; /* Alinear elementos en la parte superior */
+            align-items: flex-start; /* Alinear elementos en la parte superior */
+        }
+        
+        .info {
+            margin-right: 10px;
+        }
+        .logo {
+            max-width: 100px; /* Tamaño del logo reducido */
+            height: auto;
+            order: 2; /* Cambia el orden del logo para colocarlo al final */
+        }
+    
+        .logo {
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    </style>
+</head>
+</head>
+<body>
+    <table>
+        <tr>
+          <td>
+            <img class="logo" src="static/img/logo.jpg" alt="Logo de la clínica">
+          </td>
+          <td style="text-align: right;">
+            TERAPIA HOLÍSTICA ACUPUNTURA<br>
+            Bertha Lidia Rodríguez Chavarría<br>
+            Master en Acupuntura y Fisioterapia China.<br>
+            4a. Avenida Norte N°. 3-10, Local 3 Santa Tecla.<br>
+            terapiaholistica.sv@gmail.com<br>
+            Tel.: +503 7611 7000.
+          </td>
+        </tr>
+      </table>
+    <div class="container">
+        <div class="part1">
+            <div class="info">
+                <td style="text-align: center;">
+                    <center>
+                        <p><strong>DETALLES DE PAGO</strong></p>
+                        <p><strong>Descripcion:</strong> {{ pago.concepto_pago }}</p>
+                        <p><strong>Monto del Pago:</strong> {{ pago.monto_pago }}</p>
+                        <p><strong>Fecha:</strong> {{ pago.fecha_pago  }}</p>
+                    </center>
+                </td>
+            </div>
+            
+        </div>
+    </div>
+    <div class="part2">
+        <center>
+           <img src="{{ imagen_data_uri }}" alt="Imagen">
+        </center>
+    </div>
+</body>
+</html>

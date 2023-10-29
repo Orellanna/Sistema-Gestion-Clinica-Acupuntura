@@ -25,51 +25,52 @@
                 
                 <!-- /.card-header -->
                 <div class="card-body">
+                  <div class="table-responsive">
+                    <table id="example2" class="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th>Id</th>
+                          <th>Motivo</th>
+                          <th>Fecha</th>
+                          <th class="pagada-column">Pagada</th>
+                          <th>Accion</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for consulta in consultas %}
+                        {% if not consulta.deshabilitado %}
+                            <tr>
+                              <td>{{consulta.id_consulta}}</td>
+                              <td>{{consulta.motivo_consulta}}</td>
+                              <td>{{consulta.obtener_consulta_fecha_formateada}}</td>
+                              <td class="text-center">
+                                {% if consulta.pagada %}
+                                  <i>✓</i>
+                                {% else %}
+                                  <i>X</i>
+                                {% endif %}
+                              </td>
+                              <td class="text-center">
 
-                  <table id="example2" class="table table-bordered table-hover">
-                    <thead>
-                    <tr>
-                      <th>Id</th>
-                      <th>Motivo</th>
-                      <th>Fecha</th>
-                      <th class="pagada-column">Pagada</th>
-                      <th>Accion</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for consulta in consultas %}
-                      {% if not consulta.deshabilitado %}
-                    <tr>
-                      <td>{{consulta.id_consulta}}</td>
-                      <td>{{consulta.motivo_consulta}}</td>
-                      <td>{{consulta.obtener_consulta_fecha_formateada}}</td>
-                      <td class="text-center">
-                        {% if consulta.pagada %}
-                          <i>✓</i>
-                        {% else %}
-                          <i>X</i>
+                                <div class="d-inline-flex flex-row align-items-center">
+                                  <a href="#" class="ver-consulta mr-5" data-consulta-id="{{consulta.id_consulta}}" data-paciente-id="{{paciente.id_paciente}}">   
+                                    <i class="fas fa-eye fa-lg" style="color: #0a3461;"></i>
+                                  </a>
+
+                                  <a href="{% url 'EliminarConsulta' paciente_id=paciente.id_paciente consulta_id=consulta.id_consulta %}" class="eliminar-consulta" data-consulta-id="{{consulta.id_consulta}}" data-paciente-id="{{paciente.id_paciente}}">
+                                    <i class="fas fa-trash fa-lg" style="color: #1e3152;"></i>
+                                  </a>
+                                </div>
+                              </td>
+                            </tr>
                         {% endif %}
-                      </td>
-                      <td class="text-center">
-
-                        <div class="d-inline-flex flex-row align-items-center">
-                          <a href="#" class="ver-consulta mr-5" data-consulta-id="{{consulta.id_consulta}}" data-paciente-id="{{paciente.id_paciente}}">   
-                            <i class="fas fa-eye fa-lg" style="color: #0a3461;"></i>
-                          </a>
-
-                          <a href="{% url 'EliminarConsulta' paciente_id=paciente.id_paciente consulta_id=consulta.id_consulta %}" class="eliminar-consulta" data-consulta-id="{{consulta.id_consulta}}" data-paciente-id="{{paciente.id_paciente}}">
-                            <i class="fas fa-trash fa-lg" style="color: #1e3152;"></i>
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                      {% endif %}
-                    {% endfor %}
-                    </tbody> 
-                  </table>
-                  <a href="{% url 'ListarConsultasDesabilitadas' paciente_id=paciente.id_paciente%}" class="listar-consultas-deshab">
-                    <i class="fas fa-eye fa-lg" style="color: #1e3152;">Consultas Deshabilitadas</i>
-                  </a>
+                      {% endfor %}
+                      </tbody> 
+                    </table>
+                    <a href="{% url 'ListarConsultasDesabilitadas' paciente_id=paciente.id_paciente%}" class="listar-consultas-deshab">
+                      <i class="fas fa-eye fa-lg" style="color: #1e3152;">Consultas Deshabilitadas</i>
+                    </a>
+                  </div>
                 </div>
                 
                 <!-- /.card-body -->

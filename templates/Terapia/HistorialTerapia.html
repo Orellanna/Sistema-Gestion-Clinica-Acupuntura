@@ -25,41 +25,41 @@
                 
                 <!-- /.card-header -->
                 <div class="card-body">
+                  <div class="table-responsive">
+                    <table id="example2" class="table table-bordered table-hover">
+                      <thead>
+                      <tr>
+                        <th>Id</th>
+                        <th>Consulta</th>
+                        <th>Observacion</th>
+                        <th>Accion</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      {% for terapia in terapias %}
+                        {% comment %} {% if not Terapia.deshabilitado %} {% endcomment %}
+                      <tr>
+                        <td>{{terapia.id_terapia}}</td>
+                        <td>{{terapia.id_consulta.motivo_consulta}}</td>
+                        <td>{{terapia.observacion_terapia}}</td>
+                        <td class="text-center">
 
-                  <table id="example2" class="table table-bordered table-hover">
-                    <thead>
-                    <tr>
-                      <th>Id</th>
-                      <th>Consulta</th>
-                      <th>Observacion</th>
-                      <th>Accion</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for terapia in terapias %}
-                      {% comment %} {% if not Terapia.deshabilitado %} {% endcomment %}
-                    <tr>
-                      <td>{{terapia.id_terapia}}</td>
-                      <td>{{terapia.id_consulta.motivo_consulta}}</td>
-                      <td>{{terapia.observacion_terapia}}</td>
-                      <td class="text-center">
+                          <div class="d-inline-flex flex-row align-items-center">
+                            <a href="#" class="ver-terapia mr-5" data-terapia-id="{{terapia.id_terapia}}" data-paciente-id="{{paciente.id_paciente}}">   
+                              <i class="fas fa-eye fa-lg" style="color: #0a3461;"></i>
+                            </a>
 
-                        <div class="d-inline-flex flex-row align-items-center">
-                          <a href="#" class="ver-terapia mr-5" data-terapia-id="{{terapia.id_terapia}}" data-paciente-id="{{paciente.id_paciente}}">   
-                            <i class="fas fa-eye fa-lg" style="color: #0a3461;"></i>
-                          </a>
-
-                          <a href="{% url 'EliminarTerapia' paciente.id_paciente terapia.id_terapia %}" class="eliminar-Terapia" data-Terapia-id="{{Terapia.id_terapia}}" data-paciente-id="{{paciente.id_paciente}}">
-                            <i class="fas fa-trash fa-lg" style="color: #1e3152;"></i>
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                      {% comment %} {% endif %} {% endcomment %}
-                    {% endfor %}
-                    </tbody> 
-                  </table>
-                  
+                            <a href="{% url 'EliminarTerapia' paciente.id_paciente terapia.id_terapia %}" class="eliminar-Terapia" data-Terapia-id="{{Terapia.id_terapia}}" data-paciente-id="{{paciente.id_paciente}}">
+                              <i class="fas fa-trash fa-lg" style="color: #1e3152;"></i>
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                        {% comment %} {% endif %} {% endcomment %}
+                      {% endfor %}
+                      </tbody> 
+                    </table>
+                  </div>
                 </div>
                 <!-- /.card-body -->
               </div>

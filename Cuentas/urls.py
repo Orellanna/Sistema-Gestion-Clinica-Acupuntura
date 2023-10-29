@@ -8,7 +8,6 @@ from .views import HomePage,Login
 
 
 urlpatterns = [
-    path('home/', HomePage, name='home'),
     path('administracion/', views.Administracion, name='administracion'),
     path('login/', Login, name='login-page'),
     path('cerrar_sesion/', views.cierre_sesion, name='cerrar_sesion'),

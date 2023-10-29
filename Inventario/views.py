@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from datetime import date, datetime
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from Pacientes.models import Inventario
@@ -9,10 +9,16 @@ from django.db.models import Sum
 import json
 # Create your views here.
 
+def es_administrador(user):
+    return user.groups.filter(name='Administrador').exists()
+
 @login_required
+@user_passes_test(es_administrador)
 def index(request):
     return render(request,'index.html')
+
 @login_required
+@user_passes_test(es_administrador)
 def ListarInventario(request):
     productos = Inventario.objects.all()
     total_productos = productos.count()
@@ -35,6 +41,7 @@ def ListarInventario(request):
     })
 
 @login_required
+@user_passes_test(es_administrador)
 def RegistrarProducto(request):
     
     nuevo_producto = Inventario()  # Inicializamos la variable fuera del bloque if
@@ -70,6 +77,7 @@ def RegistrarProducto(request):
     
 
 @login_required
+@user_passes_test(es_administrador)
 def DetallesProducto(request, id_suministro):
     producto = get_object_or_404(Inventario, pk=id_suministro)
 
@@ -86,6 +94,7 @@ def DetallesProducto(request, id_suministro):
     })
     
 @login_required
+@user_passes_test(es_administrador)
 def EliminarProducto(request, id_suministro):
     producto = get_object_or_404(Inventario, id_suministro=id_suministro)
 
@@ -99,6 +108,7 @@ def EliminarProducto(request, id_suministro):
     return render(request, 'Vistas_Inventario/EliminarProducto.html', {'producto': producto,})   
 
 @login_required
+@user_passes_test(es_administrador)
 def EditarProducto(request, id_suministro):
     
     producto = get_object_or_404(Inventario, id_suministro=id_suministro)

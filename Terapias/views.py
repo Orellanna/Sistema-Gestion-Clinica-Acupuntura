@@ -11,6 +11,7 @@ from django.template.loader import get_template
 from django.http import JsonResponse
 import base64
 from xhtml2pdf import pisa
+from django.http import HttpResponseBadRequest
 
 @login_required
 def ListarTerapias(request, id_paciente):
@@ -28,9 +29,14 @@ def NuevaTerapia(request,paciente_id):
     if request.method == 'POST':
         # Procesar el formulario enviado
         image_data = request.POST.get('image_data')
-        numero_puntos = int(request.POST.get('numero_puntos'))
+        numero_puntos = request.POST.get('numero_puntos')
         
-
+        if numero_puntos and numero_puntos.isdigit():
+            numero_puntos = int(numero_puntos)
+        else:
+            messages.warning(request, "Debe marcar al menos un punto en el esquema")
+            return redirect('NuevaTerapia', paciente_id=paciente_id)
+        
         observacion_terapia = request.POST['observacion_terapia']
         consulta_terapia= request.POST['consulta_terapia']
         

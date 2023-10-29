@@ -1,0 +1,195 @@
+{% extends 'index_master.html' %} 
+
+{% block content %}
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Editar Cita</h1>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<form action="{% url 'EditarCita' cita_id=cita.id_cita %}" method="POST" id="formEditarCita">
+  {% csrf_token %}
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <!-- Default box -->
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <div class="form-group row">
+                    <label for="fechacita" class="col-sm-4 col-form-label">Fecha de Cita:</label>
+                    <div class="col-sm-5">
+                      <input type="date" class="form-control" id="fechacita" name="fechacita" value="{{ cita.cita_fecha|date:'Y-m-d' }}" required/>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group row">
+                    <label for="horainicio" class="col-sm-4 col-form-label">Hora de inicio:</label>
+                    <div class="col-sm-5">
+                      <input type="time" class="form-control" id="horainicio" name="horainicio" value="{{ cita.horainicio|time:'H:i' }}" required/>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                    <div class="form-group row">
+                      <label for="horafin" class="col-sm-4 col-form-label">Hora Fin:</label>
+                      <div class="col-sm-5">
+                        <input type="time" class="form-control" id="horafin" name="horafin" value="{{ cita.horafin|time:'H:i' }}" required/>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label for="titulo_cita">Titulo:</label>
+                    <input class="form-control" id="titulo_cita" name="titulo_cita" value="{{ cita.titulo_cita }}" required/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="form-group">
+                  <label for="descripcion_cita">Descripcion de la Cita:</label>
+                  <input class="form-control" id="descripcion_cita" name="descripcion_cita" value="{{ cita.descripcion_cita }}" required/>
+                </div>
+              </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer"></div>
+            <!-- /.card-footer-->
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2 d-flex justify-content-between" >
+
+        <div class="col-sm-6">
+          <a href="{% url 'ListarCitas' %}" class="btn btn-primary float-left"><i class="fas fa-arrow-left"></i>&nbsp; Volver al Calendario</a>
+        </div>
+
+        <div class="col-sm-6">
+          <button
+            type="submit"
+            name="submit"
+            class="btn btn-success float-right">
+            <i class="fa fa-save"></i>&nbsp; Guardar Cita
+          </button>
+        </div>
+
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+</form>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Obtener referencias a los elementos del formulario
+    var motivoInput = document.getElementById("titulo_cita");
+    var observacionInput = document.getElementById("descripcion_cita");
+    var formulario = document.getElementById("formEditarCita");
+    var horainicio = document.getElementById("horainicio");
+    var horafin = document.getElementById("horafin");
+
+    // Agregar evento de validación al campo de motivo
+    motivoInput.addEventListener("input", function() {
+      if (validarMotivo(this.value)) {
+        this.classList.remove("is-invalid");
+        this.classList.add("is-valid");
+      } else {
+        this.classList.remove("is-valid");
+        this.classList.add("is-invalid");
+      }
+      
+    });
+
+    // Agregar evento de validación al campo de observacion
+    observacionInput.addEventListener("input", function() {
+      if (validarObservacion(this.value)) {
+        this.classList.remove("is-invalid");
+        this.classList.add("is-valid");
+      } else {
+        this.classList.remove("is-valid");
+        this.classList.add("is-invalid");
+      }
+    });
+
+    //Agregar evento de validación a los campos de hora, para que la hora
+    //de inicio no sea mayor o igual a la hora de fin
+    horainicio.addEventListener("input", function() {
+      if (this.value >= horafin.value) {
+        this.classList.remove("is-valid");
+        this.classList.add("is-invalid");
+      } else {
+        this.classList.remove("is-invalid");
+        this.classList.add("is-valid");
+      }
+    });
+
+    // Agregar evento de envío del formulario
+    formulario.addEventListener("submit", function(event) {
+      // Validar el campo de motivo antes de enviar el formulario
+      if (!validarMotivo(motivoInput.value)) {
+        motivoInput.classList.add("is-invalid");
+        event.preventDefault(); // Evitar el envío del formulario si hay errores
+      }
+
+      if (!validarObservacion(observacionInput.value)) {
+        observacionInput.classList.add("is-invalid");
+        event.preventDefault(); // Evitar el envío del formulario si hay errores
+      }
+
+      if (horainicio.value >= horafin.value) {
+        horainicio.classList.add("is-invalid");
+        event.preventDefault(); // Evitar el envío del formulario si hay errores
+      }
+    });
+
+    // Función de validación para el campo de motivo
+    function validarMotivo(valor) {
+      var motivoRegex = /^[a-zA-Z0-9\sñáéíóúÁÉÍÓÚ\-]+$/; // Expresión regular para letras, números y espacios
+      return motivoRegex.test(valor);
+    }
+
+    // Función de validación para el campo de observacion
+    function validarObservacion(valor) {
+      var observacionRegex = /^[a-zA-Z0-9\sñáéíóúÁÉÍÓÚ\-.,]+$/; // Expresión regular para letras, números, espacios, ñ, tildes, guiones, puntos y comas
+      return observacionRegex.test(valor);
+    }
+
+
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Obtener la fecha y hora actual
+    var fechaActual = new Date();
+    var fecha = fechaActual.toISOString().slice(0, 10);
+    var hora = fechaActual.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    // Establecer la fecha y hora actual en los campos de entrada
+    document.getElementById('fecha_cita').value = fecha;
+    document.getElementById('hora_cita').value = hora;
+  });
+</script>
+
+{% endblock %}

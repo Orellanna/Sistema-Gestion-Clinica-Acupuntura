@@ -1,0 +1,198 @@
+{% extends 'index_master.html' %} 
+
+{% block content %}
+{% if messages %}
+                          <div class="messages">
+                            {% for message in messages %}
+                              <div class="alert alert-{{ message.tags }}">
+                                {{ message }}
+                              </div>
+                            {% endfor %}
+                          </div>
+          {% endif %}
+<style>
+  /* Estilos para la ventana emergente de confirmación de elimcita */
+  .elimcita-dialog {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+  }
+  
+  .elimcita-dialog-content {
+    text-align: center;
+  }
+  
+  .elimcita-dialog h3 {
+    margin-top: 0;
+  }
+  
+  .elimcita-dialog-buttons {
+    margin-top: 20px;
+  }
+</style>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Detalles de Cita: {{ cita.id_cita }}</h1>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      
+        
+
+      <div class="col-12">
+        <!-- Default box -->
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <div class="form-group row">
+                  <label for="fechacita" class="col-sm-4 col-form-label">Fecha de Cita:</label>
+                  <div class="col-sm-5">
+                    <!-- Mostrar la fecha de cita en lugar del campo de entrada -->
+                    {{ cita.cita_fecha }}
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group row">
+                  <label for="horainicio" class="col-sm-4 col-form-label">Hora de inicio:</label>
+                  <div class="col-sm-5">
+                    <!-- Mostrar la hora de cita en lugar del campo de entrada -->
+                    {{ cita.horainicio }}
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group row">
+                  <label for="horafin" class="col-sm-4 col-form-label">Hora Fin:</label>
+                  <div class="col-sm-5">
+                    <!-- Mostrar la hora de cita en lugar del campo de entrada -->
+                    {{ cita.horafin }}
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group auto">
+                  <a href="{% url 'EliminarCita' cita_id=cita.id_cita %}" class="btn btn-danger float-right elimcita-link">
+                    <i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Eliminar Cita
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="titulo_cita">Titulo:</label>
+                  <!-- Mostrar el título de la cita en lugar del campo de entrada -->
+                  {{ cita.titulo_cita }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-group">
+                <label for="descripcion_cita">Descripcion de la Cita:</label>
+                <!-- Mostrar la descripción de la cita en lugar del campo de entrada -->
+                {{ cita.descripcion_cita }}
+              </div>
+            </div>
+            <label for="estadocita">Estado de la Cita:</label>
+            {% if not cita.estadocita %}
+            <div class="alert alert-danger" role="alert">
+              <strong>¡Cita pendiente!</strong> La cita aun no ha sido realizada.
+            {% else %}
+            <div class="alert alert-success" role="alert">
+              <strong>¡Cita hecha!</strong> La cita ya ha sido realizada.
+            {% endif %}
+
+          </div>
+          <!-- /.card-body -->
+          <!-- /.card-footer-->
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-4">
+          <a
+            href="{% url 'ListarCitas' %}"
+            class="btn btn-primary"
+            ><i class="fas fa-arrow-left"></i>&nbsp; Volver al Calendario</a>
+        </div>
+        <div class="col-sm-4 text-center">
+          <a href="{%url 'Imprimir_cita' cita_id=cita.id_cita  %}" target="_blank" class="btn btn-dark"><i 
+            class="nav-icon fas fa-print"></i>&nbsp;&nbsp;Generar Reporte</a>
+        </div>
+        
+        <div class="col-sm-4">
+          <a href="{% url 'EditarCita' cita_id=cita.id_cita %}" 
+          class="btn btn-success float-right"><i 
+          class="nav-icon fas fa-pen"></i>&nbsp;&nbsp;Editar Cita</a>
+        </div>
+        
+      </div>
+    </div>
+    <div id="elimcita-dialog" class="elimcita-dialog">
+      <div class="elimcita-dialog-content">
+        <h3>¿Estás seguro de que deseas eliminar la cita?</h3>
+        <div class="elimcita-dialog-buttons">
+          <a href="{% url 'EliminarCita' cita_id=cita.id_cita%}" class="btn btn-danger">SI</a>
+          
+
+          <button id="elimcita-cancel" class="btn btn-secondary">Cancelar</button>
+        </div>
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+<script>
+  // Obtén el elemento del panel de usuario y el enlace de elimcita
+var userPanelContent = document.getElementById('user-panel-content');
+var elimcitaLink = document.querySelector('.elimcita-link');
+
+// Obtén los elementos de la ventana emergente
+var elimcitaDialog = document.getElementById('elimcita-dialog');
+var elimcitaConfirmButton = document.getElementById('elimcita-confirm');
+var elimcitaCancelButton = document.getElementById('elimcita-cancel');
+
+// Agrega un evento de clic al enlace de elimcita
+elimcitaLink.addEventListener('click', function(event) {
+  // Detiene el comportamiento predeterminado del enlace
+  event.preventDefault();
+
+  // Muestra la ventana emergente de confirmación de elimcita
+  elimcitaDialog.style.display = 'block';
+});
+
+
+// Agrega un evento de clic al botón de cancelar
+elimcitaCancelButton.addEventListener('click', function() {
+  // Oculta la ventana emergente de confirmación de elimcita
+  elimcitaDialog.style.display = 'none';
+});
+ </script>
+{% endblock %}
